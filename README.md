@@ -1,5 +1,5 @@
 # Personal-Projects
-Collection of code and projects from classes and edx courses.  Sub folders organized by coding language.  Subsequent sub-folders broken out by course / project.
+Collection of code and projects from Upenn classes and edx courses.  Sub folders organized by coding language.  Subsequent sub-folders broken out by course / project.
 
 Python:
 - Upenn: CIT590
