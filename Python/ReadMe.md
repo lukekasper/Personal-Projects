@@ -1,1 +1,1 @@
-Sub-folder for python projects.
+Directory for python projects.
