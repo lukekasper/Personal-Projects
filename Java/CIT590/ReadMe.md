@@ -1,1 +1,1 @@
-Directory for Upenn CIT590 Intro to Computing in Java project folders.
+Sub-folder for Upenn CIT590 Intro to Computing in Java project folders.
