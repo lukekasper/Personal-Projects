@@ -1,5 +1,7 @@
 General Notes:
 - Django allows for html code to be dynamically updated as user interacts with website
+- Django allows developer to code python functions into http responses
+- Django best practice is to preface index.html files with the app name (ie hello/index.html) to avoid having conflicting index file names
 
 
 Django commands:
@@ -19,6 +21,8 @@ Steps to generating django app:
     - add new app to list of apps to run (INSTALLED_APPS = ['app_name'])
 4) views.py: things a user might want to see
     - add function definition to say what to do when user interacts with url
+    - def index(request):
+        return HttpResponse("response")
 5) urls.py: file to define which urls are available to interact with for that app
     a) create in app directory
     b) add: from django.urls import path
@@ -33,3 +37,18 @@ Steps to generating django app:
         - and include all urls from urls.py in application
         - path('hello/', include("hello.urls")): look at urls.py inside of hello directory to see additional urls user can access
         - make sure to import "path" at top from django.urls
+
+
+Adding additional functionality:
+- add additional funciton to views.py
+- add a new path in urls.py so if user adds additional pathway (ie: /hello/Brian/) then it will run new function
+- add in additional parameter to function definition to parameterize function
+        - use formatted string to use placeholder for output in HttpResponse
+        - use <str:name> as first path parameter to pass user input from url into new function
+        
+        
+To create html code more generally:
+- return render(request, "hello/index.html") in views.py index function definition
+- pass name of html template as arguement
+- create new directories for "template" sub-folder "hello" in larger "hello" app directory
+- 
