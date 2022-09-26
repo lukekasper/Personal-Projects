@@ -1,1 +1,1 @@
-HW6, simple game.
+HW6, simple blackjack game.
