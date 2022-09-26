@@ -15,7 +15,7 @@ Steps to generating django app:
 1) django-admin startproject <PROJECT_NAME>: automatically creates starter files to build web application (ex: Lecutre 3)
     - project is where a developer can build multiple apps within (think google)
 2) python manage.py 
-    - runserver: command to run manage.py
+    - runserver: command to run manage.py and start up web application
     - startapp <app_name>: command to create an application (think google maps) (ex: hello)
 3) settings.py:
     - add new app to list of apps to run (INSTALLED_APPS = ['app_name'])
@@ -24,10 +24,10 @@ Steps to generating django app:
     - def index(request):
         return HttpResponse("response")
 5) urls.py: file to define which urls are available to interact with for that app
-    a) create in app directory
+    a) create urls.py in app directory
     b) add: from django.urls import path
     c) add: from . import views ("." means from current directory)
-    d) add urls to list variable
+    d) add urls to list variable "urlpatterns"
         - paths("", views.index, name="index")
         - "" says when user visits the default route
         - views says run function from views.py
@@ -47,8 +47,27 @@ Adding additional functionality:
         - use <str:name> as first path parameter to pass user input from url into new function
         
         
-To create html code more generally:
+To create html code more robustly:
 - return render(request, "hello/index.html") in views.py index function definition
+        - from django.shortcute import render
 - pass name of html template as arguement
 - create new directories for "template" sub-folder "hello" in larger "hello" app directory
-- 
+- render can take a 3rd arguement called the context
+        - context is all of the variables we want template to have access to
+        - passed as a dictionary of key:value pairs
+        - Django specicifc syntax to interact with html template:
+                - use {{variable}} to plug in value of variable in this location within template
+                - use {% logic statement %} to enter conditional statement in html template
+        
+        
+Adding static style css files:        
+- create a new directory "static" and populate with css files
+- add command {% load static %} to top of html template
+        - link stylesheet but in link include href="{% static 'newyear/syles.css' %}"
+        
+Python functions:
+- datetime:
+        - import datetime
+        - now = datetime.datetime.now() to have access to now.year, now.month, now.day, ect.
+    
+        
