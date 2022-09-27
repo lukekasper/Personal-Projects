@@ -2,6 +2,7 @@ General Notes:
 - Django allows for html code to be dynamically updated as user interacts with website
 - Django allows developer to code python functions into http responses
 - Django best practice is to preface index.html files with the app name (ie hello/index.html) to avoid having conflicting index file names
+- Django is very powerful for storing data inside of web-based databases
 
 
 Django commands:
@@ -49,7 +50,7 @@ Adding additional functionality:
         
 To create html code more robustly:
 - return render(request, "hello/index.html") in views.py index function definition
-        - from django.shortcute import render
+        - from django.shortcut import render
 - pass name of html template as arguement
 - create new directories for "template" sub-folder "hello" in larger "hello" app directory
 - render can take a 3rd arguement called the context
@@ -59,6 +60,7 @@ To create html code more robustly:
                 - use {{variable}} to plug in value of variable in this location within template
                 - use {% logic statement %} to enter conditional statement in html template (see newyear/index.html)
                         - can do the same thing to loop through a "for" statement (see tasks/index.html)
+                        - can also provide an {% empty %} condition to tell html what to display if loop is empty
 - template inheritance:
         - ability to define general layout and apply it to multiple html pages using Django (layout.html)
         - contains basic layout common to all pages
@@ -66,6 +68,7 @@ To create html code more robustly:
         - extend layout html page within each individual html file and add changing code within block
 - linking urls:
         - reference NAME of url in html href rather than full url path to avoid repitition
+                - generally bad practice to hardcode urls
         - to avoid namespace collision (two urls with same name), add app_name to urls.py
                 - use "{% url 'app_name:url_name' %}" to target app-specific url name
         
@@ -87,7 +90,27 @@ HTML Forms:
 - methods:
         - Get: implicit, used to request a particular page
         - Post: used to change the state of a particular page
+- Django can create forms for us:
+        - "from django import forms"
+        - provides automatic form generation that can take multiple different inputs
+        - also automatically provides "client side validation" which provides feedback to user on whether input is valid or not
+                - server is not getting any of this data, feedback is all done on the webpage
+        - want to include both client side AND server side validation of user input
+                - if on older version of webpage, server may have more up-to-date logic on valid user entry
+        - use return HttpResponseRedirect() to redirect user to new page after submitting a form
 
 
-    
+Designing for Site Security:
+- CSRF verification failed: "Cross Site Request Forgery", security vulnerability Django recognizes if site is not designed in a secure way
+- to avoid this, add in hidden CSRF token:
+        - adds in unique token each time user accesses site that is submitted with form, to ensure no forgery is committed
+- django has this by default (Middleware in settings.py)
+        - add into html page within django notation {% csrf_token %}
+        
+        
+Sessions:
+- django can remember who a specific user is and stores data about a particular session (ie: user ID)
+- instead of global task variable which is the same for all users, store task variable inside user's session
+- by default, django stores this info inside of a table, will throw an error if one is not created
+        - must run in terminal: python manage.py migrate
 
