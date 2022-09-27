@@ -57,7 +57,17 @@ To create html code more robustly:
         - passed as a dictionary of key:value pairs
         - Django specicifc syntax to interact with html template:
                 - use {{variable}} to plug in value of variable in this location within template
-                - use {% logic statement %} to enter conditional statement in html template
+                - use {% logic statement %} to enter conditional statement in html template (see newyear/index.html)
+                        - can do the same thing to loop through a "for" statement (see tasks/index.html)
+- template inheritance:
+        - ability to define general layout and apply it to multiple html pages using Django (layout.html)
+        - contains basic layout common to all pages
+        - {% block body %} and {% endblock %} to denote what changes between html pages
+        - extend layout html page within each individual html file and add changing code within block
+- linking urls:
+        - reference NAME of url in html href rather than full url path to avoid repitition
+        - to avoid namespace collision (two urls with same name), add app_name to urls.py
+                - use "{% url 'app_name:url_name' %}" to target app-specific url name
         
         
 Adding static style css files:        
@@ -65,9 +75,19 @@ Adding static style css files:
 - add command {% load static %} to top of html template
         - link stylesheet but in link include href="{% static 'newyear/syles.css' %}"
         
+        
 Python functions:
 - datetime:
         - import datetime
         - now = datetime.datetime.now() to have access to now.year, now.month, now.day, ect.
+      
+      
+HTML Forms:
+- action: use url to send form input back to a different url
+- methods:
+        - Get: implicit, used to request a particular page
+        - Post: used to change the state of a particular page
+
+
     
-        
+
