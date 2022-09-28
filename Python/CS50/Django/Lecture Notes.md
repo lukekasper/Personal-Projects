@@ -63,15 +63,15 @@ To create html code more robustly:
             - can do the same thing to loop through a "for" statement (see tasks/index.html)
             - can also provide an {% empty %} condition to tell html what to display if loop is empty
 - template inheritance:
-        - ability to define general layout and apply it to multiple html pages using Django (layout.html)
-        - contains basic layout common to all pages
-        - {% block body %} and {% endblock %} to denote what changes between html pages
-        - extend layout html page within each individual html file and add changing code within block
+    - ability to define general layout and apply it to multiple html pages using Django (layout.html)
+    - contains basic layout common to all pages
+    - {% block body %} and {% endblock %} to denote what changes between html pages
+    - extend layout html page within each individual html file and add changing code within block
 - linking urls:
-        - reference NAME of url in html href rather than full url path to avoid repitition
-            - generally bad practice to hardcode urls
-        - to avoid namespace collision (two urls with same name), add app_name to urls.py
-            - use "{% url 'app_name:url_name' %}" to target app-specific url name
+    - reference NAME of url in html href rather than full url path to avoid repitition
+        - generally bad practice to hardcode urls
+    - to avoid namespace collision (two urls with same name), add app_name to urls.py
+        - use "{% url 'app_name:url_name' %}" to target app-specific url name
         
         
 Adding static style css files:        
