@@ -25,16 +25,16 @@ Steps to generating django app:
     - def index(request):
         return HttpResponse("response")
 5) urls.py: file to define which urls are available to interact with for that app
-    a) create urls.py in app directory
-    b) add: from django.urls import path
-    c) add: from . import views ("." means from current directory)
-    d) add urls to list variable "urlpatterns"
+    1) create urls.py in app directory
+    2) add: from django.urls import path
+    3) add: from . import views ("." means from current directory)
+    4) add urls to list variable "urlpatterns"
         - paths("", views.index, name="index")
         - "" says when user visits the default route
         - views says run function from views.py
         - index is name of function to call when visiting url from views.py
         - name makes path easy to reference
-    e) go to urls.py in overall project directory and add path to new application
+    5) go to urls.py in overall project directory and add path to new application
         - and include all urls from urls.py in application
         - path('hello/', include("hello.urls")): look at urls.py inside of hello directory to see additional urls user can access
         - make sure to import "path" at top from django.urls
