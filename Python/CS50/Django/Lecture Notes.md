@@ -51,6 +51,7 @@ Adding additional functionality:
 To create html code more robustly:
 - return render(request, "hello/index.html") in views.py index function definition
     - from django.shortcut import render
+    - returns an html template 
 - pass name of html template as arguement
 - create new directories for "template" sub-folder "hello" in larger "hello" app directory
 - render can take a 3rd arguement called the context
