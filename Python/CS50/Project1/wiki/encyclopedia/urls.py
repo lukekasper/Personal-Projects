@@ -1,8 +1,10 @@
 from django.urls import path
-
 from . import views
+
+app_name = "encyclopedia"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("<str:title>", views.page_display(), name="title")
+    path("<str:title>", views.entry_page, name="entry"),
+    path("search", views.page_search, name="search")
 ]
