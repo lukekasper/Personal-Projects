@@ -49,4 +49,21 @@ Race Condition:
 
 
 Django Models:
-- 
+- Models are a way of creating a python class of data that we want django to store inside of a database
+- Inside of models.py:
+  - One model for each of the main tables we care about
+  - Documented on django website is types of fields for data (ie CharField) that can be included in a Django model
+    - Type ForeignKey allows user to reference an id from another model
+- Migrations: we 1) create a migration which define changes we want to the database and then 2) migrate them to update the db
+  - 1) python manage.py makemigrations: to create migration
+    - Creates migrations file for you
+    - Reflects changes made in models.py
+  - 2) python manage.py migrate: applies migration to database
+- Can enter django's shell to run python commands directly on database: pyhton manage.py shell
+- Any model (or python class in general) can implement a "__str__" function that returns a string representation of that object
+- on_delete=models.CASCADE: applies deletion to downstream references
+  - ie) deleting an airport from db would also delete all flights referencing that airport
+  - Can be applied to other actions besides on_delete
+  - Can also use models.PROTECT to not allow a deletion if there are other references to it
+- related_name="departures": can access relation in reverse order
+  - If you have an airport, you can get all flights that have that airport as an origin
