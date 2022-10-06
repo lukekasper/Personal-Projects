@@ -1,2 +1,2 @@
-###SQL Lecture Notes
+### SQL Lecture Notes
 - 
