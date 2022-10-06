@@ -22,6 +22,7 @@ Interacting with data tables in SQL:
   - ORDER BY: returns rows sorted in a specified manner
   - GROUP BY: group flights by a certain value (ie origin = New York)
     - Use HAVING with GROUP BY to add additional constraint (ie must have at least 3 flights leaving from NY to display)
+- CREATE INDEX: Add a way to look up a value by one of its parameters
 
 
 Table Structures
@@ -30,3 +31,22 @@ Table Structures
 - Join table: contains IDs from two seperate tables to inter-relate them
   - Allows many passangers to be related to many flights for example
   - A passanger can be on multiple flights, and a flight can have multiple passangers 
+ - Can then use JOIN query to join all tables back together in a readable way
+  - Must specify what columns we want and how to relate the two tables (JOIN ... ON ...) (inner join)
+  - Other JOINS are available as well (similar to power query or pivot tables in excel)
+
+
+SQL Injection:
+- It is possible to use SQL syntax to comment out other portions of a request or lookup
+  - Ie: enter username of "hacker"--" usese -- to comment out request for a password
+  - Good practice to escape special characters in SQL code
+
+
+Race Condition:
+- Two commands running in parrallel that may conflict with one another
+  - Leads to unpredictable/unreplicable results 
+- Can place a lock on database to make sure all computations are complete before allowing interactions with the database
+
+
+Django Models:
+- 
