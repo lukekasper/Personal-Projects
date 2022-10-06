@@ -55,11 +55,11 @@ Django Models:
   - Documented on django website is types of fields for data (ie CharField) that can be included in a Django model
     - Type ForeignKey allows user to reference an id from another model
 - Migrations:
-  1. create a migration which define changes we want to the database and then
+  1)  create a migration which define changes we want to the database and then
     - python manage.py makemigrations: to create migration
     - Creates migrations file for you
     - Reflects changes made in models.py 
-  2. migrate them to update the db
+  2)  migrate them to update the db
     - python manage.py migrate: applies migration to database
 - Can enter django's shell to run python commands directly on database: pyhton manage.py shell
 - Any model (or python class in general) can implement a "__str__" function that returns a string representation of that object
@@ -69,3 +69,4 @@ Django Models:
   - Can also use models.PROTECT to not allow a deletion if there are other references to it
 - related_name="departures": can access relation in reverse order
   - If you have an airport, you can get all flights that have that airport as an origin
+- Can use views.py to display webages with table data
