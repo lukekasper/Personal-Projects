@@ -70,3 +70,15 @@ Django Models:
 - related_name="departures": can access relation in reverse order
   - If you have an airport, you can get all flights that have that airport as an origin
 - Can use views.py to display webages with table data
+- <model>.objects.all(): gets all model objects
+- <model>.objects.filter(): can get a subset of objects based on specified conditions
+- <model>.objects.exclude(): does the inverse of filter (excludes all objects under specified conditions)
+
+More Django:
+- Can specify a variable for an html attribute to take as an arguement with: 
+  - <a href="{% url 'flight' flight.id %}"> (passes variable flight.id into 'flight' url
+- Look up obnject by primary key using: <model>.objects.get(pk=<model_id>)
+- HttpResponseRedirect(reverse()): redirects you to a url by passing the name of the url view, rather than the full url pathway
+  - Pass an arguement to this view by using args: 
+    - HttpResponseRedirect(reverse("flight", args=(flight.id,)))
+    - Structured as a tuple!
