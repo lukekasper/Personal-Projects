@@ -72,7 +72,10 @@ Django Models:
 - Can use views.py to display webages with table data
 - <model>.objects.all(): gets all model objects
 - <model>.objects.filter(): can get a subset of objects based on specified conditions
-- <model>.objects.exclude(): does the inverse of filter (excludes all objects under specified conditions)
+- <model>.objects.exclude().all(): does the inverse of filter (excludes all objects under specified conditions)
+- Admin app allows direct manipulation of models via Django's built admin interface
+  - Must add models in admin.py
+  - Can configure models further in order to add customization to the admin interface
 
 More Django:
 - Can specify a variable for an html attribute to take as an arguement with: 
@@ -82,3 +85,14 @@ More Django:
   - Pass an arguement to this view by using args: 
     - HttpResponseRedirect(reverse("flight", args=(flight.id,)))
     - Structured as a tuple!
+  
+  
+Authentication:
+- Django has built-in authentication capability
+- request.user.is_authenticated: tells if user is signed in or not
+- passing an input as type="password" lets browser know to display password as dots and not text
+- can use django modules to check:
+  - from django.contrib.auth import authenticate, login, logout
+  - user = authenticate(request, username="", password="")
+  - authentication works as long as user "is not None"
+  - then can use login(request, user)
