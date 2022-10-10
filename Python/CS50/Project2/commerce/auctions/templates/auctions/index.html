@@ -1,0 +1,52 @@
+{% extends "auctions/layout.html" %}
+{% block style %}
+<style>
+    .listing_block {
+        height: 240px;
+        width: 90vw;
+        border: 1px solid grey;
+        padding: 10px;
+        margin-top: 10px
+    }
+
+    .image_block {
+        padding: 10px;
+        float: left;
+    }
+
+    .listing_info_block {
+        padding: 10px;
+        float: left;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .listing_title {
+        font-size: 18px;
+    }
+
+    .info{
+        font-weight: normal;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {% for listing in listings %}
+        <div class="listing_block">
+            <div class="image_block">
+                {% if listing.url != "" %}
+                    <img src="{{ listing.image_url }}" alt="{{ listing.title }}" width="300" height="200">
+                {% else %}
+                    <p class="no_image">No Image</p>
+                {% endif %}
+            </div>
+            <div class="listing_info_block">
+                    <p class="listing_title">{{ listing.title }}</p>
+                    <p class="info">{{ listing.description }}</p>
+                    <p>Current Price: <span class="info">${{ listing.current_price }}</span></p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
