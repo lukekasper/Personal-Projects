@@ -90,9 +90,9 @@ More Django:
 Authentication:
 - Django has built-in authentication capability
 - request.user.is_authenticated: tells if user is signed in or not
-- passing an input as type="password" lets browser know to display password as dots and not text
-- can use django modules to check:
+- Passing an input as type="password" lets browser know to display password as dots and not text
+- Can use django modules to check:
   - from django.contrib.auth import authenticate, login, logout
   - user = authenticate(request, username="", password="")
-  - authentication works as long as user "is not None"
-  - then can use login(request, user)
+  - Authentication works as long as user "is not None"
+  - Then can use login(request, user)
