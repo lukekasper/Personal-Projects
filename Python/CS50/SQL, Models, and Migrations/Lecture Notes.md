@@ -78,7 +78,8 @@ Django Models:
   - Can configure models further in order to add customization to the admin interface
 
 More Django:
-- Can specify a variable for an html attribute to take as an arguement with: <a href="{% url 'flight' flight.id %}"> (passes variable flight.id into 'flight' url)
+- Can specify a variable for an html attribute to take as an arguement with: 
+  - \<a href="{% url 'flight' flight.id %}"\> (passes variable flight.id into 'flight' url)
 - Look up obnject by primary key using: <model>.objects.get(pk=<model_id>)
 - HttpResponseRedirect(reverse()): redirects you to a url by passing the name of the url view, rather than the full url pathway
   - Pass an arguement to this view by using args: 
