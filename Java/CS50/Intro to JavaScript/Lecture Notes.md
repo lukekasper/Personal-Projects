@@ -1,1 +1,12 @@
-
+Notes:
+- Javascript will allow us to write client side code
+  - as oppose to the server-side code we've been writing in our Django-based web applications
+  - code will run inside of user's web browser
+  - computations may be faster on client side
+  - pages can be much more interactive, as java allows us to manipulate the content of the webpage
+- Javascript can be incorporated into a webage through a <script> tag in html structure
+- Event-driven programming:
+  - ie) user clicks on a button/selects from a dropdown
+  - can add event listeners or handlers to run blocks of code when events happen
+  - code will allow page to respond to user interactions
+- 
