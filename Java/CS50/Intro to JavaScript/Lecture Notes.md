@@ -39,3 +39,13 @@ General JavaScript Notes:
 - setInterval: builtin javascript function that runs every x milliseconds
 - local storage: saves users information in a browser:
   - localStorage.getItem() and localStorage.setItem()
+  - can view value of local storage in Inspector under Application tab -> Local Storage
+- JavaScript object: like a python dictionary 
+
+APIs:
+- a way to communicate with other services by sending requests and recieving back data in a well structured format
+  - json: javascript object notation
+  - a way of transferring data in the form of javascript object
+- companies often offer API services in the form of json objects to acces certain information
+- Ajax: asynchronous javascript
+  - fetch: makes a web request to get an httpresponse (can be used to get API info)
