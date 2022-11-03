@@ -29,3 +29,14 @@ More Event Listeners:
   
 React:
 - javascript library to facilitate interfacing with the user
+- defines components that can be used as variables in html and be updated
+- include React, ReactDOM, Babel javascript libraries in
+  - React: allows us to define components and how they behave
+  - ReactDOM: takes react components and inserts them into the DOM of the page
+  - Babel: translates between languages (we write react code in jsx, an extension of javascript)
+  - illustrated in react.html
+  - can create react components and reuse them multiple times rather than type the same html multiple times
+  - React.useState(initial value): allows us to set a state of a variable and define a funciton to update that state
+  - can combine react states into a javascript object
+  - event.target.value sets the value based on an event trigger
+  - use spread handler (...state,) in setState as shorthand to skip over parts of the state that aren't being updated
