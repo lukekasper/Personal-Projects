@@ -4,3 +4,4 @@ Python: https://video.cs50.io/EOLPQdVj5Ac?screen=-d-WPlksFpc
 Django: https://video.cs50.io/w8q0C-C1js4?screen=gytX_rSwZRQ
 SQL, Models, and Migrations: https://video.cs50.io/YzP164YANAU?screen=VuB5TkTL3tM
 JavaScript: https://video.cs50.io/x5trGVMKTdY?screen=9eLagIEsBcc
+User Interfaces: https://video.cs50.io/qO8rXmQxs5A?screen=1_8Worz-RqY
