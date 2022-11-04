@@ -29,7 +29,7 @@ More Event Listeners:
   
 React:
 - javascript library to facilitate interfacing with the user
-- defines components that can be used as variables in html and be updated
+- defines components that describe the state of the webpage, can be used as variables in html and be updated
 - include React, ReactDOM, Babel javascript libraries in
   - React: allows us to define components and how they behave
   - ReactDOM: takes react components and inserts them into the DOM of the page
@@ -37,6 +37,13 @@ React:
   - illustrated in react.html
   - can create react components and reuse them multiple times rather than type the same html multiple times
   - React.useState(initial value): allows us to set a state of a variable and define a funciton to update that state
+- add "autoFocus={true}" to input element to automatically have it selected when loading the page
+- className: is how you add a class in React
+  - can change the class of an html element using logic
+  - className={state.incorrect ? "incorrect : ""}
+  
+General Java Script Notes:
+- Math.random(): randomly generates a number between 1 and 10
   - can combine react states into a javascript object
   - event.target.value sets the value based on an event trigger
   - use spread handler (...state,) in setState as shorthand to skip over parts of the state that aren't being updated
