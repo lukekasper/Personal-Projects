@@ -49,3 +49,4 @@ APIs:
 - companies often offer API services in the form of json objects to acces certain information
 - Ajax: asynchronous javascript
   - fetch: makes a web request to get an httpresponse (can be used to get API info)
+- .serialize() creates a URL encoded text string by serializing form values, used to export as json objects 
