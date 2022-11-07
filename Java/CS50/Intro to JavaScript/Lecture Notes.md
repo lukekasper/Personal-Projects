@@ -35,6 +35,9 @@ General JavaScript Notes:
 - template literal: same as a formatted string in python, called by using `some text ${variable}`
 - autofocus tag on html form focuses page on that form
 - arrow notation: () => can take the place of a function()
+- when using addEventListener:
+    - to call function with no parameters, can write directly inline as: addEventListener('click',ex_function)
+    - if function takes parameters, must use anonomyous function: addEventListener('click', () => ex_function2(param))
 - "this": special keyword that refers to the thing that recieved the event (for eventListener)
 - setInterval: builtin javascript function that runs every x milliseconds
 - local storage: saves users information in a browser:
