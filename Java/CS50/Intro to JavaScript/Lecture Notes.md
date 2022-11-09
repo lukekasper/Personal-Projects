@@ -32,7 +32,7 @@ Debugging:
 
 General JavaScript Notes:
 - const: sets variable to a static value that does not change
-- template literal: same as a formatted string in python, called by using `some text ${variable}`
+- template literal: same as a formatted string in python, called by using /`some text ${variable}/`
 - autofocus tag on html form focuses page on that form
 - arrow notation: () => can take the place of a function()
 - when using addEventListener:
