@@ -15,7 +15,8 @@ Testing:
       - c = Client()
       - save the response from querying the url
       - can check the status code and the what was passed in to the render request in the application (context)
-- JavaScript: selenium
+      
+- JavaScript: browser testing (selenium web driver)
   - creates a test file to write client-side unit testing of JavaScript code 
   - use of web driver to simulate user interacting with program
     - must get files uri first (see file_uri(filename) function in tests.py
@@ -25,3 +26,13 @@ Testing:
     - use driver.get(file_uri("name of file")) to control webpage interaction
     - write test cases to simulate user interaction with webpage
  
+ CI/CD:
+ - Continuous Integration (CI): frequent merges to a git repository, automated unit testing
+ - Continuous Development (CD): short release schedules
+ - Github Actions: creates workflows to run checks anytime code is pushed to github
+  - ie) is code styled well?, can run unit tests on code automatically
+  - immediate feedback via github if test failed whenever code is pushed
+  - YAML: file format to facilitate this type of testing (.yml, .yaml file formats)
+    - written in key-value pairs
+    - actions/checkout: checks out code in git repository and allows us to run programs on it
+  - can see result of these "jobs" in the GitHub Actions tab
