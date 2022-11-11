@@ -1,0 +1,32 @@
+#search_window {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 500px;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#mid_section {
+    padding-top: 200px;
+    display: flex;
+    height: 200px;
+    width: 100%;
+    margin: auto;
+    align-items:center;
+    justify-content:center;
+}
+
+#top_section {
+    display: flex;
+    height: 50px;
+    justify-content:right;
+}
+
+.buttons {
+    height: 35px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    border: none;
+    width: 120px;
+}

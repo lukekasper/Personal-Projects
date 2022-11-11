@@ -1,0 +1,88 @@
+{% extends "auctions/layout.html" %}
+{% block style %}
+<style>
+    .listing_block {
+        height: 240px;
+        width: 90vw;
+        border: 1px solid grey;
+        padding: 10px;
+        margin-top: 10px
+    }
+
+    .image_block {
+        padding: 10px;
+        float: left;
+    }
+
+    .listing_info_block {
+        padding: 10px;
+        float: left;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .listing_title {
+        font-size: 18px;
+        height: 30px;
+    }
+
+    .info {
+        margin-top: 5px;
+        font-weight: normal;
+    }
+
+    .no_image_box {
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 24px;
+        height: 200px;
+        width: 300px;
+        border: 3px solid #E0E0E0;
+        text-align: center;
+    }
+
+    .no_image_text {
+        padding-top: 70px;
+        color: #A9A9A9;
+    }
+
+    .user_info {
+        color: #A9A9A9;
+        font-size: 14px;
+        font-weight: normal
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+    <h2>{{ heading }}</h2>
+    {% for listing in listings %}
+        <div class="listing_block">
+            <div class="image_block">
+                {% if listing.image_url != "" %}
+                    <img src="{{ listing.image_url }}" alt="{{ listing.title }}" width="300" height="200">
+                {% else %}
+                    <div class="no_image_box">
+                        <p class="no_image_text">No Image</p>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="listing_info_block">
+                <div class="listing_title">
+                    <a href="{% url 'listing' listing.title %}">{{ listing.title }}</a>
+                </div>
+                <p class="info">{{ listing.description }}</p>
+                <p>Current Price: <span class="info">${{ listing.current_price }}</span></p>
+                {% if listing.category != "" %}
+                    <p>Listing Category: <span class="info">{{ listing.category }}</span></p>
+                 {% else %}
+                    <p>Listing Category: <span class="info">N/A</span></p>
+                {% endif %}
+                <div class="user_info">
+                    <p>Item posted by {{ listing.user }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

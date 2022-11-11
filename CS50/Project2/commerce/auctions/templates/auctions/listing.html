@@ -1,0 +1,160 @@
+{% extends "auctions/layout.html" %}
+{% block style %}
+<style>
+    .content {
+        height: 600px;
+        width: 90vw;
+    }
+
+    .listing_info {
+        width: 350px;
+        height: 100%;
+        float: left
+    }
+
+    .comments_block {
+        margin-top: 40px;
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+
+    .description {
+        height: 30px;
+        width: 90vw;
+        margin-top: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .no_image_box {
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 24px;
+        height: 200px;
+        width: 300px;
+        border: 3px solid #E0E0E0;
+        text-align: center;
+    }
+
+    .no_image_text {
+        padding-top: 70px;
+        color: #A9A9A9;
+    }
+
+    .bid_button {
+        background-color: #4BA6FF;
+        color: white;
+        border: none;
+    }
+
+    .bid {
+        padding-bottom: 20px;
+    }
+
+    .padding {
+        padding-top: 20px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .close {
+        padding-top: 30px;
+        padding-left: 70px;
+        font-size: 24px;
+        text-align: left;
+        width: 100%;
+    }
+
+    #open {
+        color: #80FF66;
+    }
+
+    #winner {
+        padding-top: 20px;
+        color: #FF66CC;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="listing_info">
+            {% if listing.winner != "None" %}
+            <h2>{{ listing.title }}: <span class="red">CLOSED</span></h2>
+            {% else %}
+                <h2>{{ listing.title }}: <span id="open">Open</span> </h2>
+            {% endif %}
+            {% if listing.image_url != "" %}
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" width="300" height="200">
+            {% else %}
+                <div class="no_image_box">
+                    <p class="no_image_text">No Image</p>
+                </div>
+            {% endif %}
+            <div class="description">
+                <p>{{ listing.description }}</p>
+            </div>
+            <h5 class="padding">Details:</h5>
+            <ul>
+                <li>Current price: ${{ listing.current_price }}</li>
+                <li>Posted by: {{ listing.user }}</li>
+                {% if listing.category != "" %}
+                    <li>Listing category: {{ listing.category }}</li>
+                 {% else %}
+                    <li>Listing category: N/A</li>
+                {% endif %}
+                {% if listing.winner != "None" %}
+                    <li>Winner: <span class="bold">{{ listing.winner }}</span></li>
+                {% endif %}
+            </ul>
+            {% if listing.winner == username %}
+                <h4 id="winner">YOU ARE THE WINNER!!</h4>
+            {% endif %}
+            <div class="info">
+                {% if login_flag == 1 and listing.winner == "None" %}
+                    <form class="bid" action="{% url 'bid' %}" method="post">
+                        {% csrf_token %}
+                        {{ bid_form }}
+                        <input class="bid_button" type="submit" value="Place Bid">
+                        <input type="hidden" name="listing_title" value="{{ listing.title }}">
+                    </form>
+                    {% if error == "Error1" %}
+                        <p class="red">Error: bid does not exceed current price</p>
+                    {% elif error == "Error2" %}
+                        <p class="red">Error: bid exceeds maximum value</p>
+                    {% endif %}
+                        <div>
+                            <a href="{% url 'edit_watchlist' listing.title %}">{{ tag1 }} {{ listing.title }} {{ tag2 }} Watchlist</a>
+                        </div>
+                    {% if option %}
+                        <div class="close">
+                            <a href="{% url 'close_listing' listing.title %}">Close Listing</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="comments_block">
+            <h5>Comments:</h5>
+            <ul>
+                {% for comment in comments %}
+                <li><span class="bold">{{ comment.user.username }}:</span> {{ comment.comment }}</li>
+                {% endfor %}
+            </ul>
+            <form class="bid" action="{% url 'comment' %}" method="post">
+                {% csrf_token %}
+                {{ comment_form }}
+                <input class="bid_button" type="submit" value="Add Comment">
+                <input type="hidden" name="listing_title" value="{{ listing.title }}">
+            </form>
+        </div>
+    </div>
+{% endblock %}

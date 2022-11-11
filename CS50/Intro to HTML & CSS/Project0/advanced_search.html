@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            #title_box {
+                display: flex;
+                height: 70px;
+                padding-top: 50px;
+            }
+
+            #title {
+                margin-left: 40px;
+                color: crimson;
+                font-size: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            .mid_section {
+                height: 300px;
+                margin-left: 40px;
+                font-family: Arial, sans-serif;
+            }
+
+            .heading {
+                font-size: 16px;
+                height: 50px;
+                padding-top: 50px;
+            }
+
+            .text_container{
+                height: 50px;
+                font-size: 14px;
+            }
+
+            .text_child1{
+                width: 200px;
+                height: 25px;
+                float: left;
+                padding-top: 6px;
+            }
+
+            .text_child2{
+                width: 50%;
+                height: 25px;
+                float: left;
+                align-content: center;
+            }
+
+            .search_box {
+                border: 1px solid darkgray;
+                height: 100%;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .text_container2{
+                height: 50px;
+                width: 75%;
+                padding-left: 200px;
+                font-size: 14px;
+            }
+
+            .search_button {
+                background-color: dodgerblue;
+                font-size: 11px;
+                color: white;
+                border-radius: 2px;
+                border: none;
+                height: 30px;
+                width: 120px;
+                font-weight:bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top_section">
+            <a href="index.html">Back to Google Search</a>
+        </div>
+        <div id="title_box">
+            <p id="title">
+                Advanced Search
+            </p>
+        </div>
+        <hr style="background-color: lightgray; height: 1px; border: none;">
+        <div class="mid_section">
+            <form action="https://google.com/search">
+                <div class="heading">Find pages with...</div>
+                <div class="text_container">
+                    <div class="text_child1">all these words:</div>
+                    <div class="text_child2">
+                        <input class="search_box" type="text" name="as_q">
+                    </div>
+                </div>
+                <div class="text_container">
+                    <div class="text_child1">this exact word or phrase:</div>
+                    <div class="text_child2">
+                        <input class="search_box" type="text" name="as_epq">
+                    </div>
+                </div>
+                <div class="text_container">
+                    <div class="text_child1">any of these words:</div>
+                    <div class="text_child2">
+                        <input class="search_box" type="text" name="as_oq">
+                    </div>
+                </div>
+                <div class="text_container">
+                    <div class="text_child1">none of these words:</div>
+                    <div class="text_child2">
+                        <input class="search_box" type="text" name="as_eq">
+                    </div>
+                </div>
+                <div class="text_container2">
+                    <input class="search_button" type="submit" value="Advanced Search">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
