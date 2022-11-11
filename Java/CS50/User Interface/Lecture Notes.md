@@ -40,7 +40,7 @@ React:
 - add "autoFocus={true}" to input element to automatically have it selected when loading the page
 - className: is how you add a class in React
   - can change the class of an html element using logic
-  - className={state.incorrect ? "incorrect : ""}
+  - className={state.incorrect ? "incorrect" : ""}
   
 General Java Script Notes:
 - Math.random(): randomly generates a number between 1 and 10
