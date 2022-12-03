@@ -76,6 +76,7 @@ Django Models:
 - Admin app allows direct manipulation of models via Django's built admin interface
   - Must add models in admin.py
   - Can configure models further in order to add customization to the admin interface
+  - $ python manage.py createsuperuser.
 
 More Django:
 - Can specify a variable for an html attribute to take as an arguement with: 
