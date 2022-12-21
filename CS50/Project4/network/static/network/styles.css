@@ -1,0 +1,132 @@
+h2 {
+    padding: 10px;
+}
+
+#new_post {
+    padding: 20px;
+    border: solid LightGray 1px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+textarea {
+    padding-top: 15px;
+    padding-left: 15px;
+    height: 200px;
+}
+
+#post-button {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#post-div {
+    border: solid LightGray 1px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    padding-left: 20px;
+    padding-top: 15px;
+}
+
+#poster {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: RoyalBlue;
+    width: 5px;
+}
+
+#content {
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+#timestamp {
+    color: Gray;
+    margin-bottom: 0px;
+}
+
+#likes {
+    color: Gray;
+    margin-bottom: 15px;
+}
+
+#heart {
+    color: Gray;
+    font-size: 18px;
+}
+
+#followers {
+    font-weight: bold;
+    padding-left: 10px;
+    display: flex;
+    float: left;
+    padding-top: 3px;
+}
+
+#following {
+    font-weight: bold;
+    padding-left: 20px;
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 3px;
+    float: left;
+}
+
+#following_text {
+    font-weight: normal;
+    color: Gray;
+}
+
+#followers_text {
+    font-weight: normal;
+    color: Gray;
+}
+
+#follow-button {
+    margin-left: 25px;
+    background-color: #1e90ff;
+    color: White;
+    font-weight: bold;
+}
+
+#user_posts {
+    clear: both;
+}
+
+#edit-button {
+    background-color: #1e90ff;
+    color: White;
+    font-size: 12px;
+    height: 25px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 0px;
+    width: 40px;
+}
+
+#edit-text {
+    height: 75px;
+    width: 98%;
+    margin-bottom: 10px;
+    border: solid LightGray 1px;
+    border-radius: 5px;
+    clear: both;
+}
+
+#submit-edit {
+    background-color: Gray;
+    color: White;
+    font-size: 14px;
+    height: 30px;
+    margin-bottom: 5px;
+    padding: 0px;
+    width: 60px;
+    border: solid Gray 1px;
+}
+
+#nav-id {
+    padding-left: 10px;
+}
