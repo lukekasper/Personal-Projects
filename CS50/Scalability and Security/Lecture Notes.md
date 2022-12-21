@@ -1,1 +1,22 @@
+Scalability:
+- ability for hosting server to handle requests from many users simultaneously
+  - servers exist either on the cloud, or on premise (inside of a companies walls)
+  - cloud servers are 3rd party servers (ie amazon/google) that are available for use
+- benchmarking: analysis to determine how many users a particular server can handle at any given time (Apache Bench)
+- vertical scaling: get a larger server to handle more users
+- horizontal scaling: get multiple servers
+  - load balancer: hardware used to derict user requests to a particula server location if multiple exist
+    - random choice, round robin, fewest connections, ect.
+  - user session: stores information about a user on the server (ie login info)
+  - sticky session: if multiple servers are in use, load balancer must remember which server user was previously on to recover session
+    - more computationally costly and one server can get overloaded
+- sessions in database: allows all servers to access session information
+- can also store sessions on client-side (cookies)
+  - want to use encryption with cookie to ensure someone does not manipulate info
+  - can get expensive to send cookies between client and server on every request
+- autoscaling: if enough people are traffiking servers, add additional servers automatically (can set a range of servers to use)
+  - may take some time to start autoscaling process
+  - adding servers introduces opportunity for failure, but removes the chance of a single point failure (one server)
+- heartbeat: load balancer sends ping request to each server to get latency and whether server is functioning properly
+- redundant load balancers are also necessary to reduce possibility of single point failure
 
