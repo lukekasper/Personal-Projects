@@ -76,5 +76,16 @@ Security:
 - JavaScript:
   - cross-site scripting: someone else injects javascirpt code to run on your website
     - ex: use "\<script>" tag in url to write javascript code which acts on webpage
-  - django: cross-site request forgery
-    - 
+
+- Django: 
+  - cross-site request forgery: ability to fake a request to make it seem like it is coming from a different user
+    - only want to allow manipulation of state through a PUT request
+    - can perform a GET request by clicking on malicious image or link (vulnerability)
+    - made more malicious by hidden inputs where user only sees link and not what is being passed to server
+      - can be done without even having user click the page! (using javascript can run request after DOM is loaded)
+    - mitigate with CSRF tokens
+
+Other Web Application Frameworks:
+- server-side: Express.js, Ruby on Rails
+- client-side: Angular JS, React, Vue.js
+- deploy these to the web using: AWS, GitHub Pages (free), Google Cloud, Heroku, Microsoft Azure
