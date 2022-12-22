@@ -20,3 +20,61 @@ Scalability:
 - heartbeat: load balancer sends ping request to each server to get latency and whether server is functioning properly
 - redundant load balancers are also necessary to reduce possibility of single point failure
 
+Database servers:
+- dedicated database server is common practice to share info across databases
+- to scale database, can horizontally split tables:
+  - seperate table into multiple with same info (columns) but containing different data sets
+    - ie international vs domestic flights
+    - allows servers to query information without searching through entire dataset
+    - data should only be seperated in a way where seperated data sets would only be handled individually
+- database replication: to protect against single point failures
+  - single primary replication: multiple databases (read only) but one is primary (can both read and write)
+    - databases must be synced when updates are made
+    - if primary database fails, no other databases can be updated
+  - multi-primary database: all databases can be read and written to
+    - complicates synchronization process (adds complexity and leads to conflicts)
+    - update, uniqueness, deletion conflicts
+- caching: storing a saved version of information in a way we can access it more quickly
+  - avoids making many databse requests
+  - can be done on client-side
+  - can specify cache in HttpResponse from server, and specifiy number of seconds info should be cached for
+    - Cache-Control: max-age=xxxx
+    - ETag: unique characters to identify a version of a resource (ie CSS file)
+      - allows webpage to determine if its necessary to request a new version of the resource or just use the cached version
+  - can also do server-side caching
+    - django has built-in cache framework
+      - per-view (whole view)
+      - template fragment (section of an html page, ie a side bar)
+      - low-level cache API (works for any information, can save inside of cache API)
+
+Security:
+- Git:
+  - due to open-source code, don't put credential information inside of repositories
+  - even if credentials are removed, users can roll back code and access removed credentials (must wipe out previous commits)
+- HTML:
+  - phishing: href displays one url but anchor tag links to a different page
+  - can replicate all of the same html as another website to disguise fake one
+- Encryption:
+  - secret key cryptography: have both plain text and key to decode message
+    - generates cyphertext with key and send that across the internet
+  - public key cryptography: use of both a public and private key
+    - reciever gives sender public key to encrypt message, recieves cypher text, and uses private key to decrypt
+- SQL vlunerabilities:
+  - when storing passwords in plain text
+    - hash function outputs a sequence of characters based on the password input (only works one way)
+  - on login page, displaying an error when user does not have an associated email
+    - hacker can try emails until they do not get that error to determine if a user has an account with that application
+  - SQL injection:
+    - using known SQL syntax, hacker can use "--" in username to comment out password portion of code and bypass it
+    - make sure to escape these special characters (django models does this automatically)
+- APIs:
+  - rate limiting: make sure user can only make so many requests to an API in a certain time period
+  - route authentication: only certain users can access specific parts of the API data (API key)
+    - should not put API keys inside source code of web applications
+      - use environment variables: keys are drawn from environment API is ran
+      - make sure environmental variables are set on server, which avoids them being in text within the source code
+- JavaScript:
+  - cross-site scripting: someone else injects javascirpt code to run on your website
+    - ex: use "\<script>" tag in url to write javascript code which acts on webpage
+  - django: cross-site request forgery
+    - 
