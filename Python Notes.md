@@ -1,6 +1,6 @@
 Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
 - eval(): mathematically evaluates a string expression
-- count = collections.Counter(s): gives back a dirctionsary with wor occurences count (must "import collectoins" library)
+- count = collections.Counter(s): gives back a dirctionsary with word occurences count (must "import collectoins" library)
 - for idx, ch in enumerate(s): steps through an array 's' using variable 'ch', and tracks the index of that array element using 'idx'
 - all(): returns true if all objects in an interable are true, otherwise returns false (returns true if object is empty also)
 - remove(element): removes the specified element from the list
