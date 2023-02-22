@@ -6,6 +6,7 @@ Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
 - remove(element): removes the specified element from the list
 - pop(): removes an array element at specified index and returns removed element
 - append(element): appends an element to the end of a list
+- extend(elements): appends multiple elements to the end of the list
 - insert(yi,y): inserts element at the specified index within a list
 - replace(oldvalue, newvalue, count): replaces a specified phrace with a new phrase
 - sort(): sorts a list
