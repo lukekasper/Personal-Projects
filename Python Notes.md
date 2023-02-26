@@ -1,0 +1,20 @@
+Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
+- eval(): mathematically evaluates a string expression
+- count = collections.Counter(s): gives back a dictionary with word occurences count (must "import collectoins" library)
+- for idx, ch in enumerate(s): steps through an array 's' using variable 'ch', and tracks the index of that array element using 'idx'
+- all(): returns true if all objects in an interable are true, otherwise returns false (returns true if object is empty also)
+- remove(element): removes the specified element from the list
+- pop(): removes an array element at specified index and returns removed element
+- append(element): appends an element to the end of a list
+- extend(elements): appends multiple elements to the end of the list
+- insert(yi,y): inserts element at the specified index within a list
+- replace(oldvalue, newvalue, count): replaces a specified phrace with a new phrase
+- sort(): sorts a list
+  - optional arguements to reverse sort or provide a key (function) to specifiy sort criteria
+- sum(array): sums array elements
+- 
+- sets:
+  - intersection() or '&': returns element in common between two sets
+  - symmetric_difference() or '^': set of elements in only one of the two sets
+  - "s1 - s2": set of elements in s1 but not s2
+  - union() or |: combines two sets
