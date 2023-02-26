@@ -1,0 +1,31 @@
+{% extends "cookbook/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div id="all_recipes-view">
+        <h2 id="recipes-title">All Recipes</h2>
+        <a id="new_recipe-link" href="new_recipe">Add New Recipe</a>
+        <hr>
+        <div id="all_recipes"></div>
+
+        <div id="recipe-view">
+            <h2 id="recipe-title"></h2>
+            <div id="recipe-image"></div>
+            <div id="recipe-info"></div>
+        </div>
+
+        <div id="matched_recipes-view">
+            <h4>Recipes with these ingredients:  <span id="ing_header"></span></h4>
+            <div id="l1">
+                <ul id="rec1" class="rec"></ul>
+            </div>
+            <div id="l2">
+                <ul id="rec2" class="rec"></ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cookbook/recipes.js' %}"></script>
+{% endblock %}

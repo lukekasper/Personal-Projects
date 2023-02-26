@@ -1,0 +1,233 @@
+h2 {
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.outer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.outer > div {
+    width: 560px;
+}
+
+#instructions_label {
+    vertical-align: top;
+}
+
+#instructions_entry {
+    height: 100px;
+    width: 380px;
+}
+
+#id_title {
+    width: 380px;
+}
+
+#ingredients_entry {
+    height: 32px;
+    width: 250px;
+}
+
+#id_category {
+    width: 380px;
+}
+
+#id_cooktime {
+    width: 380px;
+}
+
+#recipes-title {
+    float: left;
+    width: 50%;
+}
+
+#new_recipe-link {
+    float: right;
+    margin-right: 40px;
+    font-size: 18px;
+    margin-top: 40px;
+}
+
+#new_recipe-button {
+    margin-top: 60px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+#ingredients_list {
+    padding-left: 25px;
+}
+
+#list_1 {
+    float: left;
+    width: 275px;
+}
+
+#list_2 {
+    margin-left: 300px;
+    width: 275px;
+}
+
+#directions {
+    position: relative;
+    padding: 25px;
+    width: 100%;
+}
+
+#instructions-button {
+    position: absolute;
+    left: 442px;
+    margin-top: 108px;
+}
+
+.new_recipe-info {
+    position: absolute;
+    left: 175px;
+}
+
+.container {
+    height: 30px;
+}
+
+.label {
+    position: absolute;
+    left: 15px;
+}
+
+#cooking_container {
+    height: 140px;
+}
+
+#ingredients-button {
+    position: absolute;
+    left: 435px;
+}
+
+.ing_list {
+    margin-top: 10px;
+}
+
+.dir-li {
+    padding-top: 10px;
+}
+
+#notes-button {
+    position: absolute;
+    left: 472px;
+    margin-top: 62px;
+}
+
+#note_entry {
+    width: 250px;
+    height: 60px;
+    width: 380px;
+}
+
+#notes {
+    width: 100%;
+    margin: 25px;
+}
+
+#title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#category {
+    margin: 0px;
+    font-size: 14px;
+}
+
+#timestamp {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #D0D0D0;
+}
+
+#info-div {
+    height: 220px;
+    padding-left: 300px;
+}
+
+#outer-div {
+    height: 220px;
+}
+
+#image-div {
+    float: left;
+    display: flex;
+    margin-left: 20px;
+    width: 250px;
+    height: 220px;
+    text-align: center;
+    justify-content: center;
+}
+
+.checked {
+    color: orange;
+}
+
+hr {
+    clear: both;
+}
+
+#rating {
+    float: left;
+    padding-right: 10px;
+}
+
+/* Style the search box inside the navigation bar */
+#search_bar {
+    position: absolute;
+    font-size: 17px;
+    margin-top: 4px;
+    border: solid;
+    right: 12px;
+    width: 300px;
+    background-color: white;
+    border-width: 1px;
+    border-color: LightGray;
+    border-radius: 15px;
+    display: flex;
+}
+
+#nav_bar {
+    width: 100vw;
+}
+
+.search-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    background-color: white;
+}
+
+#search-button{
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+#matched_recipes-view{
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.rec {
+    padding-top: 10px;
+}
+
+.matched_recipe-list {
+    padding-top: 15px;
+    font-family: 'Courier New';
+}
+
+#ing_header{
+    font-style: italic;
+}
