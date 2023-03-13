@@ -12,9 +12,12 @@ Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
 - sort(): sorts a list
   - optional arguements to reverse sort or provide a key (function) to specifiy sort criteria
 - sum(array): sums array elements
-- 
+
 - sets:
   - intersection() or '&': returns element in common between two sets
   - symmetric_difference() or '^': set of elements in only one of the two sets
   - "s1 - s2": set of elements in s1 but not s2
   - union() or |: combines two sets
+
+- dictionary.items():
+  - returns an object containing key-value pairs as tuples in a list
