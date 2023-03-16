@@ -41,3 +41,41 @@ Consumption-Based Model
   - No need to purchase and manage costly infrastructure that users might not use to its fullest potential
   - The ability to pay for more resources when they're needed
   - The ability to stop paying for resources that are no longer needed
+
+Benefits of High Availability and Scalability
+- High availability: minimal disruptions to services
+  - For Azure, availability (up time) is part of the serivce level agreements (SLAs)
+- Scalability: ability to adjust resources to meet demand
+  - Vertical: increasing resource capability
+    - If you need more processing power, can add more CPUs or RAM
+  - Horizontal: increasing the number of resources
+    - Add additional virutal machines if demand increases
+
+Benefits of Reliability and Predictability
+- Reliability: system can recover from failures and continue to function
+  - Cloud's decentralized nature allows application to switch to a different region if one region goes down (often automatically)
+- Predicatability:
+  - Performance: predicts resources needed to deliver solution to cusotmers
+    - Autoscaling: can deploy additional resources to meet the demand
+    - Load Balancing: helps redirect overload to less stressed areas
+    - High Availability
+  - Cost: forecasting cost of cloud spend
+    - Using cloud analytics, you can optimize resource allocation and predict costs
+    - Total Cost of Ownership (TCO) or Pricing Calculator help estimate cloud spend
+
+Bennefits of Security and Governance
+- Governance:
+  - Set templates ensure resources meet corporate standards and goverment regulatory requirements
+  - Can automatically update resources when standards change
+  - Cloud-based auditing flags resources out of compliance and provides mitigation strategies
+- Security: cloud offers options to entirely control security (IaaS) or have it automatically managed (SaaS)
+  - Cloud is well suited to handle distributed denial of service (DDoS) attacks
+
+Benefits of Manageability
+- Management of the cloud: managing your cloud resources
+  - Automatically scale resources
+  - Deply from preconfigured template, removing need for manual configuration
+  - Monitor health of resources and automatically replace failed ones
+  - Automatic alerts to provide performance in real time
+- Management in the cloud: how to manage cloud environemnt
+  - Through a web portal, cmd line, APIs, PowerShell
