@@ -17,17 +17,17 @@
                 <ul class="navbar-nav mr-auto=" id="nav_bar">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
+                            <a class="nav-link" id="usrname" href="#"><strong id="name">{{ user.username }}</strong></a>
                         </li>
                     {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" id="allRecipes-link" href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Meals-link" href="#">Meals</a>
+                        <a class="nav-link" id="Favoirtes-link" href="#">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="Cuisines-link" href="#">Cuisines</a>
+                        <a class="nav-link" id="Cuisines-link" href="#">Categories</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
@@ -43,7 +43,7 @@
                     {% endif %}
                     <li id="search_bar">
                         <input style="width: 260px; border: none; background-color: transparent; border-radius: 15px;
-                        padding-left: 10px;" id="search_box" type="text" placeholder=" Search recipes by ingredient(s)...">
+                        padding-left: 10px;" id="search_box" type="text" placeholder=" Search recipes...">
                         <button class="search-button" id="search-button">
                             <img src="https://www.kindacode.com/wp-content/uploads/2020/12/search.png">
                         </button>

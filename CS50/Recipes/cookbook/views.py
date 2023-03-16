@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Recipe
+from .models import User, Recipe, Comment
 
 
 def login_view(request):
@@ -137,8 +137,18 @@ def all_recipes(request):
 
 def get_recipe(request, name):
 
+    # get requested recipe and set favorite flag
     recipe = Recipe.objects.get(title=name)
-    return JsonResponse(recipe.serialize(), safe=False)
+    favorite_flag = "None"
+
+    # if the recipe is in the user's list of favorites, set favorite flag to True
+    if request.user.is_authenticated:
+        if recipe in request.user.favorites.all():
+            favorite_flag = "True"
+        else:
+            favorite_flag = "False"
+
+    return JsonResponse({"recipe": recipe.serialize(), "favorite_flag": favorite_flag})
 
 
 @csrf_exempt
@@ -160,16 +170,18 @@ def update_rating(request, name):
 
 
 @csrf_exempt
+@login_required
 def search_recipes(request):
 
     # get ingredients list and split into individual ingredients
     if request.method == "POST":
         data = json.loads(request.body)
-        ingredients = data.get("ingredients")
-        searched_ingredients = ingredients.split(", ")
+        search = data.get("search")
 
         recipes = Recipe.objects.all()
-        matched_recipes = []
+        matched_recipes = set()
+
+        search_list = search.split(", ")
 
         # loop over all recipes
         for recipe in recipes:
@@ -181,7 +193,98 @@ def search_recipes(request):
             recipe_ingredients_list = recipe_ingredients_list.split(",")
 
             # if the recipe has the ingredients being searched, add it to the list of recipes to return
-            if set(searched_ingredients).issubset(set(recipe_ingredients_list)):
-                matched_recipes.append(recipe.title)
+            if set(search_list).issubset(set(recipe_ingredients_list)):
+                matched_recipes.add(recipe.title)
 
-        return JsonResponse({"matched_recipes": matched_recipes})
+            # check if search matches a recipe title, if so add it to the matched recipes list
+            if len(search_list) == 1:
+                if search_list[0] in recipe.title:
+                    matched_recipes.add(recipe.title)
+
+        return JsonResponse({"matched_recipes": list(matched_recipes)})
+
+    return JsonResponse({"message": "Post Error."}, status=404)
+
+
+@csrf_exempt
+@login_required
+def my_recipes(request):
+
+    # get signed-in user recipes posted by that user and order by post time
+    user = request.user
+    user_recipes = Recipe.objects.filter(user=user)
+    user_recipes = user_recipes.order_by("-timestamp").all()
+
+    # .serialize() creates a text string for json object
+    return JsonResponse({"user_recipes": [recipe.serialize() for recipe in user_recipes]})
+
+
+def cuisines(request):
+
+    recipes = Recipe.objects.all()
+    cuisines_list = set()
+
+    for recipe in recipes:
+        cuisines_list.add(recipe.category)
+
+    return JsonResponse({"list": list(cuisines_list)})
+
+
+def cuisine_recipes(request, cuisine):
+
+    recipes = Recipe.objects.filter(category=cuisine)
+    recipes = recipes.order_by("-timestamp").all()
+
+    # .serialize() creates a text string for json object
+    return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in recipes]})
+
+
+@login_required
+def favorites(request):
+
+    # get recipes favorited by signed in user
+    recipes = request.user.favorites.all()
+
+    # .serialize() creates a text string for json object
+    return JsonResponse({"list": [recipe.serialize() for recipe in recipes]})
+
+
+@login_required
+@csrf_exempt
+def update_favorites(request, title):
+
+    # get signed-in user, recipe to update, and flag from PUT request
+    user = request.user
+    recipe = Recipe.objects.get(title=title)
+
+    # update user's favorites according to flag logic
+    if recipe in user.favorites.all():
+        user.favorites.remove(recipe)
+        flag = "False"
+    else:
+        user.favorites.add(recipe)
+        flag = "True"
+    user.save()
+
+    return JsonResponse({"flag": flag})
+
+
+@login_required
+@csrf_exempt
+def add_comment(request, title):
+
+    if request.method == "POST":
+
+        # get recipe, user, and comment info
+        user = request.user
+        recipe = Recipe.objects.get(title=title)
+        data = json.loads(request.body)
+        text = data.get("comment")
+
+        # create new comment object
+        comment = Comment(text=text, user=user, recipe=recipe)
+        comment.save()
+
+        return JsonResponse({"comment": comment.serialize()})
+
+    return JsonResponse({"message": "Post Error."}, status=404)

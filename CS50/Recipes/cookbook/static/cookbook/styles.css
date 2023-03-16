@@ -1,4 +1,4 @@
-h2 {
+h3 {
     padding: 15px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -126,39 +126,42 @@ h2 {
     width: 380px;
 }
 
-#notes {
+.notes {
     width: 100%;
     margin: 25px;
 }
 
-#title {
+.title {
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 15px;
 }
 
-#category {
+.category {
     margin: 0px;
     font-size: 14px;
 }
 
-#timestamp {
+.timestamp {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 14px;
     color: #D0D0D0;
 }
 
-#info-div {
+.info-div {
     height: 220px;
-    padding-left: 300px;
+    padding-left: 30px;
 }
 
-#outer-div {
+.outer-div {
+    display: flex;
     height: 220px;
+    width: 60%;
+    float: left;
 }
 
-#image-div {
+.image-div {
     float: left;
     display: flex;
     margin-left: 20px;
@@ -207,27 +210,86 @@ hr {
     background-color: white;
 }
 
-#search-button{
+#search-button {
     background: transparent;
     border: none;
     outline: none;
 }
 
-#matched_recipes-view{
-    padding: 20px;
-    font-size: 20px;
+.matched_recipe-list {
+    padding-top: 10px;
+    font-family: 'Courier New';
+    font-size: 18px;
+}
+
+.search_header {
+    font-style: italic;
+}
+
+.list_div {
+    display: flex;
+    float: left;
+    width: 45%;
+}
+
+h4 {
+    margin: 25px;
+}
+
+.nav-link {
+    margin-right: 18px;
+    margin-left: 18px;
+}
+
+.comments-button {
+    border-radius: 5px;
+    background-color: Gainsboro;
+    color: white;
+    border: solid DarkGray;
+    border-width: 0.5px;
+    font-size: 13px;
+    width: 120px;
+    height: 30px;
+}
+
+.comments-button:hover {
+    outline-style: solid;
+    box-shadow: 0 0 0 3px RoyalBlue;
+}
+
+.comments-div {
+    overflow-y:auto;
+    display: flex;
+    width: 38%;
+    padding-left: 10px;
+    background-color: WhiteSmoke;
+    border-radius: 10px;
+    height: 220px;
+    padding: 10px;
+}
+
+.comments-inner {
+    font-size: 11px;
+    padding-top: 15px;
+}
+
+.comment-poster {
     font-weight: bold;
 }
 
-.rec {
-    padding-top: 10px;
-}
-
-.matched_recipe-list {
+.comment-p {
     padding-top: 15px;
-    font-family: 'Courier New';
 }
 
-#ing_header{
-    font-style: italic;
+.add_comment-button {
+    padding-top: 15px;
+}
+
+.add_comment_box {
+    height: 25px;
+    width: 95%;
+    border-radius: 5px;
+    color: Gray;
+    margin: auto;
+    font-size: 12px;
 }

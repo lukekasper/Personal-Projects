@@ -6,9 +6,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import re
 
 
-# Create your models here.
 class User(AbstractUser):
-    pass
+    favorites = models.ManyToManyField('Recipe', symmetrical=False, blank=True, related_name="favoriters")
+
+    def serialize(self):
+        return {
+            "favorites": [recipe.title for recipe in self.favorites.all()],
+        }
 
 
 class Recipe(models.Model):
@@ -56,6 +60,13 @@ class Recipe(models.Model):
         else:
             return 0
 
+    # get all the comments for a specified recipe
+    def stringify_comments(self):
+        if self.recipe_comments.all():
+            return [comment.serialize() for comment in self.recipe_comments.order_by("-timestamp").all()]
+        else:
+            return None
+
     def serialize(self):
         return {
             "id": self.id,
@@ -68,12 +79,21 @@ class Recipe(models.Model):
             "cooktime": self.cooktime,
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
             "note": self.note,
-            "rating": self.avg_rating()
+            "rating": self.avg_rating(),
+            "comments": self.stringify_comments()
         }
 
 
-class RecipesForm(ModelForm):
+class Comment(models.Model):
+    text = models.CharField(max_length=250, null=True)
+    user = models.ForeignKey("User", on_delete=models.CASCADE, null=True, related_name="user_comments")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, null=True, related_name="recipe_comments")
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        model = Recipe
-        fields = ["title", "ingredients", "instructions", "category", "image", "cooktime", "note"]
+    def serialize(self):
+        return {
+            "id": self.id,
+            "comment": self.text,
+            "poster": self.user.username,
+            "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p")
+        }
