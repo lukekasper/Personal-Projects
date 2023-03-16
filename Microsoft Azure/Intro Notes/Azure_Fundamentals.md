@@ -43,3 +43,36 @@ Managment Infastructure
     - 10,000 management groups can be supported in a single directory
     - A management group tree can support up to six levels of depth. This limit doesn't include the root level or the subscription level
     - Each management group and subscription can support only one parent
+
+Virtual Machines
+- Provide IaaS in the form of a virtualized server
+- Ideal choice when:
+  - Total control over operating system (OS) is needed
+  - Need to run custom software
+  - Use custom hosting configurations
+- As an IaaS, must configure, update, and maintain software on VM
+- An image is a template used to create a VM and may already include an OS and other software, like development tools or web hosting environments
+- Scale sets:
+  - create and manage a group of identical, load-balanced VMs
+  - allows you to centrally manage, configure, and update a large number of VMs in minutes
+  - number of VM instances can automatically increase or decrease in response to demand, or you can set it to scale based on a defined schedule
+  - automatically deploys a load balancer
+  - good for large scale services such as: compute, big data, and container workloads
+- Availability sets:
+  - ensure that VMs stagger updates and have varied power and network connectivity (making system more robust to failures)
+  - Update domain: groups VMs that can be rebooted at the same time, allows user to push an update and ensures only one update domain group will be             offline at a single time
+  - Fault domain: groups VMs by common power source and network switch (protecting against failures)
+- When to use VMs:
+  - During testing and development
+    - can quickly create and test different os and app configs
+  - When running applications in the cloud
+    - can start up or shut down VMs automatically when needed to optimize efficiency and cost
+  - When extending your datacenter to the cloud
+  - During disaster recovery
+    - can create temporary VMs to run critical apps until datacenter comes back online
+  - Moving from physcial server to cloud
+    - VMs can directly replicate phyical server configuration and os
+- Can pick resources associated with the VM like:
+  - size (purpose, number of processor cores, amount of RAM)
+  - storage disks (hard drives, solid state, ect)
+  - networking (virtual network, public IP address, port configuration)
