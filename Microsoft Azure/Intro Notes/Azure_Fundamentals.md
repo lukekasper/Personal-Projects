@@ -239,3 +239,22 @@ Azure ExpressRoute
   - private connections mean data does not travel over internet
   - Even if you have an ExpressRoute connection, DNS queries, certificate revocation list checking, and Azure Content Delivery Network requests are still
     sent over the public internet
+
+Azure DNS
+- Hosting service for DNS domains; provides name resolution using Azure infastructure
+- Can manage your DNS records using the same credentials, APIs, tools, and billing as your other Azure services
+- Beneifts:
+  - Reliability and performance: uses anycast networking, so each DNS query is answered by the closest available DNS server to provide fast performance and
+    high availability
+  - Security: based on Azure Resource Manager
+    - azure role-based access control (Azure RBAC) to control who has access to specific actions
+    - activity logs to monitor how a user in your organization modified a resource or to find an error when troubleshooting
+    - resource locking to lock a subscription, resource group, or resource
+  - Ease of use: can manage records and provide DNS for external resources as well
+    - can manage domains and records with Azure portal, powershell and cross-platform CLI
+    - applications that require automated DNS management can integrate with the service by using the REST API and SDKs
+  - Customizable virtual networks with private domains: allows use of your own custom domain names in your private virtual networks
+  - Alias records: can use to refer to a resource, such as an Azure public IP address, an Azure Traffic Manager profile, or an Azure Content Delivery
+    Network (CDN) endpoint
+    - if a resource IP changes, alias record automaticall updates itself during DNS resolution
+    - alias record set points to the service instance, and the service instance is associated with an IP address
