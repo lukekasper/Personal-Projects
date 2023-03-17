@@ -172,3 +172,16 @@ Azure Virtual Networking
     - Traffic is private and is on Microsoft backbone network (not public internet)
     - Resources can communicate across virtual networks (even in seperate regions)
     - User-defined routes (UDR) allow control of routing tables between subnets within a network or between networks
+
+Exercise "Configuring Network Access"
+- Every VM on Azure is aassociated with at least one network security group
+- Default rule is to allow inbound connections over port 22 (SSH); only allows administrators to access the system remotely
+- Must allow inbound connections on port 80 to allow access over HTTP (internet)
+- Can create a standalone network security group that include the inbound and outbound network access rules you need
+- If you have multiple VMs that serve the same purpose, you can assign that NSG to each VM at the time you create it
+
+Virtual Private Networks (VPN)
+- Uses an encrypted tunnel within another network
+- Used to connect two or more private networks over an untrusted one (public internet)
+- Traffic is encrypted on untrusted network, allowing networks to share sensitive info securely
+- 
