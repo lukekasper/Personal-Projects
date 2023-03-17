@@ -76,3 +76,38 @@ Virtual Machines
   - size (purpose, number of processor cores, amount of RAM)
   - storage disks (hard drives, solid state, ect)
   - networking (virtual network, public IP address, port configuration)
+
+Virtual Desktops
+- A VM that serves as a desktop and application virtualization service
+- Runs across any OS or device
+- Enhanced security:
+  - Azure Active Directory (AD) provides centralized security management
+  - Supports multifactor authentication
+  - Can secure access to data with granular role-based access controls (RBACs)
+  - Reduced risk of data being left on a personal device due to seperation of hardware and data/apps
+  - Users are isolated in both single and multi-session environments
+- Multi-session Windows deployment:
+  - Enterprise multi-session is the only Windwos client-based OS that enables multiple concurrent users on a single VM
+  - More consistent with broader application support compared with Windows server-based OS
+
+Azure Containers
+- Used to run multiple instances of an app (using different OSs) on a single host machine
+- They are a virtualization environment, which you can run multiple of on a single physical or virtual host
+- Don't manage the OS for a container
+- VMs virtualize the hardware, while Containers virtualize the OS
+- Containers are more light wait and agile than VMs
+  - Just need to wait for the app to launch rather than the OS and the app (VMs)
+- Docker is one of the most common containers, which is supported by Azure
+- If complete control is needed, VM is preferred; if not, portability, performance characterisitics, and management capabilities of containers are better
+- Azure Container Instances:
+  - Fastest and simplest way to deply a container; don't have to manage VMs or adopt additional services
+  - They are a PaaS, you upload your containers and the service runs them for you
+- Microservice Architecture:
+  - break solution itno smaller, independent pieces
+  - Ex) container for front end, back end, and storage
+  - Can scale portions of the application seperately depending on the need
+
+Azure Functions
+- Event-driven serverless compute option, alleveiating the need to keep services running when there are no events (like VMs or containers)
+- Serverless computing: management of servers and infastructure is handled by cloud service
+- No infastructure management, scalability, only pay for what you use (event driven)
