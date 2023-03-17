@@ -214,4 +214,23 @@ Virtual Private Networks (VPN)
   - Zone-redundant gateways:
     - deploying in availability zones seperates gateways within a region, protecting against zone-level failures
     - require different gateway stock keeping unites (SKUs) and use standard publeic IP address (vice basic public IP addresses)
-    - 
+
+Azure ExpressRoute
+- ExpressRoute Circuit provides connection between on premise networks and cloud (private connection)
+- Can be from an any-to-any (IP VPN) network, point-to-point Ethernet network, or virtual cross-connection through a connectivity provider at a colocation
+  facility
+- More reliability, faster speeds, consistent latencies, and higher security than over the Internet
+- Features and Benefits:
+  - Connectivity to cloud services in all regions such as:
+    - Microsoft Office 365
+    - Microsoft Dynamics 365
+    - Azure compute services, such as Azure Virtual Machines
+    - Azure cloud services, such as Azure Cosmos DB and Azure Storage
+  -  Global connectivity: can enable ExpressRoute Global Reach to exchange data across your on-premises sites by connecting your ExpressRoute circuits
+  -  Dynamic routing: BGP enables dynamic routing between your on-premises network and services running on the cloud
+  -  Redundancy: each connectivity provider uses redundant devices; can configure multiple circuits to complement this feature
+- ExpressRoute connectivity models:
+  - Co-location at a cloud exchange: datacenter, office, or other facility is physically co-located at a cloud exchange, such as an ISP
+    - if so, can request a virtual cross-connect to the cloud
+  - Point-to-point Ethernet connection
+  - 
