@@ -135,4 +135,25 @@ Application Hosting Options
     - execute custom back-end logic in C# or Node.js
 
 Azure Virtual Networking
-- 
+- Allow Azure resources (VMs, web apps, ect) to communicate with one another, users on the internet, and on-premise client computers
+- It is an extension of an on premise netweor with resources that link to other Azure resources
+- Supports public and private endpoints enable communication between external or internal resources with other internal resources
+  - Public endpoints have a public IP address and can be accessed from anywhere
+  - Private endpoints exist within a virtual network and have a private IP address from within the address space of that virtual network
+- Capabilities:
+  - Isolation and segmentation:
+    - Can create multiple isolated virtual networks
+    - IP range only exists within virtual network and isn't internet routable
+    - Can divide IP address space into subnets and allocate part of the defined address space to each subnet
+    - Can use name resolution service built into Azure or configure virtual network to use internal or extranl DNS server
+  - Internet communications:
+    - Can enable internet connection by assigning pulic IP address to an resource or put resource behind a public load balancer
+  - Communicate between Azure resources:
+    - Virtual networks can connect all Azure resources such as the App Service Environment for Power Apps, Azure Kubernetes Service, and Azure virtual
+      machine scale sets
+    - Service endpoints can connect to Azure SQL databases, storage accounts, ect; allows linkage of multiple resources to virtual networks to improve
+      security and provide optimal routing between resources
+  - Communicate with on-premises resources
+  - Route network traffic
+  - Filter network traffic
+  - Connect virtual networks
