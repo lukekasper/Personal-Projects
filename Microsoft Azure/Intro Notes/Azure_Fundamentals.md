@@ -1,3 +1,5 @@
+##Core Components
+
 Interacting with Azure:
 - Can interact with Azure using PowerShell, BASH, Azure CLI Interactive mode, or portal
   - Interactive mode resembles an integrated development environment (IDE)
@@ -43,6 +45,8 @@ Managment Infastructure
     - 10,000 management groups can be supported in a single directory
     - A management group tree can support up to six levels of depth. This limit doesn't include the root level or the subscription level
     - Each management group and subscription can support only one parent
+
+##Azure compute and networking services
 
 Virtual Machines
 - Provide IaaS in the form of a virtualized server
