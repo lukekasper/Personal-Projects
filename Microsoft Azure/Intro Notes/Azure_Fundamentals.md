@@ -111,3 +111,28 @@ Azure Functions
 - Event-driven serverless compute option, alleveiating the need to keep services running when there are no events (like VMs or containers)
 - Serverless computing: management of servers and infastructure is handled by cloud service
 - No infastructure management, scalability, only pay for what you use (event driven)
+- Ideal when you only care about the code running on your service (not the infastructure or platform)
+- Common when you need to perform work in response to an event (REST request), timer, or message, and it can be completed quickly
+- Stateless functions reset each time its ran
+- Stateful functions track prior activity
+
+Application Hosting Options
+- VMs, containers, and Azure App Service
+- Azure App Service:
+  - Build and host web apps, background jobs, mobile back-ends, and RESTful APIs without manangeing infrastructure
+  - Automated deployments GitHub, Azure DevOps, or any Git repo
+  - Supports Windows and Linux
+  - Can host: web apps, API apps, WebJobs, Mobile apps
+  - App Service handles most infrastructure decisions:
+    - Deployment and mangement
+    - Secured endpoints
+    - Scaled sites to handle high traffic loads
+    - Load balancing and traffic manager provide high availability
+  - Mobile Apps:
+    - sotre mobile app data in cloud-based SQL database
+    - authenticate cusomers against common social providers
+    - send push notifications
+    - execute custom back-end logic in C# or Node.js
+
+Azure Virtual Networking
+- 
