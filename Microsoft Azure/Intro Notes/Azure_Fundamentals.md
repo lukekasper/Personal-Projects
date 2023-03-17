@@ -184,4 +184,34 @@ Virtual Private Networks (VPN)
 - Uses an encrypted tunnel within another network
 - Used to connect two or more private networks over an untrusted one (public internet)
 - Traffic is encrypted on untrusted network, allowing networks to share sensitive info securely
-- 
+- VPN gateways:
+  - deployed in a dedicated subnet of the virtual network:
+    - Connect on-premises datacenters to virtual networks through a site-to-site connection
+    - Connect individual devices to virtual networks through a point-to-site connection
+    - Connect virtual networks to other virtual networks through a network-to-network connection
+  - Only one gateway per virtual network, but can use one gateway to connect to multipe locations
+  - Specify BPN type as policy-based or route-based (how traffic is encrypted); both use a pre-shared key as method of authentication
+  - Policy-based: specify statically the IP address of packets that should be encypted through each tunnel
+  - Rout-based: IPSec tunnels are modeled as a network interface or virtual tunnel interface
+    - IP routing (either static routes or dynamic routing protocols) decides which one of these tunnel interfaces to use when sending each packet
+    - preferred for on-premise devices
+    - more resilient to topology changes such as the creation of new subnets
+    - used for:
+      - Connections between virtual networks
+      - Point-to-site connections
+      - Multisite connections
+      - Coexistence with an Azure ExpressRoute gateway
+- High Availability Scenarios:
+  - Ensure VPN is highly availabile and fault tolerant
+  - Active/standby:
+    - when maintenance or disruptions occur, standby VPN automatically assumes control within a few secs for maintenance or 90 sec for disruptions
+  - Active/active:
+    - seperate IPs and tunnels for each VPN instance
+    - can extend the high availability by deploying an additional VPN device on-premises
+  - ExpressRoute failover:
+    - provide a VPN gateway that uses internet as an alternative when ExpressRoute has physical disruptions
+    - ensures there is always a connection to the virtual networks
+  - Zone-redundant gateways:
+    - deploying in availability zones seperates gateways within a region, protecting against zone-level failures
+    - require different gateway stock keeping unites (SKUs) and use standard publeic IP address (vice basic public IP addresses)
+    - 
