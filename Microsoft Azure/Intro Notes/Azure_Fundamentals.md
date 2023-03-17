@@ -233,4 +233,9 @@ Azure ExpressRoute
   - Co-location at a cloud exchange: datacenter, office, or other facility is physically co-located at a cloud exchange, such as an ISP
     - if so, can request a virtual cross-connect to the cloud
   - Point-to-point Ethernet connection
-  - 
+  - Any-to-any networks: can integrate your wide area network (WAN) by providing connections to your offices and datacenters
+  - Directly from ExpressRoute sites: connect into the Microsoft's global network at a peering location; supports Active/Active connectivity at scale
+- Security considerations:
+  - private connections mean data does not travel over internet
+  - Even if you have an ExpressRoute connection, DNS queries, certificate revocation list checking, and Azure Content Delivery Network requests are still
+    sent over the public internet
