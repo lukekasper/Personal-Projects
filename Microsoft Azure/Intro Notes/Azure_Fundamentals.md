@@ -154,6 +154,21 @@ Azure Virtual Networking
     - Service endpoints can connect to Azure SQL databases, storage accounts, ect; allows linkage of multiple resources to virtual networks to improve
       security and provide optimal routing between resources
   - Communicate with on-premises resources
-  - Route network traffic
-  - Filter network traffic
+    - Can create a network that spans both on premise and cloud resources
+    - Point-to-site: from a computer outside your organization back into your corporate network; client computer initiates an encrypted VPN to connect to
+      virtual network
+    - Site-to-site: devices in Azure can appear as being on the local network; encrypted and works over the internet
+    - Azure ExpressRoute: private connectivity that doesn't travel over the internet; when you need greater bandwidth and even higher levels of security
+  - Route network traffic:
+    - Azure routes traffic, but you can override those settings
+    - Route tables define rules on how traffic should be directed
+    - Border Gateway Protocol (BGP) works with Azure VPN gateways, Azure Route Server, or Azure ExpressRoute to propagate on-premises BGP routes to Azure
+      virtual networks
+  - Filter network traffic:
+    - Network security groups: contain inbound/outbound securty rules; can allow/block traffic based on IP, port, and protocol
+    - Network virtual appliances: specialized VMs that can perform a network function like run a firewall or perform a wide area network (WAN) optimization
   - Connect virtual networks
+    - Link networks through network peering
+    - Traffic is private and is on Microsoft backbone network (not public internet)
+    - Resources can communicate across virtual networks (even in seperate regions)
+    - User-defined routes (UDR) allow control of routing tables between subnets within a network or between networks
