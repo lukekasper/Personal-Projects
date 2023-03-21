@@ -382,3 +382,31 @@ File Movement Options
   - have caches across the world
   - replace a failed server by installing on a new server in same DC
   - configure cloud tiering; replicate heavily accessed files locally and store remaining ones on cloud
+
+## Azure Identity, Access, and Security
+
+Directory Services
+- Acive Directory (AD): enables you to sign in, access Microsoft cloud and apps, and cloud apps you develop; can also help maintain on-premise AD
+  - For on premise, provides idnentity and access manageement
+- When connecting your AD to Azure AD, Microsoft can help protect against suspicious sign-in attempts
+- Who uses Azure AD?
+  - IT administrators: control acces to resources
+  - App developers: add SSO functionality or enable apps to work with user's existing credentials
+  - Users: manage identities and password reset
+  - Online service subscribers: anybody using Microsoft 365, ect
+- What does Azure AD do?
+  - Authentication: verify indentity, password reset, multifactor authentication, banned passwords, smart lockout
+  - Single Sign-On (SSO): one username/password to access multiple apps
+  - Application management: manage cloud/on premise apps; has features like application proxy, SaaS apps, My Apps portal, and SSO
+  - Device management: device registration; enables mangement through Microsoft Intune; device-based Conditional Acecss policies (allow access only to known     devices)
+- Azure AD Connect: synchronizes users between on premise and cloud
+- Azure AD Domain Services: provides managed domain services like domain join, group policy, lightweight directory access protocol (LDAP), and Kerberos/NTLM
+  authentication
+  - Allows use of directory services (DS) without need to deply, manage, and patch DCs in the cloud
+  - provides a smoother lift-and-shift of on-premises resources to Azure
+  - How it works:
+    - Define a unique namespace for domain name
+    - Replica set of DCs are deployed into selected region
+    - Azure manages DCs for you (including backups and encryption at rest using Azure Disk Encryption)
+  - Pefroms a one way sync from AD to AD DS
+  - 
