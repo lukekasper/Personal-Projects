@@ -303,3 +303,46 @@ Storatge Redundancy
   - Read Access-GRS (RA-GRS) and Read Access-GZRS (RA-GZRS):
     - Enables user to read data in secondary region even if failover has not occured
     - Data may not be up to date due to RPO
+
+Storage Services
+- Azure Data Services:
+  - Azure Blobs: scalable object store for text and binary data; includes support for big data analytics through Data Lake Storage Gen2
+  - Azure Files: managed file shares for cloud or on-premises deployments
+  - Azure Queues: messaging store for reliable messaging between application components
+  - Azure Disks: block-level storage volumes for Azure VM
+- Benefits:
+  - Durable and highly available: redundancy
+  - Secure: data is encrypted and access controlled
+  - Scalable
+  - Managed: Azure handles hardware maintenance, updates, and critical issues
+  - Accessible: accessible anywhere over HTTP/HTTPS; client libraries in many languages; access to data using any of Azure access methods (ie portal)
+- Blob Storage:
+  - unstructured; no restrictions on data type
+  - Ideal for:
+    - Serving images or documents directly to a browser
+    - Storing files for distributed access
+    - Streaming video and audio
+    - Storing data for backup and restore, disaster recovery, and archiving
+    - Storing data for analysis by an on-premises or Azure-hosted service
+  - Blob storage tiers:
+    - useful to organize data by frequency of access and planned retention period
+    - Hot access tier: data is accessed frequently (website images)
+    - Cool access tier: accessed infrequently and stored for at least 30 days (customer invoices)
+    - Archive access tier: rarely accessed and stored for at least 180 days; flexible latency requirements (long-term backups)
+    - considerations:
+      - Archive tier cannot be set at account level (only hot/cool)
+      - all can be set at blob level, during or after upload
+      - cool access tier can tolerate slightly lower availbliity, but still high durability, retrieval latency, and throughput characteristics
+      - archive storage is offline; lowest cost to store but highest cost to access
+- Azure Files:
+  - Accessible via Server Message Block (SMB) or Network File System (NFS) - macOS and Linux only
+  - SMB files can be cached on Azure File Sync for acess near where data is being used
+  - Benefits:
+    - Shared access: SMB and NFS industry standards ensures no need to worry about application compatibility
+    - Fully managed: No need to manage hardware or OS
+    - Scripting and tooling: PowerShell cmdlets and Azure CLI can be used to create, mount, and manage Azure file shares as part of the administration of
+      Azure applications. You can create and manage Azure file shares using Azure portal and Azure Storage Explorer
+    - Resiliency: No need to deal with local power outages or network issues
+    - Familiar programmability: can access data using system I/O APIs, Azure Storage Client Libraries, or Azure Storage REST API
+
+
