@@ -287,7 +287,19 @@ Storatge Redundancy
     - provides 11 nines durability (99.999999999%) of objects over a given year
     - lowest cost option
     - protects against server rack/drive failures, but not against datacenter-wide disasters
-  - Zone-Redundant Storage (ZRS): replicated across 3 availability zones
+  - Zone-Redundant Storage (ZRS): replicated synchronously across 3 availability zones
     - 12 nines durability
-    - data is accessible for read and write if a zone becomes unavailable
-    - 
+    - data is accessible for read and write if a zone becomes unavailable (Azure automatically provides network updates like DNS repointing)
+    - recommended for restricting data within a country/region for governance requirements
+- Redundancy in a secondary region:
+  - provides a secondary backup in the event of catastrophic event in primary region, backup is asychronous (may result in some data loss)
+    - Recovery Point Objective (RPO) is the point in time to which data can be recovered (typically less than 15 min)
+  - based on Azure Pairs (cannot be changed)
+  - data in secondary region not availabile for read/write access unless failover to secondary region occurs
+  - Geo-redundant storage (GRS): synchronously 3 times within a data center and asynchronously 3 times within a secondary data center (like LRS)
+    - 16 nines durability
+  - Geo-zone-redundant storage (GZRS): 3 copies in primary region (ZRS) and 3 times in secondary region dataceneter (LRS)
+    - 16 nines durability
+  - Read Access-GRS (RA-GRS) and Read Access-GZRS (RA-GZRS):
+    - Enables user to read data in secondary region even if failover has not occured
+    - Data may not be up to date due to RPO
