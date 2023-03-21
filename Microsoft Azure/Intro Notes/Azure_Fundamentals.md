@@ -415,4 +415,13 @@ Authentication Methods
   - apps must trust the initial authenticator (sign-on is only as secure as this authenticator)
   - using SSO makes it easier for users to manage IDs and IT to manage users
 - Multifactor Authentication (MFA): prompt user for extra form of ID
-  - 
+  - something the user knows, something the user has (text code), something the user is (face-id)
+  - can be enabled on cloud with Azure MFA
+- Passwordless Authentication:
+  - 3 ways azure integrates this with Azure AD:
+    - Windows Hello for Business: Biometric and PIN credential for user's PC
+      - Public Key Infastructure (PKI) integration and support for SSO
+    - Microsoft Authenticator App: turns phone into a storng, passwordless credential
+      - get a notification, match number on screen to one on their phone, use biometric or PIN to confirm
+    - FIDO2 Security Keys: Fast IDentity Online uses external security key or platform key built into a device (hardware)
+      - typically a USB device, but could be Bluetooth or NFC 
