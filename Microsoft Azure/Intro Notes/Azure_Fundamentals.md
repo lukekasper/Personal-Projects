@@ -262,3 +262,32 @@ Azure DNS
     Network (CDN) endpoint
     - if a resource IP changes, alias record automaticall updates itself during DNS resolution
     - alias record set points to the service instance, and the service instance is associated with an IP address
+
+## Storage Services
+
+Storage Accounts
+- Provides a unique namespace for data that's accessible from anywhere over HTTP or HTTPS
+- Redundancy options:
+  - Locally redundant storage (LRS)
+  - Geo-redundant storage (GRS)
+  - Read-access geo-redundant storage (RA-GRS)
+  - Zone-redundant storage (ZRS)
+  - Geo-zone-redundant storage (GZRS)
+  - Read-access geo-zone-redundant storage (RA-GZRS)
+- Storage account endpoints:
+  - combination of account name and the Azure Storage service endpoint forms the endpoints
+  - names must be between 3 and 24 characters, and contain numbers and lower case letters only
+  - must be unique
+
+Storatge Redundancy
+- Tradeoff between lower cost and higher availability
+- Reundancy in Primary Region:
+  - data is always replicated 3 times in primary region
+  - Locally Redundant Storage (LRS): replicated 3 times within a data center in primary region
+    - provides 11 nines durability (99.999999999%) of objects over a given year
+    - lowest cost option
+    - protects against server rack/drive failures, but not against datacenter-wide disasters
+  - Zone-Redundant Storage (ZRS): replicated across 3 availability zones
+    - 12 nines durability
+    - data is accessible for read and write if a zone becomes unavailable
+    - 
