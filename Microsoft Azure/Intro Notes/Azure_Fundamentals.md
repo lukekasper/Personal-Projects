@@ -352,5 +352,19 @@ Storage Services
 - Disk Storage: block-level storage volumes managed by Azure for use with Azure VMs; virutalized version of a physical disk
 
 Data Migration Options
-- 
-
+- Azure Migrate: 
+  - Unified migration platform: single portal to start, run, and track your migration to Azure
+  - Range of tools: A range of tools for assessment and migration
+    - Independent Software Vendor (ISV)
+    - Azure Migrate: Discovery and assessment - Discover and assess on-premises servers running on VMware, Hyper-V, and physical servers in preparation for
+      migration
+    - Azure Migrate: Server Migration - Migrate VMware VMs, Hyper-V VMs, physical servers, other virtualized servers, and public cloud VMs
+    - Data Migration Assistant - stand-alone tool to assess SQL Servers
+    - Azure Database Migration Service - Migrate on-premises databases to Azure VMs running SQL Server, Azure SQL Database, or SQL Managed Instances
+    - Web app migration assistant - tandalone tool to assess on-premises websites for migration to Azure App Service; use to to migrate .NET and PHP web apps
+    - Azure Data Box: move large amounts of offline data
+      - phsycial box shipped to datacenter to upload up to 80 terabytes of data
+      - use cases:large data with limitied or no network connectivity
+        - import: onetime migration, moving media library, migrating VM farm/SQL server, iniitla bulk transfer, periodic update
+        - export: disaster recovery, security requirements (government compliance), migrate to another DC or cloud provider 
+  - Assessment and migration: In Azure Migrate hub, assess and migrate your on-premises infrastructure to Azure
