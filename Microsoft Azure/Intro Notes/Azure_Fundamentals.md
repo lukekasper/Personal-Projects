@@ -366,5 +366,19 @@ Data Migration Options
       - phsycial box shipped to datacenter to upload up to 80 terabytes of data
       - use cases:large data with limitied or no network connectivity
         - import: onetime migration, moving media library, migrating VM farm/SQL server, iniitla bulk transfer, periodic update
-        - export: disaster recovery, security requirements (government compliance), migrate to another DC or cloud provider 
+        - export: disaster recovery, security requirements (government compliance), migrate to another DataCenter (DC) or cloud provider 
   - Assessment and migration: In Azure Migrate hub, assess and migrate your on-premises infrastructure to Azure
+
+File Movement Options
+- tools to facilitate moving individual files
+- AzCopy: command-line utility to copy blobs/files
+  - can upload, download, copy, or synchronize; or move files between clouds
+  - synchronization is a one-way process
+- Storage Explorer: app that provides GUI to manage files
+  - uses AzCopy on backend (no synchronization)
+- File Sync: centralize file shares in Azure files and keep flexibility, perfomrance, and compatibility of Windows file server
+  - automatically stay bi-directionally synced
+  - use protocols to access data locally (SMB, NFS, FTPS)
+  - have caches across the world
+  - replace a failed server by installing on a new server in same DC
+  - configure cloud tiering; replicate heavily accessed files locally and store remaining ones on cloud
