@@ -344,5 +344,12 @@ Storage Services
       Azure applications. You can create and manage Azure file shares using Azure portal and Azure Storage Explorer
     - Resiliency: No need to deal with local power outages or network issues
     - Familiar programmability: can access data using system I/O APIs, Azure Storage Client Libraries, or Azure Storage REST API
+- Queue Storage:
+  - stores large numbers of messages up to 64 KB in size (each)
+  - commonly used to create a backlog of work to process asynchronously
+  - can be combined with Azure Functions to take an action when a message is recieved
+    - ie) submit button on website triggers a message to Queue storage; Azure Function then runs an action once message was received
+- Disk Storage: block-level storage volumes managed by Azure for use with Azure VMs; virutalized version of a physical disk
+
 
 
