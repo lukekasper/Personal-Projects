@@ -437,3 +437,26 @@ External Identities
     - not represented in your directory, but visible in Teams
   - Azure AD business to customer (B2C): publish SaaS or custom-developed apps to customers, using B2C fro identity and access management
   - Can use a combination of above capabilities
+
+Conditional Access
+- Tailor access based on identitiy signals (who, where, what device?)
+- Empowers user's to be productive wherever while protecting company assets
+- More granular control:
+  - user may only need MFA if in a specific location or on an unfamiliar device
+- Process follows collection of ID signals, decision making process, enforcement of access control
+
+Role-Based Access Control (RBAC)
+- Only grant access up to the level needed to complete work
+- Azure provides built-in roles which describe common access rules for cloud resources
+  - can also define your own rules
+  - roles have associated access permissions
+  - can add new users to role, or point role to a new resource
+- RBAC is applied to a scope (management group, subscription, resource group, or resource)
+- Some roles may be: admins, users managing resources, observers (read access only), or automated processes
+- RBAC is enforced when a resource is passed through an Azure Resource Manager
+  - management service that provides a way to organize and secure cloud resources
+  - accessed from cloud portal, sell, Powershell, or CLI
+  - does not enforce permissions at app or data level (app security must be handled by the application)
+  - uses an allow model:
+    - if one assignment grants you read acess and another write acess, you have both
+  - 
