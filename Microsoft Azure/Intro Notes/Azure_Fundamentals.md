@@ -424,4 +424,16 @@ Authentication Methods
     - Microsoft Authenticator App: turns phone into a storng, passwordless credential
       - get a notification, match number on screen to one on their phone, use biometric or PIN to confirm
     - FIDO2 Security Keys: Fast IDentity Online uses external security key or platform key built into a device (hardware)
-      - typically a USB device, but could be Bluetooth or NFC 
+      - typically a USB device, but could be Bluetooth or NFC
+
+External Identities
+- Azure AD External Identities refers to how users can interact with people, devices, and services outside of their organization
+- External users can "bring their own identities" like corproate digital ID or social media, they can use their own credentials to sign in
+- External User's ID provider manages their ID, and you manage access to apps with Azure AD or Azure AD B2C
+  - Business to business (B2B) collaboration: let external users use their preferred ID to sign-in
+    - typically represented in directory as guest users
+  - B2B direct connect: establish a two-way mutual trust with another Azure AD organization
+    - currently supports Teams shared channels
+    - not represented in your directory, but visible in Teams
+  - Azure AD business to customer (B2C): publish SaaS or custom-developed apps to customers, using B2C fro identity and access management
+  - Can use a combination of above capabilities
