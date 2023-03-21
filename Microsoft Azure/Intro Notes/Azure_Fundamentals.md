@@ -409,4 +409,10 @@ Directory Services
     - Replica set of DCs are deployed into selected region
     - Azure manages DCs for you (including backups and encryption at rest using Azure Disk Encryption)
   - Pefroms a one way sync from AD to AD DS
+
+Authentication Methods
+- Single sign-on (SSO): one credential accesses multiple resources from different providers
+  - apps must trust the initial authenticator (sign-on is only as secure as this authenticator)
+  - using SSO makes it easier for users to manage IDs and IT to manage users
+- Multifactor Authentication (MFA): prompt user for extra form of ID
   - 
