@@ -351,5 +351,6 @@ Storage Services
     - ie) submit button on website triggers a message to Queue storage; Azure Function then runs an action once message was received
 - Disk Storage: block-level storage volumes managed by Azure for use with Azure VMs; virutalized version of a physical disk
 
-
+Data Migration Options
+- 
 
