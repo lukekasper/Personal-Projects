@@ -545,3 +545,5 @@ Defender for Cloud
       - can export alert
       - includes fusion kill-chain analysis
         - helps analyze the nature of attack (where it started and what kind of impact it had)
+    - Advanced threat protection:
+      - securing management ports of VMs with just-in-time access, adaptive application controls (which apps should and shouldn't run on machines)
