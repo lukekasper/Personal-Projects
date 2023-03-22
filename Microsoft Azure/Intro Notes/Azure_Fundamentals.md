@@ -475,11 +475,28 @@ Defense-In-Depth
 - Strategy uses a series of mechanisms to slow advance of attack
 - Layers:
   - Physical security: protect computing hardware
-  - ID and access layer: controls access to infastructure and change control
-    - 
+  - ID and access layer:
+    - control access to infrastrucutre and change control
+    - use SSO and MFA
+    - audit events and changes
   - Perimeter layer: DDoS protection
-  - Network layer: limits communication between resources through segmentaiton and access control
-  - Compute layer: secures access to VMs
-  - Application layer: secures applications and reduces vulnerabilities
-  - Data layer: controls access to business/customer data that needs protecting
-- 
+    - filter large-scale attacks before they affect availability for users
+    - user firewalls to identify and alert on malicious attacks
+  - Network layer:
+    - limit communications between resources
+    - deny by default
+    - restrict inbound internet access and limit outbound access where appropriate
+    - implement secure connectivity to on-premises networks
+  - Compute layer: make sure compute resources are secure
+    - secures access to VMs
+    - implement endpoint protection on devices and keep systems patched and current 
+  - Application layer:
+    - ensure applications are secure and reduce vulnerabilities
+    - store sensitive app secrets in secure medium
+    - make security a design requirement
+  - Data layer: controls access to business/customer data that needs protecting; regulatory requirements often mandate this
+    - attackers are after data thats:
+      - stored in a database
+      - stored on a disk inside a VM
+      - stored in a SaaS app
+      - managed through cloud storage
