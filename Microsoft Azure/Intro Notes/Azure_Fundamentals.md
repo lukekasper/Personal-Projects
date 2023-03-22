@@ -469,3 +469,17 @@ Zero Trust Model
   - Assume breach: Minimize blast radius and segment access; verify end-to-end encryption; use analytics to get visibility, drive threat detection, and
     improve defenses
 - Philosophy switches from allowing only devices on an assumed secure network, to allowing devices anywhere but mandating authentication every time
+
+Defense-In-Depth
+- Objective is to protect information
+- Strategy uses a series of mechanisms to slow advance of attack
+- Layers:
+  - Physical security: protect computing hardware
+  - ID and access layer: controls access to infastructure and change control
+    - 
+  - Perimeter layer: DDoS protection
+  - Network layer: limits communication between resources through segmentaiton and access control
+  - Compute layer: secures access to VMs
+  - Application layer: secures applications and reduces vulnerabilities
+  - Data layer: controls access to business/customer data that needs protecting
+- 
