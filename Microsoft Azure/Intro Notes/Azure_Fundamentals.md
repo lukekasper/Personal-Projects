@@ -537,3 +537,11 @@ Defender for Cloud
       - secures configurations standards across resources
     - secure score provides health of security posture, and controls give you a list of things to improve on
   - Defend
+    - Security alerts:
+      - Can: 
+        - describe details of affected resource
+        - suggest remediation steps
+        - can provide an option to trigger a logic app in response
+      - can export alert
+      - includes fusion kill-chain analysis
+        - helps analyze the nature of attack (where it started and what kind of impact it had)
