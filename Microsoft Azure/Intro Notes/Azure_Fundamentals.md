@@ -500,3 +500,40 @@ Defense-In-Depth
       - stored on a disk inside a VM
       - stored in a SaaS app
       - managed through cloud storage
+
+Defender for Cloud
+- monitoring tool for security posture management and threat protection
+- Azure services are monitored automatically (no deployment needed)
+- a Log Analytics agent can be used to gather security data
+  - handled directly for azure machines
+- for hybrid/multicloud: defender plans are extended with the help of Azure Arc Cloud security posture management (CSPM) features (no need for agents)
+- native protections help detect threats across:
+  - PaaS services: Azure App Service, Azure SQL, Azure Storage Account, and more
+    - can perform cloud anomaly detection on Azure activity logs using native integration wtih Microsoft Defender for Cloud Apps
+  - Azure data services: help automatically classify data in Azure SQL; get assessments for vulnerabilities across SQL and storage services + recommendations
+  - Networks: limit exposure to brute force attacks
+    - reduce access to VM ports using just-in-time VM access (prevent unecessary access)
+    - set secure access policies on selected ports, allow source IP address ranges or addresses, and set a time limit
+- Hybrid cloud: to extend to on-premise machines, deploy Azure Arc and enable Defender's enhanced security features
+- Multi-cloud: 
+  - Defender for Cloud's CSPM features: agentless plan to asses other cloud resources
+    - can specify assessment according to cloud's security recommendations
+    - assessed for compliance with cloud's built-in standards
+    - asset inventory page is a multicloud enabled feature
+  - Defender for containers: extends threat detection and advanced defenses to other clouds
+  - Defener for servers
+- 3 Vital roles of cloud defender:
+  - Assess:
+    - identify and track vulnerabilities in VMs, container registries, and SQL servers
+    - defender for servers includes automatic, native integration with Microsoft Defender for Endpoint; allows for Microsoft threat and vulnerability
+      management
+    - can review and respond to scans from within Defender for Cloud
+  - Secure:
+    - can set policies to run on management groups, subscriptions, or for a whole tenant
+    - defender automatically assesses if new resources are configured to security best practices
+      - flag resources not up to standard and provides a prioritized list of recommendations (secure score)
+      - help reduce attack surface across resources
+    - recs supported by Azure Security Benchmark; set of guidelines for security and compliance best practices based on common frameworks
+      - secures configurations standards across resources
+    - secure score provides health of security posture, and controls give you a list of things to improve on
+  - Defend
