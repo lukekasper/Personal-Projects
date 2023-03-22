@@ -459,4 +459,13 @@ Role-Based Access Control (RBAC)
   - does not enforce permissions at app or data level (app security must be handled by the application)
   - uses an allow model:
     - if one assignment grants you read acess and another write acess, you have both
-  - 
+
+Zero Trust Model
+- Security model that protects resources against worst case scenario
+  - assumes breach at outset, and verifies each request as if its from an uncontrolled network
+- Principles:
+  - Verify explicitly: Always authenticate and authorize based on all available data points
+  - Use least privilege access: Limit access with Just-In-Time and Just-Enough-Access (JIT/JEA), risk-based adaptive policies, and data protection
+  - Assume breach: Minimize blast radius and segment access; verify end-to-end encryption; use analytics to get visibility, drive threat detection, and
+    improve defenses
+- Philosophy switches from allowing only devices on an assumed secure network, to allowing devices anywhere but mandating authentication every time
