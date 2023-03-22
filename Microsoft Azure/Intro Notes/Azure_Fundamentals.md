@@ -11,7 +11,7 @@ Physical Infastructure
   - Sovereign Regions: instance of Azure isolated from the main instance
 - Availability Zones:
   - Datacenters within a region
-  - Set up to ensure redundancy if one goes down, and connected through high-spee, private fiber-optic networks
+  - Set up to ensure redundancy if one goes down, and connected through high-speed, private fiber-optic networks
   - Primarily for VMs, managed disks, load balancers, and SQL databases
   - Services that support availability zones:
     - Zonal services: You pin the resource to a specific zone (for example, VMs, managed disks, IP addresses)
