@@ -42,3 +42,23 @@ Princing Calculator Example:
   - The database doesn't need to be configured for high-performance workloads and requires no more than 32 GB of storage.
 - Choose a VM (2), Database, and Network for a basic web-app
 
+Cost Management Tool
+- ability to check resource costs, create alerts based on resource spend, and create budgets that can be used to automate management of resources
+- cost analysis is a subset of tool
+  - can view total cost by billing cycle, region, resource, ect.
+- cost alerts:
+  - budget alerts:
+    - notify when spending exceeds threshold (cost or usage based)
+    - cost management budgets are created using Azure portal (cost) or Azure Consumption API (cost or consumption)
+    - cost alerts can be viewed in the portal and can be sent out via email to recipients list
+  - credit alerts:
+    - notify when credit monetary commitments are consumed (90% and 100% of limit)
+    - for businesses with Enterprise Agreements (EAs)
+  - department spending quota alerts:
+    - notify when spending reaches a fixed limit of your quota
+    - quotas are configured via EA portal
+- Budgets:
+  - where you set an Azure spending limit
+  - can be set on subscription, resource group, service type, ect.
+  - will also get a budget alert automatically
+  - can automate suspend/modify a resource when limit is reached
