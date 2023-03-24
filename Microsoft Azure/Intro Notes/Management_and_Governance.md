@@ -29,8 +29,9 @@ Pricing and Total Cost of Ownership Calculators
     - estimate compute, storatge (type, tier, redundancy) and associated network costs
 - TCO Calculator:
   - compares on-premise to estimated cloud costs
-  - Inputs: infastructure config (servers, databases, storage, outbound netowrk traffic)
-    - add in assumptions like power and IT labor costs
+  - define workloads: infastructure config (servers, databases, storage, outbound netowrk traffic)
+  - add in assumptions like power and IT labor costs
+  - view report
 
 Princing Calculator Example:
 - Web based applicaiton requirements:
