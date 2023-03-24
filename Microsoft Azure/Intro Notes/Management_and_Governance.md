@@ -62,3 +62,19 @@ Cost Management Tool
   - can be set on subscription, resource group, service type, ect.
   - will also get a budget alert automatically
   - can automate suspend/modify a resource when limit is reached
+
+Resource Tags
+- A way to organize resources (like subscription or group) by providing metadata about said resource
+- Tags are used for:
+  - resource management: locate and act on resources that are associated with specific workloads, environments, business units, and owners
+  - cost and management: optimization: group resources to report on costs, allocate internal cost centers, track budgets, and forecast estimated cost
+  - operational management: group by criticality; enables formulation of Service Level Agreements (SLAs) for your users
+  - security: such as public or confidential
+  - governance and regulatory compliance: group by compliance (ie ISO 27001); can also be used as standards enforcement by requiring a tag by owner or
+    department name
+  - workload optimization and automation: group by workload or application name to organize how resources are deployed (ie Azure DevOps)
+- Management of tags:
+  - can add, modify or delete tags through typical Azure intergaces (powershell, CLI, portal, resouce manager templates, or REST API)
+  - can use Azure policy to enforce tagging rules
+  - resources [do not] inherit tags from groups/subscriptions, only at one level
+  - tag consists of a name and a value (ie Name: AppName, Value: LukesRecipes)
