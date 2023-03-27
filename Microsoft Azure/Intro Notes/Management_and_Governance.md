@@ -124,3 +124,29 @@ Resource Locks
 Service Trust portal
 - Provides content, tools and resources about Microsoft security, privacy, and compliance practices
 - contains details about Microsoft's implementation of controls and processes that protect our cloud services and the customer data
+
+## Tools for Managing and Deploying Azure Resources
+
+Interacting with Azure
+- Azure Portal:
+  - Web-based console (GUI) as an alternate to cmd line tools
+  - build, manage, and monitor web apps to cloud deployments
+  - create custom dashboards for organization
+  - configure accessibility options
+  - presence at every datacenter
+    - resiliant to failures and avoids network slowdowns by being close to users 
+  - no downtime for maintenance
+- Azure Cloud Shell:
+  - browser-based shell tool
+    - Azure PowerShell and Azure Command Line Interface (CLI)
+  - can access from portal by hitting cloud shell icon
+    - browser-based means no local installation or configuration
+    - authenticated with your Azure credentials (knows ID and permissions upon login)
+    - can choose preferred shell:PowerShell or Bash (CLI)
+  - PowerShell:
+    - run cmdlets which call REST API to perform management tasks in Azure
+      - routine setup, teardown, and maintenance of resource or connected resources
+      - deployment of entire infastructure
+    - script makes process automatable
+    - in addition to Azure Cloud Shell, can also confugre on Windows, Linux, and mac platforms
+  - CLI: same as PowerShell with different syntax (bash commands)
