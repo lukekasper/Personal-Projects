@@ -190,3 +190,29 @@ Azure Resource Manager and ARM Templates
     - Extensibility: can use deployment scripts in PowerShell or Bash to extend ability to set up resources
       - can be in template or an external source
       - complete entire end-to-end evironemnt setup in a single ARM
+
+## Monitoring Tools
+
+Azure Advisor
+- evaluates resources and makes recommendations to help improve reliability, security, and performance, achieve operational excellence, and reduce costs
+- designed to help save time on cloud optimization
+- can take actions right away, postpone, or dismiss
+- 5 categories of recommendations:
+  - Reliability
+  - Security
+  - Performance: speed of applicaitons
+  - Operational excellence: process and workflow efficiency, resource manageability, and best deployment practices
+  - Cost
+
+Azure Service Health
+- Assess status of individual resources and overall global infastructure
+- Azure Status: broad picture of Azure status globally
+  - incidents with widespread impact
+- Service Health: focuses on services and regions you are using
+  - incidents impacting communications and outages, planned maintenance, and other health advisories
+- Resource Health: individual cloud resources
+- Historical alerts help you track issues that may have seemed like an anomoly initially
+- Provides links to support
+
+Azure Monitor
+- 
