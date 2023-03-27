@@ -79,6 +79,8 @@ Resource Tags
   - resources [do not] inherit tags from groups/subscriptions, only at one level
   - tag consists of a name and a value (ie Name: AppName, Value: LukesRecipes)
 
+## Tools for Governance and Compliance
+
 Azure Blueprints
 - Let you standardized cloud subscriptions or environment deployments
 - Define repeatable settings and policies (template) for subscriptions
