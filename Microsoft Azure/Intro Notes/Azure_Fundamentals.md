@@ -99,12 +99,12 @@ Azure Containers
 - They are a virtualization environment, which you can run multiple of on a single physical or virtual host
 - Don't manage the OS for a container
 - VMs virtualize the hardware, while Containers virtualize the OS
-- Containers are more light wait and agile than VMs
+- Containers are more light weight and agile than VMs
   - Just need to wait for the app to launch rather than the OS and the app (VMs)
 - Docker is one of the most common containers, which is supported by Azure
 - If complete control is needed, VM is preferred; if not, portability, performance characterisitics, and management capabilities of containers are better
 - Azure Container Instances:
-  - Fastest and simplest way to deply a container; don't have to manage VMs or adopt additional services
+  - Fastest and simplest way to deplo a container; don't have to manage VMs or adopt additional services
   - They are a PaaS, you upload your containers and the service runs them for you
 - Microservice Architecture:
   - break solution itno smaller, independent pieces
