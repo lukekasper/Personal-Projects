@@ -150,3 +150,13 @@ Interacting with Azure
     - script makes process automatable
     - in addition to Azure Cloud Shell, can also confugre on Windows, Linux, and mac platforms
   - CLI: same as PowerShell with different syntax (bash commands)
+
+Azure Arc
+- Azure Resource Manager (ARM): Arc extends compliance to hybrid and multi-cloud configurations
+- Centralized way to:
+  - Manage entire environment together by projecting non-Azure resources into ARM
+  - Manage multi-cloud and hybrid virtual machines, Kubernetes clusters, and databases as if they are running in Azure
+  - Use familiar Azure services and management capabilities
+  - Continue using traditional ITOps while introducing DevOps practices to support new cloud and native patterns
+  - Configure custom locations as an abstraction layer on top of Azure Arc-enabled Kubernetes clusters and cluster extensions
+- Can manage following resource types outside of Azure: servers, Kubernets clusters, Azure data services, SQL server, VMs (preview) 
