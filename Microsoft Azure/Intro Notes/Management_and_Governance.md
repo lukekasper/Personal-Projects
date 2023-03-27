@@ -217,5 +217,24 @@ Azure Service Health
 Azure Monitor
 - platform for collecting, analyzing, visualizing, and acting on data on resources
 - can monitor Azure, on-premises, and multi-cloud resources
-- 
-- 
+- Log Analytics:
+  - write and run log queries on data gathered by Azure Monitor
+  - can write a simple query and sort, filter, and analyze result
+  - advanced queries can perform statistical analysis and visualize data
+- Azure Monitor Alerts:
+  - automates alert when threshold is crossed and can perform automated action
+  - alerts based on log events or metrics (CPU utilization)
+    - rules based on logs allow complex logic across data from multiple sources
+  - action groups define who to notify when alert is triggered
+- Application Insights:
+  - monitors web applications on Azure, on-premise, and other clouds
+  - configure through installing an SDK or using an Application Insights agent
+  - used to monitor:
+    - request rates, response times, and failure rates
+    - dependency rates, response times, and failure rates, to show whether external services are slowing down performance
+    - page views and load performance reported by users' browsers
+    - AJAX calls from web pages, including rates, response times, and failure rate
+    - user and session counts
+    - performance counters from Windows or Linux server machines, such as CPU, memory, and network usage
+  - can periodically send synthetic requests to monitor health even during low activity periods
+
