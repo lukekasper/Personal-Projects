@@ -215,4 +215,7 @@ Azure Service Health
 - Provides links to support
 
 Azure Monitor
+- platform for collecting, analyzing, visualizing, and acting on data on resources
+- can monitor Azure, on-premises, and multi-cloud resources
+- 
 - 
