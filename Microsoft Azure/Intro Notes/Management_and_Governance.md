@@ -160,3 +160,33 @@ Azure Arc
   - Continue using traditional ITOps while introducing DevOps practices to support new cloud and native patterns
   - Configure custom locations as an abstraction layer on top of Azure Arc-enabled Kubernetes clusters and cluster extensions
 - Can manage following resource types outside of Azure: servers, Kubernets clusters, Azure data services, SQL server, VMs (preview) 
+
+Azure Resource Manager and ARM Templates
+- management and deployment service for Azure
+  - is involved anytime you interact with an Azure resource
+  - recieves any request (from tools, APIs, SDKs), provides authentication, and sends request to Azure service which takes the action
+- Benefits:
+  - manage infrastructure through declarative templates rather than scripts
+    - JSON file that defines what you want to deploy to Azure
+  - handle resources as a group
+  - have confidence re-deployments are consistent
+  - define dependencies, to ensure resources are deployed in correct order
+  - apply access control to all services (RBAC is integrated into platform)
+  - apply tags
+  - clarify billing by viewing costs by tag
+- ARM templates:
+  - infrastructure as code: manage infastrucutre as lines of code (use of Azure Cloud Shell, PowerShell, or CLI)
+    - ARM templates also provide this function
+  - deployment code is verified before any code is run
+  - ochestrates creation of resources in parallel (simultaneously)
+  - only define desired state and configuration of resource, template does the rest
+  - can execute PowerShell and Bash scripts before or after the resource has been set up
+  - Benefits:
+    - Declarative syntax: declare what you want to deploy, but don't need to write the actual programming commands
+    - Repeatable results
+    - Orchestration: ARM creates resources in correct order (no need to worry about order of operations), and in parallel
+    - Modular files: break template into smaller, reuseable components and link together at deployment time
+      - nest templates
+    - Extensibility: can use deployment scripts in PowerShell or Bash to extend ability to set up resources
+      - can be in template or an external source
+      - complete entire end-to-end evironemnt setup in a single ARM
