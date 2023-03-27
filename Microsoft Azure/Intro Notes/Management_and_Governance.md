@@ -78,3 +78,47 @@ Resource Tags
   - can use Azure policy to enforce tagging rules
   - resources [do not] inherit tags from groups/subscriptions, only at one level
   - tag consists of a name and a value (ie Name: AppName, Value: LukesRecipes)
+
+Azure Blueprints
+	- Let you standardized cloud subscriptions or environment deployments
+	- Define repeatable settings and policies (template) for subscriptions
+	- Artifacts:
+		- Each component in a blueprint definition
+		- Can contain parameters (like allowed location for an allowance setting) that can be set at definition or blueprint assignment (not required)
+		- Artifacts can include: role assignments, policy assignments, Azure Resource Manager templates, and resource groups
+	- How do they help monitor deployments?
+		- Version-able, allowing updates to be made and assigning a new version to update
+			- Helps to track which deployments used which configuration
+		- Relationship between blueprint definition and assignment is preserved to better track/audit deployments
+
+Azure Policy
+	- Service that lets you create, assign, and manage policies that control/audit resources
+		○ Enforce different rules across configurations to stay compliant with corporate standards
+	- Define both individual or group policies (initiatives)
+	- Highlights uncompliant resources, or prevents them from being created
+	- Can be set at each level (resource, group, subscription, ect)
+		- Are inherited to lower levels
+	- Azure Policy comes with built-in definitions for Storage, Networking, Compute, Security Center, and Monitoring
+		- Ie) a policy defining size of VMs is evoked when creating or resizing VMs in environment, and Azure monitors all other VMs (even those created before
+      the policy)
+	- Can automatically remediate noncompliant resources (assign a missing tag)
+		○ Can tag resources you don't want automatically fixed as an exception
+	- Also integrates with Azure DevOps
+		- Apply continuous integration and delivery pipeline policies
+		- Pertain to both pre and post-deployment app phases
+	- Initiatives are a way to group related policies to help track compliance state for a larger goal
+		- Ex) Azure Policy of Enable Monitoring in Azure Security Center contains the following policies:
+			- Monitor unencrypted SQL Database
+			- Monitor OS vulnerabilities
+			- Monitor missing Endpoint Protection
+
+Resource Locks
+	- Prevents resources from being accidentally deleted or changed
+	- Can be applied to resources, groups, or subscriptions (inherited)
+	- Delete (users can modify) and ReadOnly locks available
+	- Can manage locks in any of the Azure interfaces (portal, CLI, Powershell, Azure Resource Manager template)
+	- To modify a locked resource, must remove the lock first
+	
+Service Trust portal
+	- Provides content, tools and resources about Microsoft security, privacy, and compliance practices
+	- contains details about Microsoft's implementation of controls and processes that protect our cloud services and the customer data
