@@ -91,7 +91,7 @@ PaaS:
 - Cloud provider: also maintains the operating systems, middleware, development tools, and business intelligence services
   - Don't have to worry about licensing or patching for operating systems and databases
 - Makes sense for:
-  - Development framework: PaaS provides a framework that developers can build upon to develop or customize cloud-based applications. Similar to the way you     create an Excel macro, PaaS lets developers create applications using built-in software components. Cloud features such as scalability, high-        
+  - Development framework: PaaS provides a framework that developers can build upon to develop or customize cloud-based applications. Similar to the way you     create an Excel macro, PaaS lets developers create applications using built-in software components. Cloud features such as scalability, high
     availability, and multi-tenant capability are included, reducing the amount of coding that developers must do
   - Analytics or business intelligence: Tools provided as a service with PaaS allow organizations to analyze and mine their data, finding insights and  
     patterns and predicting outcomes to improve forecasting, product design decisions, investment returns, and other business decisions
