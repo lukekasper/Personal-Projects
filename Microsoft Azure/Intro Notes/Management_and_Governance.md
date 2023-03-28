@@ -76,7 +76,7 @@ Resource Tags
 - Management of tags:
   - can add, modify or delete tags through typical Azure interfaces (powershell, CLI, portal, resouce manager templates, or REST API)
   - can use Azure policy to enforce tagging rules
-  - resources [do not] inherit tags from groups/subscriptions, only at one level
+  - resources do not inherit tags from groups/subscriptions, only at one level
   - tag consists of a name and a value (ie Name: AppName, Value: LukesRecipes)
 
 ## Tools for Governance and Compliance
