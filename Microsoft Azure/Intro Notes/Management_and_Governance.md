@@ -67,7 +67,7 @@ Resource Tags
 - A way to organize resources (like subscription or group) by providing metadata about said resource
 - Tags are used for:
   - resource management: locate and act on resources that are associated with specific workloads, environments, business units, and owners
-  - cost and management: optimization: group resources to report on costs, allocate internal cost centers, track budgets, and forecast estimated cost
+  - cost and management optimization: group resources to report on costs, allocate internal cost centers, track budgets, and forecast estimated cost
   - operational management: group by criticality; enables formulation of Service Level Agreements (SLAs) for your users
   - security: such as public or confidential
   - governance and regulatory compliance: group by compliance (ie ISO 27001); can also be used as standards enforcement by requiring a tag by owner or
