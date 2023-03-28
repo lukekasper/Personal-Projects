@@ -361,7 +361,7 @@ Data Migration Options
     - Azure Migrate: Server Migration - Migrate VMware VMs, Hyper-V VMs, physical servers, other virtualized servers, and public cloud VMs
     - Data Migration Assistant - stand-alone tool to assess SQL Servers
     - Azure Database Migration Service - Migrate on-premises databases to Azure VMs running SQL Server, Azure SQL Database, or SQL Managed Instances
-    - Web app migration assistant - tandalone tool to assess on-premises websites for migration to Azure App Service; use to to migrate .NET and PHP web apps
+    - Web app migration assistant - stand-alone tool to assess on-premises websites for migration to Azure App Service; use to to migrate .NET and PHP web apps
     - Azure Data Box: move large amounts of offline data
       - phsycial box shipped to datacenter to upload up to 80 terabytes of data
       - use cases:large data with limitied or no network connectivity
