@@ -133,7 +133,7 @@ Application Hosting Options
     - Scaled sites to handle high traffic loads
     - Load balancing and traffic manager provide high availability
   - Mobile Apps:
-    - sotre mobile app data in cloud-based SQL database
+    - store mobile app data in cloud-based SQL database
     - authenticate cusomers against common social providers
     - send push notifications
     - execute custom back-end logic in C# or Node.js
