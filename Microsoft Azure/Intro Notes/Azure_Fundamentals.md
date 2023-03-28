@@ -104,7 +104,7 @@ Azure Containers
 - Docker is one of the most common containers, which is supported by Azure
 - If complete control is needed, VM is preferred; if not, portability, performance characterisitics, and management capabilities of containers are better
 - Azure Container Instances:
-  - Fastest and simplest way to deplo a container; don't have to manage VMs or adopt additional services
+  - Fastest and simplest way to deploy a container; don't have to manage VMs or adopt additional services
   - They are a PaaS, you upload your containers and the service runs them for you
 - Microservice Architecture:
   - break solution itno smaller, independent pieces
