@@ -140,7 +140,7 @@ Application Hosting Options
 
 Azure Virtual Networking
 - Allow Azure resources (VMs, web apps, ect) to communicate with one another, users on the internet, and on-premise client computers
-- It is an extension of an on premise netweor with resources that link to other Azure resources
+- It is an extension of an on premise network with resources that link to other Azure resources
 - Supports public and private endpoints enable communication between external or internal resources with other internal resources
   - Public endpoints have a public IP address and can be accessed from anywhere
   - Private endpoints exist within a virtual network and have a private IP address from within the address space of that virtual network
