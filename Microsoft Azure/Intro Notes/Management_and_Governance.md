@@ -74,7 +74,7 @@ Resource Tags
     department name
   - workload optimization and automation: group by workload or application name to organize how resources are deployed (ie Azure DevOps)
 - Management of tags:
-  - can add, modify or delete tags through typical Azure intergaces (powershell, CLI, portal, resouce manager templates, or REST API)
+  - can add, modify or delete tags through typical Azure interfaces (powershell, CLI, portal, resouce manager templates, or REST API)
   - can use Azure policy to enforce tagging rules
   - resources [do not] inherit tags from groups/subscriptions, only at one level
   - tag consists of a name and a value (ie Name: AppName, Value: LukesRecipes)
