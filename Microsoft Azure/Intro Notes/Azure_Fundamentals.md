@@ -196,7 +196,7 @@ Virtual Private Networks (VPN)
   - Only one gateway per virtual network, but can use one gateway to connect to multipe locations
   - Specify VPN type as policy-based or route-based (how traffic is encrypted); both use a pre-shared key as method of authentication
   - Policy-based: specify statically the IP address of packets that should be encypted through each tunnel
-  - Rout-based: IPSec tunnels are modeled as a network interface or virtual tunnel interface
+  - Route-based: IPSec tunnels are modeled as a network interface or virtual tunnel interface
     - IP routing (either static routes or dynamic routing protocols) decides which one of these tunnel interfaces to use when sending each packet
     - preferred for on-premise devices
     - more resilient to topology changes such as the creation of new subnets
