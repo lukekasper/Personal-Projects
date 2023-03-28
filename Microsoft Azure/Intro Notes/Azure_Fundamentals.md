@@ -217,7 +217,7 @@ Virtual Private Networks (VPN)
     - ensures there is always a connection to the virtual networks
   - Zone-redundant gateways:
     - deploying in availability zones seperates gateways within a region, protecting against zone-level failures
-    - require different gateway stock keeping unites (SKUs) and use standard publeic IP address (vice basic public IP addresses)
+    - require different gateway stock keeping unites (SKUs) and use standard public IP address (vice basic public IP addresses)
 
 Azure ExpressRoute
 - ExpressRoute Circuit provides connection between on premise networks and cloud (private connection)
