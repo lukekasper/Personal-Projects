@@ -175,7 +175,7 @@ Azure Resource Manager and ARM Templates
   - apply tags
   - clarify billing by viewing costs by tag
 - ARM templates:
-  - infrastructure as code: manage infastrucutre as lines of code (use of Azure Cloud Shell, PowerShell, or CLI)
+  - infrastructure as code: manage infastrucutre as lines of code (like Azure Cloud Shell, PowerShell, or CLI)
     - Use Azure Blueprints to deploy policies in an automated fashion and ARM template to deploy resources as code
   - deployment code is verified before any code is run
   - ochestrates creation of resources in parallel (simultaneously)
