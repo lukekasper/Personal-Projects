@@ -1,7 +1,7 @@
 ## Cost Management
 
 Factors that Effect Cost
-- Azure shuifts cost from CapEx to OpEx
+- Azure shifts cost from CapEx to OpEx
 - Resource Type:
   - Type, settings, and region all affect resource cost
   - Metered instances are created for each resource to track usage and generate a cost record for billing
