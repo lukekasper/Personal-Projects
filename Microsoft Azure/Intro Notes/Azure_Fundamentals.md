@@ -387,7 +387,7 @@ File Movement Options
 
 Directory Services
 - Acive Directory (AD): enables you to sign in, access Microsoft cloud and apps, and cloud apps you develop; can also help maintain on-premise AD
-  - For on premise, provides idnentity and access manageement
+  - For on premise, provides idnentity and access management
 - When connecting your AD to Azure AD, Microsoft can help protect against suspicious sign-in attempts
 - Who uses Azure AD?
   - IT administrators: control acces to resources
