@@ -6,7 +6,7 @@ Interacting with Azure:
   
 Physical Infastructure
 - Regions: Azure datacenters are broken out by region (may have multiple in a single region)
-  - Azure controls resources within a region to ensure workloads are balanceed
+  - Azure controls resources within a region to ensure workloads are balanced
   - Region pairs: provides redundancy if an entire region were to fail
   - Sovereign Regions: instance of Azure isolated from the main instance
 - Availability Zones:
