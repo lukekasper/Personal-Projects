@@ -29,25 +29,25 @@
     - use either a comma-seperated list of columns or "*" to display all
   - 
 
-- Cmds:
-  - Get-Verb: list of approved PowerShell verbs (with descriptions)
-  - Get-Command: lists all available cmdlets in your system
-    - Get-Command -Verb Get -Noun a-noun*
-      - "-Noun" targets part of command thats a noun
-      - "a-noun*" targets all commands whose Noun starts with "a-noun"
-      - likewise the first part targets commands whose verb is "Get"
-  - Get-Help: invoke built-in help system; can also use alias of "help"
-  - Get-Member: response of a command is an object with many properties; use this command to drill down into object and get more details
-  - Get-Help -Name Get-Help: invoke "Get-Help" and then specify the name of the cmdlet after "-Name" (in this case the Get-Help cmdlet)
-  - Get-Help Get-FileHash -Examples: only return examples of the cmdlet
-    - Get-FileHash returns the hashing function output for a file using the specified hashing algorithm
-    - Hashing functions produce an output based on the content of the file, they help ensure file contents have not been altered
-  - Get-Process -Name 'name-of-process' | Get-Member:
-    - Result of Get-Process is passed as an input to Get-Member by using pipe "|"
-    - This returns the Name, MemberType, and Definition columns, along with the type of returned object
-    - Get-Process returns a list of processes running on your machine
-  - Get-Command -ParameterType Process: to search cmdlets that use the type "Process"
-    - use if returned object type is "TypeName: System.Diagnostics.Process" for example
-  - Get-Process -Name 'name-of-process' | Get-Member | Select-Object Name, MemberType
-    - specifies you only want the Name and MemberType columns returned
-    - can add -MemberType Method flag to specify you only want to return MemberTypes that are a method
+## Cmds:
+- Get-Verb: list of approved PowerShell verbs (with descriptions)
+- Get-Command: lists all available cmdlets in your system
+  - Get-Command -Verb Get -Noun a-noun*
+    - "-Noun" targets part of command thats a noun
+    - "a-noun*" targets all commands whose Noun starts with "a-noun"
+    - likewise the first part targets commands whose verb is "Get"
+- Get-Help: invoke built-in help system; can also use alias of "help"
+- Get-Member: response of a command is an object with many properties; use this command to drill down into object and get more details
+- Get-Help -Name Get-Help: invoke "Get-Help" and then specify the name of the cmdlet after "-Name" (in this case the Get-Help cmdlet)
+- Get-Help Get-FileHash -Examples: only return examples of the cmdlet
+  - Get-FileHash returns the hashing function output for a file using the specified hashing algorithm
+  - Hashing functions produce an output based on the content of the file, they help ensure file contents have not been altered
+- Get-Process -Name 'name-of-process' | Get-Member:
+  - Result of Get-Process is passed as an input to Get-Member by using pipe "|"
+  - This returns the Name, MemberType, and Definition columns, along with the type of returned object
+  - Get-Process returns a list of processes running on your machine
+- Get-Command -ParameterType Process: to search cmdlets that use the type "Process"
+  - use if returned object type is "TypeName: System.Diagnostics.Process" for example
+- Get-Process -Name 'name-of-process' | Get-Member | Select-Object Name, MemberType
+  - specifies you only want the Name and MemberType columns returned
+  - can add -MemberType Method flag to specify you only want to return MemberTypes that are a method
