@@ -66,6 +66,10 @@
     2) Select a profile type and create a text file at its location
         - New-Item -Path $Profile.CurrentUserCurrentHost
     3) Add customization and save  
+- Parameters allow you to provide inputs to functions, cmdlets and scripts without changing the actual code
+  - declare with Param()
+  - select approach to ensure correct parameters are passed to let the script function as intended
+  - use decorators to ensure parameters are passed correctly
 
 
 ## Cmdlets:
@@ -99,3 +103,6 @@
   - filter processes by name prior in the pipeline to selecting object columns to improve efficiency
   - Get-Process -Name 'name-of-process' | Select-Object Name: more efficient version of prior statement, -Name does filtering for you
 - "a string" | Get-Member | Format-List: overrides default formatting to return list
+- Write-Error: provides an error message to user console
+- Compress-Archive: creates a .zip backup of application
+- 
