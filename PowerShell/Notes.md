@@ -29,8 +29,16 @@
     - use either a comma-seperated list of columns or "*" to display all
 
 ## Connecting Commands into a Pipeline
+- Creating a pipeline requires the output of one cmdlet to match the required input to the next cmdlet
+  - must have parameters with property "Accept Pipeline Input?" set to "True"
+  - input can be considered valid:
+    - By Value: input matches an array to a specific type
+    - By Property Name: object that is passed in must have a property with a specific name
 - To format output of cmdlet, use Get-Member to get the real property names for a process in order to use Select-Object to filter
 - Use Sort-Object in a pipeline to sort by default properties first, or provide property names to sort by specific column names
+- Filtering left: filter results as early as possible (make data processing as efficient as possible)
+- Formatting right: format is the last thing you do; formatting changes the oject you are dealing with, making Select-Object calls invalid
+  - most common formatting calls are Format-Table or Format-List
 
 
 ## Cmdlets:
@@ -60,3 +68,7 @@
 - Get-Process | Sort-Object -Descending -Property Name, CPU: sort proceses in descending order by Name and then CPU 
 - Get-Process | Where-Object CPU -gt 2 | Sort-Object CPU -Descending | Select-Object -First 3
   - returns first 3 processes (-First 3), where CPU value > 2 (-gt 2), in descending order
+- Get-Process | Select-Object Name | Where-Object Name -eq 'name-of-process' vs Get-Process | Where-Object Name -eq 'name-of-process' | Select-Object Name
+  - filter processes by name prior in the pipeline to selecting object columns to improve efficiency
+  - Get-Process -Name 'name-of-process' | Select-Object Name: more efficient version of prior statement, -Name does filtering for you
+- "a string" | Get-Member | Format-List: overrides default formatting to return list
