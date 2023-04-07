@@ -62,7 +62,10 @@
   - can use to customize environment
   - $Profile variable is an object that points to path where each profile should be placed
   - To create a profile:
-    - $Profile | Select-Object \*: see the profile types and the paths associated with them
+    1) $Profile | Select-Object \*: see the profile types and the paths associated with them
+    2) Select a profile type and create a text file at its location
+      - New-Item -Path $Profile.CurrentUserCurrentHost
+    3) Add customization and save  
 
 
 ## Cmdlets:
