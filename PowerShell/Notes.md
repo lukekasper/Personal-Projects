@@ -28,6 +28,7 @@
   - use Select-Object to filter on what columns to return
     - use either a comma-seperated list of columns or "*" to display all
 
+
 ## Connecting Commands into a Pipeline
 - Creating a pipeline requires the output of one cmdlet to match the required input to the next cmdlet
   - must have parameters with property "Accept Pipeline Input?" set to "True"
@@ -39,6 +40,29 @@
 - Filtering left: filter results as early as possible (make data processing as efficient as possible)
 - Formatting right: format is the last thing you do; formatting changes the oject you are dealing with, making Select-Object calls invalid
   - most common formatting calls are Format-Table or Format-List
+
+
+## Intro to Scripting
+- Get-ExecutionPolicy returns execution policy (always Unrestricted for Mac/Linux)
+  - can Set-ExecutionPolicy for Windows
+- Single quotes: defines literals
+  - ie) Write-Host 'Here is $PI' # Prints Here is $PI
+- Double quotes: variables are interpolated
+  - ie) Write-Host "Here is `$PI and its value is $PI" # Prints Here is $PI and its value is 3.14
+- Can use $() to write and evaluate an expression
+  - ie) Write-Host "An expression $($PI + 1)" # Prints An expression 4.14
+- Scope: where constructs like variables, aliases, and functions can be read and changed
+  - Global: variables exist after session ends
+  - Script: available just within the script
+  - Local: current scope, can be global or otherwise
+- Scopes can nest
+- Items are visible in the current and child scopes
+  - can change that by making an item private 
+- A profile script runs when PowerShell starts
+  - can use to customize environment
+  - $Profile variable is an object that points to path where each profile should be placed
+  - To create a profile:
+    - $Profile | Select-Object \*: see the profile types and the paths associated with them
 
 
 ## Cmdlets:
