@@ -27,9 +27,13 @@
   - response is verbose, meaning it returns many columns
   - use Select-Object to filter on what columns to return
     - use either a comma-seperated list of columns or "*" to display all
-  - 
 
-## Cmds:
+## Connecting Commands into a Pipeline
+- To format output of cmdlet, use Get-Member to get the real property names for a process in order to use Select-Object to filter
+- Use Sort-Object in a pipeline to sort by default properties first, or provide property names to sort by specific column names
+
+
+## Cmdlets:
 - Get-Verb: list of approved PowerShell verbs (with descriptions)
 - Get-Command: lists all available cmdlets in your system
   - Get-Command -Verb Get -Noun a-noun*
@@ -51,3 +55,8 @@
 - Get-Process -Name 'name-of-process' | Get-Member | Select-Object Name, MemberType
   - specifies you only want the Name and MemberType columns returned
   - can add -MemberType Method flag to specify you only want to return MemberTypes that are a method
+- Get-Process zsh | Format-List -Property \*: get full list of properties for zsh process and return in a Format-List
+- Get-Process zsh | Get-Member -Name C*: return the real property names for zsh processes that start with "C"
+- Get-Process | Sort-Object -Descending -Property Name, CPU: sort proceses in descending order by Name and then CPU 
+- Get-Process | Where-Object CPU -gt 2 | Sort-Object CPU -Descending | Select-Object -First 3
+  - returns first 3 processes (-First 3), where CPU value > 2 (-gt 2), in descending order
