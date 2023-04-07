@@ -64,7 +64,7 @@
   - To create a profile:
     1) $Profile | Select-Object \*: see the profile types and the paths associated with them
     2) Select a profile type and create a text file at its location
-      - New-Item -Path $Profile.CurrentUserCurrentHost
+        - New-Item -Path $Profile.CurrentUserCurrentHost
     3) Add customization and save  
 
 
