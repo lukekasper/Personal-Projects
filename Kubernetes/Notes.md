@@ -54,4 +54,21 @@
   - etcd: key-value storer of cluster state (cluster brain)
     - when state changes happen to pod, values get updated in etcd
     - provides the insight into what resources are available on each node, cluster health, did the state change
-    - does not store actual application data 
+    - does not store actual application data
+- Usually multiple master nodes for backup purposes
+- Less resources for master nodes (no actual application data and processes)
+- To make a new node:
+  - get bare server
+  - install necessary master/worker node processes
+  - add it to the cluster
+
+
+## Minikube and Kubectl
+- Minikube: way to test cluster setup locally (master and worker processes run together on one machine)
+  - ran through a virtual box on laptop
+- kubectl: command line tool for K8 cluster
+  - used to interact with minikube cluster
+  - can be used for other types of clusters as well (ie cloud)
+- Steps for installation:
+  - minikube: https://bit.ly/38bLcJy 
+  - kubectl: https://bit.ly/32bSI2Z
