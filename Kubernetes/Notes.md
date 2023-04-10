@@ -72,3 +72,9 @@
 - Steps for installation:
   - minikube: https://bit.ly/38bLcJy 
   - kubectl: https://bit.ly/32bSI2Z
+- Interacting with cluster (kubectl):
+  - interact with deployment -> manages replicaset -> manages pod -> abstraction of a container
+    - everything below deployment is managed automatically by kubernetes
+  - debugging tips:
+    - use "kubectl logs [pod name]" to log pod output
+    - "kubectl exec -it [pod name] -- bin/bash" to get terminal of container
