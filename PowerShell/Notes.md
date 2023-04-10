@@ -119,3 +119,5 @@
 - Write-Error: provides an error message to user console
 - Compress-Archive: creates a .zip backup of application
 - Remove-Item \*zip: remove zip files
+
+List of PowerShell cmdlets: https://devblogs.microsoft.com/scripting/table-of-basic-powershell-commands/
