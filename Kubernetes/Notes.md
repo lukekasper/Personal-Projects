@@ -78,3 +78,5 @@
   - debugging tips:
     - use "kubectl logs [pod name]" to log pod output
     - "kubectl exec -it [pod name] -- bin/bash" to get terminal of container
+  - in practice, create a deployment using a configuration file to specify things like name, image, and options for deployment
+    - kubectl apply -f [config file name]: to execute configuration file
