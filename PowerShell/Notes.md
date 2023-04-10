@@ -83,6 +83,7 @@
   - Non-Terminating errors:
     - PowerShell just notifies user of error using Write-Error and continues on
     - Use parameter '-ErrorAction Stop' to raise severity of error and terminate script
+  - PowerShell comparison operators: -lt (less than), -le (less than or equal to), -eq, -ne (not equal) 
 
 ## Cmdlets:
 - Get-Verb: list of approved PowerShell verbs (with descriptions)
