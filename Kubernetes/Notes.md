@@ -38,3 +38,20 @@
 ## Kubernetes Architecture
 - Node processes: must be installed on every node
   - Container runtime: ie) Docker
+  - Kubelet: interacts with both container and node
+    - responsible for starting a pod with a container inside and assigning resources (like CPU, RAM, storage) from the node to the container
+  - Kube proxy: forwards requests between pods
+- Master processes:
+  - API server: cluster gateway
+    - interact externally with API server using a client (dashboard, cmd line tool, or Kubernetes API)
+    - gets initial request for updates to cluster or queries
+    - acts as gatekeeper for authentication
+  - Scheduler: recieves requests from API server and sends scheduling requests onto pods
+    - intelligently determines where to schedule next pod based on resource availability
+    - executes request through Kubelet on that node
+  - Controller manager: detect state changes (like pods crashing) and tries to recover state
+    - makes request to scheduler to reschedule dead pods -> Kubelet
+  - etcd: key-value storer of cluster state (cluster brain)
+    - when state changes happen to pod, values get updated in etcd
+    - provides the insight into what resources are available on each node, cluster health, did the state change
+    - does not store actual application data 
