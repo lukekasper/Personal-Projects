@@ -70,7 +70,19 @@
   - declare with Param()
   - select approach to ensure correct parameters are passed to let the script function as intended
   - use decorators to ensure parameters are passed correctly
-
+- Handling errors:
+  - Try: one or more statements you want the script to try and run (must contain at least one catch or finally statement also)
+  - Catch: catch or manage an error when it occurs
+    - Can include more than once catch for each type of error
+  - Finally: runs regardless of if anything goes wrong (like cleaning up resources)
+  - Exception objects can be used to inspect errors; it contains:
+    - A message about what went wrong
+    - The stacktrace: which statements ran before the error
+    - The offending row: which statement threw the error
+    - Built in variable '$_' contains exception object ($_.exception.message)
+  - Non-Terminating errors:
+    - PowerShell just notifies user of error using Write-Error and continues on
+    - Use parameter '-ErrorAction Stop' to raise severity of error and terminate script
 
 ## Cmdlets:
 - Get-Verb: list of approved PowerShell verbs (with descriptions)
@@ -105,4 +117,4 @@
 - "a string" | Get-Member | Format-List: overrides default formatting to return list
 - Write-Error: provides an error message to user console
 - Compress-Archive: creates a .zip backup of application
-- 
+- Remove-Item \*zip: remove zip files
