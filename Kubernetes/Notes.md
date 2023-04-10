@@ -95,4 +95,6 @@
   - the label is then matched by the selector
   - for a service, the selector is matched with the label of the deployments it needs to communicate with
 - services have their own ports, and targetPort (port numbers of the pods they intend to connect to, specified by deployment yaml)
-  - use: kubectl describe service nginx-service and kubectl get pod -o wide to ensure pods and services are communicating to the same ports
+  - use: "kubectl describe service nginx-service" and "kubectl get pod -o wide" to ensure pods and services are communicating to the same ports
+- "deployment nginx-deployment -o yaml > nginx-deployment-result.yaml": get updated yaml status of deployment and save result
+  - in order to copy deployment (blueprint), must clean status part of config file first
