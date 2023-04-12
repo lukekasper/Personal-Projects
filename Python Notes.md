@@ -9,8 +9,10 @@ Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
 - extend(elements): appends multiple elements to the end of the list
 - insert(yi,y): inserts element at the specified index within a list
 - replace(oldvalue, newvalue, count): replaces a specified phrace with a new phrase
-- sort(): sorts a list
+- s.sort(): sorts a list, does not return anything
   - optional arguements to reverse sort or provide a key (function) to specifiy sort criteria
+- sorted(s): can be used to sort a string, list, set, dict, ect
+  - returns a list of sorted items
 - sum(array): sums array elements
 
 - sets:
