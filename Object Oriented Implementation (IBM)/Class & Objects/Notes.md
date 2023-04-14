@@ -37,12 +37,23 @@
     - parametrized: takes an arguement list, different default values for each object
       - when creating an object from that class, pass the default values in as parameters to utilize this constructor 
       - Employee empObj(101, "rex", 25000);
-    - copy
+    - copy: initialize an object using another object of the same class
+      - shallow (member-wise) copy: C++ copies each member of the class individually using the assignment operator
+        - Employee e1 = e;
+      - deep copy: copies all fields and makes copies of dynamically allocated memory pointed to by fields
   - a singleton class is one that has a private constructor, can only be initialized by its own member functions
   - if a local variable shadows a field with the same name, use "this" pointer
     - this->empid=empid; (for public parameterized constructor
     - use also if a method needs to pass the current object to another method
-  - a class can have multiple constructors (constructor overlaoding) but they must vary in:
-    - number of parameters
-    - type of parameters
-    - order of parameters
+    - "this" refers to the current object and stores the address of the current object
+  - overloading: 
+    - a class can have multiple constructors or methods with the same name but they must vary in:
+      - number of parameters
+      - type of parameters
+      - order of parameters
+    - behavior differs based on arguements
+    - difference in return type is not a valid overloading scenario
+- Destructors: de-allocates memory
+  - compiler provides defualt destructor when none are provided
+  - cannot take arguements or return values
+  - 
