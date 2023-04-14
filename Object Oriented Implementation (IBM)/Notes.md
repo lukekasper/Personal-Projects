@@ -62,3 +62,4 @@
 - static or class variables: properties associated to a class but not a specific object (global to all objects of a class)
 - can access static properties through static member functions
 - "this" pointer cannot be used for static variables
+- static data must be initialized outside of the class using "::"
