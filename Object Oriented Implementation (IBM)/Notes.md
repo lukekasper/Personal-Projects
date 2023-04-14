@@ -63,3 +63,7 @@
 - can access static properties through static member functions
 - "this" pointer cannot be used for static variables
 - static data must be initialized outside of the class using "::"
+
+## Inheritance
+- common properties and methods across multiple classes can be collected in a parent class
+- 
