@@ -8,13 +8,8 @@
   - used to declare properties of a class (called data members)
   - can be intrinsic type (int, double, ect), or user defined type
   - syntax of an attribute:
-    - <visibility modifier>: <type> <name> [= <initial_value>]
     - ie) private: double salary
 - Methods define behavior of an object derived from the class
   - will have a name and return type (void means no return type)
-  - <visibility modifier>: <returnType> <methodName> (<arguement>)
-    {
-       <statement
-    }
 - Access to attributes and members is done with "."
     
