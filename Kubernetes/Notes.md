@@ -96,5 +96,29 @@
   - for a service, the selector is matched with the label of the deployments it needs to communicate with
 - services have their own ports, and targetPort (port numbers of the pods they intend to connect to, specified by deployment yaml)
   - use: "kubectl describe service nginx-service" and "kubectl get pod -o wide" to ensure pods and services are communicating to the same ports
+  - specify selector as the label of the pod you want to connect to
 - "deployment nginx-deployment -o yaml > nginx-deployment-result.yaml": get updated yaml status of deployment and save result
   - in order to copy deployment (blueprint), must clean status part of config file first
+
+
+## Kubernetes Components Demo:
+- go on "hub.docker.com" to determine what ports/environmental variables are available for a given image (ie mongo)
+- don't want to define usrname and password info in config file
+  - make secret config file to store usrname and password info and reference it in the yaml config file
+  - values must be base64 encoded (not plain text)\
+    - do this in terminal with "echo -n 'username' | base64" and "echo -n 'password' | base64" and paste into secret config file
+- can put multiple documents in one file in yaml using "---" to seperate documents
+  - deployment and service are usually combined
+- reference value for something like mongo db server (service name) should be kept in config map not in yaml file itself
+  - allows other pods to refernce this value and avoids having to update multiple yaml files on change
+  - order matters, so must have config map in cluster before deploying yaml file that references it
+- to make an external service:
+  - in specification section (spec), add "type: LoadBalancer" below selector
+    - assigns service an external IP address
+  - then apply a third port
+    - nodePort: # (some number between 30000-32767) which is what will be accessed by the browser
+  - minikube service mongo-express-service will then make the external service in minikube
+
+## Namespaces
+
+  
