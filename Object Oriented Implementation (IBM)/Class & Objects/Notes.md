@@ -42,3 +42,7 @@
   - if a local variable shadows a field with the same name, use "this" pointer
     - this->empid=empid; (for public parameterized constructor
     - use also if a method needs to pass the current object to another method
+  - a class can have multiple constructors (constructor overlaoding) but they must vary in:
+    - number of parameters
+    - type of parameters
+    - order of parameters
