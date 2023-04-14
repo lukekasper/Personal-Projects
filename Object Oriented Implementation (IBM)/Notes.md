@@ -1,4 +1,4 @@
-## Classes
+## Classes and Objects
 - A class is the generalized blueprint for which objects are constructed from
   - describes the state (data or attributes) and behavior that an object of this type supports
   - fundamental building block of C++
@@ -56,4 +56,9 @@
 - Destructors: de-allocates memory
   - compiler provides defualt destructor when none are provided
   - cannot take arguements or return values
-  - 
+
+
+## Static
+- static or class variables: properties associated to a class but not a specific object (global to all objects of a class)
+- can access static properties through static member functions
+- "this" pointer cannot be used for static variables
