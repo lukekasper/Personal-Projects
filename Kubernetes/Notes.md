@@ -120,5 +120,22 @@
   - minikube service mongo-express-service will then make the external service in minikube
 
 ## Namespaces
-
+- a way to organize resources (virtual cluster inside of a K8 cluster)
+- default namespaces:
+  - kube-system: not for user use, do not modify
+  - kube-public: publicly accessible data
+    - contains a config map with cluster info (even without authentication
+  - kube-node-lease: contains info about nodes availability (heartbeat)
+  - default: created resources are here
+- kubectl create namespace <name>: to create new namespaces
+- uses:
+  - way to group resources
+  - multiple teams
+  - resource sharing: staging and development or blue/green deploment (two versions of production environments)
+  - emply access or resource limits on certain namespaces
+- cannot access most resources from another namespace
+  - each namespace must define its own config map and secret
+- can apply namespace in config file under metadata with: namespace: <name>
+- use kubens to change default namespace to desired namespace and avoid having to specify -n <namespace> with each command
+  
   
