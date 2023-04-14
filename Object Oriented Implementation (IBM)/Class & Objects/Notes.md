@@ -1,3 +1,4 @@
+## Classes
 - A class is the generalized blueprint for which objects are constructed from
   - describes the state (data or attributes) and behavior that an object of this type supports
   - fundamental building block of C++
@@ -6,10 +7,38 @@
   - when object is created, all data members are assigned default values
 - Attributes are instance variables or data memebers or class variables
   - used to declare properties of a class (called data members)
-  - can be intrinsic type (int, double, ect), or user defined type
+  - can be intrinsic type (int, double, ect), or user defined type (a class)
   - syntax of an attribute:
     - private: double salary
 - Methods define behavior of an object derived from the class
   - will have a name and return type (void means no return type)
 - Access to attributes and members is done with "."
-    
+- Scope resolution operator "::" used to declare member functions outside of the class
+  - double Employee::calculateGrossPay(int bonus){}
+  - signature of method should still be in class (double calculateGrossPay(int bonus);)
+- Information hiding is implemented using access Specifiers or visbility modifiers
+  - regulate access to classes, fields, and methods
+  - specify if a field or method in a class can be accessed from another class or subclass
+  - public: accessed anywhere
+  - private: only accessed within that class (default)
+  - protected: accessed within class and subclasses
+
+## Member Functions
+- Instance methods: Accessor (or Getters) and Mutators (or Setters) are public methods that allow the user to manipulate an object's data
+- Accessors don't change the state of the object
+  - getSalary(): accepts no parameters but returns salary
+- Mutators change the object state
+  - setSalary(): take parameter as an input to set a data member
+- Constructors: a method that is envoked when an object is created to initialize the instance variables to a default value
+  - name should be the same as the name of the class
+  - must not have any return type (not even a void)
+  - 3 types: 
+    - default: no arguements, all objects created will have the same default values
+    - parametrized: takes an arguement list, different default values for each object
+      - when creating an object from that class, pass the default values in as parameters to utilize this constructor 
+      - Employee empObj(101, "rex", 25000);
+    - copy
+  - a singleton class is one that has a private constructor, can only be initialized by its own member functions
+  - if a local variable shadows a field with the same name, use "this" pointer
+    - this->empid=empid; (for public parameterized constructor
+    - use also if a method needs to pass the current object to another method
