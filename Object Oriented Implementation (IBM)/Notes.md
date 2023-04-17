@@ -98,3 +98,23 @@
 - abstract base class: comprised of at least one pure virtual function
   - a pure virtual function (or member) is set =0
   - if defining a pure virtual member to the base class, you must add the member to ANY derived class
+
+  ## Operator Overloading
+  - similar concept to method overloading but with an operator
+    - add additional functionaility to operators (like ability to add objects)
+  - cannot overload: ::, sizeof, ., *, ?:
+  - syntax: <return_type> <class_name> :: operator <overloaded_operator> (arguements) {}
+  - 3 ways to do this:
+    - binary operator: one arguement is passed to the operator function, the other is passed implicitly using the "this" pointer
+      - take two explicit arguements if overloaded through a friend function
+    - unary operator: no arguements are passed, works with one class object; has void return type
+      - one arguement is passed if overloaded through a friend function
+    - friend operator: makes use of friend function
+      - without friend functions, operator overloading cannot have another object referenced in the overloading method if within a different class
+      - must be declared in every class it is a friend of (with "friend" keyword), but derfined outside of the class as a normal function
+      - friend functions cannot overlaod: =, (), [], ->
+        - must use member functions to overload these
+  - friend functions: non-member method of a class that can access private/protected members of that class
+    - can access private members without creating objects for that class
+    - function is preceded by keyword "friend" and can be defined anywhere in the program
+  - can also apply this concept to classes using: friend class <class_name>;
