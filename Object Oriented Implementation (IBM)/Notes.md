@@ -133,3 +133,7 @@
   - use what() method to provide the string to pinpoint the exception
     - returns a null terminated character to recognize the exception
 - typecasting: conversion from one datatype to another (can also do this for objects)
+
+## Templates
+- generic approach to allow a function/class to work on different datatypes
+- a placeholder is used rather than specifying the data type associated with a member class or funciton
