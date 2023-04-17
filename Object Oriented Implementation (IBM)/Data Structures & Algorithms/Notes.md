@@ -40,4 +40,3 @@
   - doubly: both directions; includes two addresses
   - circularly linked: last node references first node; no null values; can be singly or doubly linked
 - applications: not sure about number of elements, browser cache, undo/redo, track info in a circular manner (ie player turns)
-- 
