@@ -80,3 +80,17 @@
 - inheritence is invoked through "class <parent> : <access modifier> <child>
   
 ## Polymorphism
+- ability for a method to do different things based on the object it is acting on
+- when two methods have the same name and invocation in parent and child class, use "virtual" key word in base class method 
+- method overriding is using a pointer to hold the address for a specific object to ensure correct class method is invoked
+- a virtual function is declared in a baseclass and then overriden in a derived class
+- when you refer to a sub class object using a pointer, you can:
+  - call a virtual function for that object
+  - execute the version of the function of that sub class
+- two types of polymorphism:
+  - static binding (or compile time):
+    - performed at compile time
+    - acheived through method overloading
+  - dynamic binding (or runtime):
+    - acheived through method overriding
+- 
