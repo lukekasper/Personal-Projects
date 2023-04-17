@@ -77,7 +77,7 @@
   - hierarchical: derive more than one class from a parent class
   - multilevel: parent class of one derived class is itself derived from another parent class
   - hybrid: combination of inheritance types
-- inheritence is invoked through "class <parent> : <access modifier> <child>
+- inheritence is invoked through "class <derived> : <access modifier> <base>
   
 ## Polymorphism
 - ability for a method to do different things based on the object it is acting on
@@ -118,3 +118,18 @@
     - can access private members without creating objects for that class
     - function is preceded by keyword "friend" and can be defined anywhere in the program
   - can also apply this concept to classes using: friend class <class_name>;
+  
+## Exception Handling
+- Seperates error handling code from rest of program, avoids abnormal termination of code, can chosse how to handle different exceptions
+- Methods to handling exceptions:
+  - Not handle it (not recommended)
+  - Raise a warning and exit program
+  - Handle exception gracefully and then continue to execute program
+- Try: block of code where exceptions may occur and throws an exception
+- Catch: handles the exception
+- Throw: exception to throw when an issue occurs
+- user defined exceptions can override or inherit from parent class
+  - must include an exception header
+  - use what() method to provide the string to pinpoint the exception
+    - returns a null terminated character to recognize the exception
+- typecasting: conversion from one datatype to another (can also do this for objects)
