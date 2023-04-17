@@ -10,3 +10,34 @@
     - collection of randomly distributed set of data joined by a reference pointer
 
 ## Arrays and Linked Lists
+- list: ordered collection of elemeents that may occur more than once
+- array: homogeneous data and fixed size
+  - can be single or multidimensional
+  - pros:
+    - index or randomely access elements frequently
+    - when low memory is required
+  - cons:
+    - static: array size must be known beforehand and stays fixed
+    - complicated insertion and deletion: requires shifting elements
+  - applications: ticketing or booking system, leaderboards for games, image/speech processing (2D)
+- linked list: collection of nodes in a linear sequence
+  - has memory allocated seperately for each node
+  - uses pointers or references to connect nodes together
+  - each element contains data and a reference to the next node
+    - null reference means it is the last node in the list
+  - dynamic structure: can increase or decrease size at runtime
+    - no need to shift items during insertions or deletions
+  - pros:
+    - grows or shrinks dynamically
+    - no restrictions on operations: can be done on any part of the list
+    - no memory waste
+  - cons:
+    - more memory due to data + reference address
+    - traversal is difficult (must traverse all nodes before n)
+      - reverse traversal requires additional memory for pointer to reference in the opposite direction
+- linked lists can be: 
+  - singly (one-way)
+  - doubly: both directions; includes two addresses
+  - circularly linked: last node references first node; no null values; can be singly or doubly linked
+- applications: not sure about number of elements, browser cache, undo/redo, track info in a circular manner (ie player turns)
+- 
