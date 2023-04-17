@@ -56,6 +56,7 @@
 - Destructors: de-allocates memory
   - compiler provides defualt destructor when none are provided
   - cannot take arguements or return values
+  - called with "~"
 
 
 ## Static
@@ -66,4 +67,16 @@
 
 ## Inheritance
 - common properties and methods across multiple classes can be collected in a parent class
-- 
+- ability to reuse methods and properties of parent class
+- parent class constructor is envoked before specific contructors/methods of the child class
+  - destructors are called in the opposite order
+- if private, properties of parent class can only be accessed in child class through getters/setters
+- Types of inheritance: 
+  - single: derived class is inherited from a single parent class
+  - multiple: inherits attributes from 2+ base classes
+  - hierarchical: derive more than one class from a parent class
+  - multilevel: parent class of one derived class is itself derived from another parent class
+  - hybrid: combination of inheritance types
+- inheritence is invoked through "class <parent> : <access modifier> <child>
+  
+## Polymorphism
