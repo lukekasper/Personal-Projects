@@ -69,3 +69,41 @@
   - doubly ended queue: insertion and deletion takes place at both ends
     - Input restricted deque: input is blocked at one end but allows deletion from both ends
     - Output restricted deque: output is blocked at one end but allows insertion from both ends
+
+## Trees
+- nonlinear data structures: elements not ordered sequentially and elements can be connected to more than two other elements
+  - cannot be traversed in a single run
+- trees are like a file or directory system (hierarchical)
+- root: top node of a tree (no parent)
+- predecessor = parent; successor = child
+- path: sequence of successive edges from source to destination node
+- degree of a node: number of its children
+- dgree of a tree: highest degree of a node in that tree
+- depth of a node: number of edges between that node and the root
+- height of a node: longest path from a node to the leaf
+- applications: compilers (expression/symbol tree), database management systems, OS file systems, org charts
+- implemented using a linked list
+- binary tree: node is linked to at most two successor nodes
+  - used for searching, arithmetic expression, decision process
+  - complete binary tree: every level except last is full and nodes are as far to the left as possible
+  - full binary tree: every node has two children other than the leaves
+  - binary search tree:
+    - every node on left subtree is < parent node
+    - every node on right subtree is >= parent node
+    - major operations:
+      - insert, search, delete, traversal (pre-order, in-order, post-order)
+- max number of nodes on depth i = 2^i
+- max nodes of height k = 2^(k+1)-1
+
+## Recursion
+- solve a problem by solving smaller problems of the same type
+- a function/algorithm calls itself using smaller input values
+- pros: solves difficult problems easily and provides readability
+- cons: use alot of memory
+- base case: condition to terminate recursion algorithm
+- components:
+  - decomposition: decompose the problem into smaller problems
+  - composition: combining answers of smaller problems into an answer for the larger problem
+  - base case: smallest problem that can be solved wihtout further decomposition
+- iteration is more efficient in terms of memory/execution speed
+- 
