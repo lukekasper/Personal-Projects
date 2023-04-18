@@ -92,6 +92,9 @@
     - every node on right subtree is >= parent node
     - major operations:
       - insert, search, delete, traversal (pre-order, in-order, post-order)
+        - pre-order: root, then left nodes, then right nodes
+        - in-order: left, then root, then right nodes
+        - post-order: left, then right, then root nodes
 - max number of nodes on depth i = 2^i
 - max nodes of height k = 2^(k+1)-1
 
@@ -106,4 +109,13 @@
   - composition: combining answers of smaller problems into an answer for the larger problem
   - base case: smallest problem that can be solved wihtout further decomposition
 - iteration is more efficient in terms of memory/execution speed
-- 
+- used for tree operation algorithms
+
+## Graphs
+- collection of verticies and edges
+- applications: gps systems, social networks, ecommerce recommendations, google search, traveling salesman problem (TSP), networks in general
+- graph variations:
+  - directed (digraph): edges have a direction associated with them
+    - traversals must follow direction of edges
+  - undirected: edges have no direction (bi-directional); default config
+  - weighted: 
