@@ -40,3 +40,32 @@
   - doubly: both directions; includes two addresses
   - circularly linked: last node references first node; no null values; can be singly or doubly linked
 - applications: not sure about number of elements, browser cache, undo/redo, track info in a circular manner (ie player turns)
+
+## Stack and Queue
+- stack: only allows access to last element inserted (or top/head)
+  - last-in-first-out (LIFO)
+  - functions:
+    - push: add an element to top
+    - pop: remove an element
+    - peek: get top element
+  - stack underflow: trying to pop an item from an empty stack
+  - can be implemented using array or linked list
+  - size of stack is fixed (item can be pushed if space is available)
+  - needs a variable or pointer "top" to track top element
+    - top variable = -1 means an empty stack for array or NULLL for linked list
+  - applications: web browsers (history), to reverse a string, create local variables, evaluating arithmetic expressions
+- queue: collection of items where we add items at one end (rear) and remove items from the other end (front)
+  - first-in-first-out (FIFO)
+  - application: CPU/disk scheduling, interruptions on real-time systems, phone calls in call centers, shared resource usage
+  - functions:
+    - enque: add an element
+    - deque: remove an element
+  - can be implemented using arrays and linked lists
+  - linked list queues can be singly, doubly, and circularly linked (ring buffer)
+    - circular queues are used for CPU scheduling, memory management, and traffic management
+  - priority queue: priority assigned to each element
+    - elements are deleted based on priority of the element (highest is removed first)
+    - used for load balancing, interruption handling, sorting heap
+  - doubly ended queue: insertion and deletion takes place at both ends
+    - Input restricted deque: input is blocked at one end but allows deletion from both ends
+    - Output restricted deque: output is blocked at one end but allows insertion from both ends
