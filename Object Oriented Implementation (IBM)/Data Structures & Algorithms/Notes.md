@@ -12,6 +12,7 @@
 ## Arrays and Linked Lists
 - list: ordered collection of elemeents that may occur more than once
 - array: homogeneous data and fixed size
+  - syntax: type name[size]
   - can be single or multidimensional
   - pros:
     - index or randomely access elements frequently
