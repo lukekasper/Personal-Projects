@@ -118,4 +118,18 @@
   - directed (digraph): edges have a direction associated with them
     - traversals must follow direction of edges
   - undirected: edges have no direction (bi-directional); default config
-  - weighted: 
+  - weighted: weight or value given to edges (cost of traversing)
+  - unweighted: no cost of traversing (default)
+  - cyclic: graph contains cycles, or closed regions (a path can start and end at the same node
+  - acyclic: an acyclic, directed graph is a tree
+- degree: number of edges connected to  a vertex
+  - indegree: number of incoming edges connected to a vertex
+  - outdegree: number of outgoing edges connected to a vertex
+- graph representations: situation specefic (type of operations to be performed and ease of use)
+  - adjacency matrix: 2D array of size VxV (V = number of vertices)
+    - in the matrix, a value of 1 at point i, j means there is an edge between vertex i and j
+    - for an undirected graph, its always a symmetric matrix
+    - also used to represent weighted graphs (1 is replaced with weight w)
+  - adjacency list: array of linked lists
+    - size of array = number of vertices
+    - for weighted graph, weight of edges can be stored in nodes of linked list
