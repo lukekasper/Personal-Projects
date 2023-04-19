@@ -141,3 +141,10 @@
 ## Ingress:
 - used to have a url in browser rather than IP address (like with an external service)
   - connects to with an internal service to connect to K8 pods
+- yaml file configuration:
+  - host: is what user will enter into browser (must be a valid domain address)
+  - backend: is what service request will be redirected to
+    - service should be internal service name, and port should be the port of that internal service
+- steps:
+  1) request from browser to ingress
+  2) request get forwarded to internal service
