@@ -137,5 +137,7 @@
   - each namespace must define its own config map and secret
 - can apply namespace in config file under metadata with: namespace: <name>
 - use kubens to change default namespace to desired namespace and avoid having to specify -n <namespace> with each command
-  
-  
+
+## Ingress:
+- used to have a url in browser rather than IP address (like with an external service)
+  - connects to with an internal service to connect to K8 pods
