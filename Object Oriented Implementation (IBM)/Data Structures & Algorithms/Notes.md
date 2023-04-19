@@ -131,6 +131,10 @@
     - in the matrix, a value of 1 at point i, j means there is an edge between vertex i and j
     - for an undirected graph, its always a symmetric matrix
     - also used to represent weighted graphs (1 is replaced with weight w)
+    - pros: easy to implement/follow, queries checking for an edge from u to v are efficient
+    - cons: lots of memories for big graphs
   - adjacency list: array of linked lists
     - size of array = number of vertices
     - for weighted graph, weight of edges can be stored in nodes of linked list
+    - pros: store graph in more compact form, adding a vertex is easier
+    - cons: difficult to check for an edge
