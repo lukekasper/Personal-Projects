@@ -1,3 +1,6 @@
+https://www.youtube.com/watch?v=X48VuDVv0do
+https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
+
 ## Intro to Kubernetes
 - Open source container orchestration tool
 - Helps manage many containerized applications in different environments
@@ -142,9 +145,44 @@
 - used to have a url in browser rather than IP address (like with an external service)
   - connects to with an internal service to connect to K8 pods
 - yaml file configuration:
-  - host: is what user will enter into browser (must be a valid domain address)
+  - host: is what user will enter into browser (must be a valid/registered domain address)
+    - map domain name to IP address of node you want to be the entry point to your cluster
   - backend: is what service request will be redirected to
     - service should be internal service name, and port should be the port of that internal service
 - steps:
   1) request from browser to ingress
   2) request get forwarded to internal service
+- also need an implementation for ingress (or ingress controller)
+  - another pod or set of pods running in K8 cluster
+  - does evaluation and processing of ingress rules, and manages redirections
+  - is the entrypoint to the cluster
+  - must download and install controller from third party vendor (or K8s nginx controller)
+  - must consider the environment in which your cluster is running
+    - if on a cloud, they will implement a load balancer (saving you the need to do that) which will redirect requests to the controller
+- creating ingress rules
+  - create a ingress yaml file in same namespace as service/pod
+  - define rules in specification (spec)
+  - set http forwarding to the internal serviceName and port you want to access
+  - must define IP address mapping in /etc/hosts file (sudo vim /etc/hosts)
+    - find using "kubectl get ingress -n <namespace>"
+    - insert IP address and url mapping (esc, :wq will exit editor)
+- default backend exists which can be used to define custom error messages for incorrect url pathways
+  - make internal service with name "default-http-backend" and same port number (80)
+- multiple paths for the same host:
+  - can define seperate pathways using "paths: /path1" and send request to different port# and K8 services
+  - can also define seperate hosts if multiple sub-domains are required
+- to configure TLS certifficate (for https forwarding), define tls section in spec above rules and reference secretName
+  - this contains TLS certificates (02:23:30)
+  
+## Helm
+- package manager for Kubernetes (ie to package yaml files and distribute in public/private repositories)
+- helm charts: standard bundle of K8 yaml files which includes things like config map, secret, ect
+  - available on public repositories to download
+  - things like database apps (MySQL) or Monitoring Apps (Prometheus) have helm charts available
+  - find them in cmd line using: helm search <keyword> or at Helm Hub
+- templating engine: way to define a common blueprint for similar microservices to avoid having to create yaml files for each one
+  - dynamic values are replaced by placeholders {{ .Values... }}
+    - .Values is an object based on values supplied by values yaml file or through cmd line using "--set" flag
+    - values.yaml file is used to fill in template placeholders
+    - practical for CI/CD (use template files in build pipeline)
+- useful for same application across different environemnts (or K8 clusters)
