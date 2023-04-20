@@ -138,3 +138,28 @@
     - for weighted graph, weight of edges can be stored in nodes of linked list
     - pros: store graph in more compact form, adding a vertex is easier
     - cons: difficult to check for an edge
+
+## Analysis of Algorithms
+- algorithm efficiency depends on: quality/accuracy, space complexity, and time complexity
+  - time complexity: measured in terms of number of operations
+    - asymptotic analysis: way to calculate time complexity of an algorithm based on number of operations
+    - typically consider worst case scenario (ie traversing the entire array)
+    - Big-O notiation (O) represents growth rate of a function with n
+      - O(1): constant time for any input size
+        - generally a sequence of statements
+      - O(log n): applies to algorithms that divide the problem in half each time
+        - BST
+      - O(n): time is proportional to input size
+        - find max element in unsorted array
+        - single loop statements
+      - O(n log n): log linear complexity; linearithmic running time
+      - O(n^2): sorting array with bubble sort
+        - nested loop statements
+      - O(2^n): exponential time period
+        - finding all subsets of an array
+      - O(1) < O(log n) < O(n) < O(n log n) < O(n^2)
+  - space complexity: total memory to perform an operation
+    - includes auxillary space (temporary space needed to perform algorithm) and space for inputs
+    -  also expressed in big-O notation
+    -  can vary for different OS, programming languages, and compilers
+    -  calculate by multiplying the number of bytes needed to store each variable (including the return variable)
