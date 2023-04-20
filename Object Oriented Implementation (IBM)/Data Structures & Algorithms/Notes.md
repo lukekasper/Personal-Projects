@@ -141,25 +141,78 @@
 
 ## Analysis of Algorithms
 - algorithm efficiency depends on: quality/accuracy, space complexity, and time complexity
-  - time complexity: measured in terms of number of operations
-    - asymptotic analysis: way to calculate time complexity of an algorithm based on number of operations
-    - typically consider worst case scenario (ie traversing the entire array)
-    - Big-O notiation (O) represents growth rate of a function with n
-      - O(1): constant time for any input size
-        - generally a sequence of statements
-      - O(log n): applies to algorithms that divide the problem in half each time
-        - BST
-      - O(n): time is proportional to input size
-        - find max element in unsorted array
-        - single loop statements
-      - O(n log n): log linear complexity; linearithmic running time
-      - O(n^2): sorting array with bubble sort
-        - nested loop statements
-      - O(2^n): exponential time period
-        - finding all subsets of an array
-      - O(1) < O(log n) < O(n) < O(n log n) < O(n^2)
-  - space complexity: total memory to perform an operation
-    - includes auxillary space (temporary space needed to perform algorithm) and space for inputs
-    -  also expressed in big-O notation
-    -  can vary for different OS, programming languages, and compilers
-    -  calculate by multiplying the number of bytes needed to store each variable (including the return variable)
+- time complexity: measured in terms of number of operations
+  - asymptotic analysis: way to calculate time complexity of an algorithm based on number of operations
+  - typically consider worst case scenario (ie traversing the entire array)
+  - Big-O notiation (O) represents growth rate of a function with n
+    - O(1): constant time for any input size
+      - generally a sequence of statements
+    - O(log n): applies to algorithms that divide the problem in half each time
+      - BST
+    - O(n): time is proportional to input size
+      - find max element in unsorted array
+      - single loop statements
+    - O(n log n): log linear complexity; linearithmic running time
+    - O(n^2): sorting array with bubble sort
+      - nested loop statements
+    - O(2^n): exponential time period
+      - finding all subsets of an array
+    - O(1) < O(log n) < O(n) < O(n log n) < O(n^2)
+- space complexity: total memory to perform an operation
+  - includes auxillary space (temporary space needed to perform algorithm) and space for inputs
+  -  also expressed in big-O notation
+  -  can vary for different OS, programming languages, and compilers
+  -  calculate by multiplying the number of bytes needed to store each variable (including the return variable)
+
+## Algorithm Design Strategies
+- iterative and recursive algorithms are discussed above
+- divide and conquer: divide problem into smaller sub parts, each part is solved seperately, then combined
+  - steps:
+    1) partition data into different groups
+    2) continue sub dividing the groups until problem can be solved easily
+    3) find solution of individual problems
+    4) combine solutions
+  - used in binary search, merge sort, quick sort, ect
+- greedy algorithm: used to solve optimization problems
+  - makes the locally optimal choice at each stage with the hope of finding the global optimum
+  - chooses next best step without thinking much about future impact
+  - decides once and for all
+  - may not (in general) yeild optimal solution, but approximates global optimal from locally optimal solutions in reasonable amount of time
+  - divide problem into multiple steps and take the best choice at each step
+  - examples: Huffman encoding problem, fractional knapsack problem, traveling salesman problem, coin change problem, minimum spanning tree
+- dynamic programming: also used for optimization problems
+  - solves smaller sub-problems and stores results to avoid computing again
+  - before solving the current problem, algorithm examines results fof previuosly solved sub-problems
+  - not useful when there are no common (overlapping) sub-problems
+    - no point in storing a solution if it is not needed again
+  - overlapping sub problem: solutions are stored in a table to avoid re-computing an answer (memoization)
+  - optimal sub structure: optimal solution can be optained from solution of sub-problems
+  - comparitively slow (compared to greedy algorithm), but can solve more problems than greedy algorithm
+  - examples: fibonacci series implementation, google maps
+
+## Searching and Sorting Algorithms
+- Searching:
+  - linear and binary search (divide and conquer) algorthms
+  - binary search only works on a sorted list
+- Sorting:
+  - bubble sort: continue to iterate through list and swap adjacent items if they're in the wrong order
+  - selection sort: selects smallest item from unsorted list in each iteration and places it at the beginning of list
+    - logically divides the array into sorted and unsorted parts
+    - can also select the largest element and place it at the end of the list
+  - insertion sort: sorts elements one-by-one (like playing cards)
+    - efficient for small data sets (not for large ones)
+    - start with the left and check a given element against all previous elements (to the left) and place it in the correct spot
+  - quick sort: 
+    - based on divide and conquer strategy
+    - better to use with larger data sets
+    - divides list into: pivot element, < pivot element, > pivot element
+    - strategy:
+      - pick a pivot value (usually first in array)
+      - place items < pivot on left and > pivot on right (pivot is now in correct place)
+      - move pivot value to the right of the current pivot value
+        - call function recursively again on each side (left pivot is value furthest to the left)
+      - repeat until there is no item left
+  - merge sort: best for worst case time complexity
+    - continue to divide array in half until only only one element is left
+    - sort each half
+    - merge sorted havles 
