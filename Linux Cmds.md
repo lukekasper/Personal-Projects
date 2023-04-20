@@ -34,4 +34,3 @@
 - `tar -czf archive.tar.gz file1 file2`: write files to a zipped archive
   - `tar -xf archive.tar -C directory`: extract files from an archive to a specific directory
   - `-tf`: lists files in an archive
-- 
