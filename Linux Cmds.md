@@ -1,0 +1,36 @@
+## Common Linux Cmds:
+- `man <command>`: prints out cmd manual
+  - `tldr <command>`: abbreviated overview of command
+  - use the `q` key to escape the man page
+- `ls -al <pathway>`: returns additional info about files in a directory
+  - from left to right: file permissions, number of links to the file, owner, group, file size (bytes), last modification time, name
+  - `a` option is what shows hidden files as well (prefaced by a `.`)
+- `cd`: use `.` to indicate current folder and `/` to start a path from the root folder
+- `pwd`: prints current folder path
+- `mkdir -p fruits/apples`: use `-p` to make nested folders
+- `rmdir fruits cars`: to remove multiple directories; folder you delete must be empty
+- `rm -rf fruts cars`: to delete folders with files in them
+- `mv pear1 pear2 new_pear`: used to move and rename files; if the last parameter is a folder, it will move the specified file(s) into that folder
+- `cp -r fruits cars`: to copy files and folders, adding `-r` is necessary when working with folders to copy the entire folder's contents
+- `open <filename>` or `open <director name>`: opens a file or directory (on mac OS opens finder)
+  - can also use `open <app name>` to run an application
+- `touch apple`: creates an empty file; if one already exists, it opens the file in write mode
+- `find . -name '*.js'`: prints the relative path for a file with the given extension in the current directory
+  - `find . -type d -iname src`: d = directories, f = files, l = symboolic links; iname performs case-insensitive search
+  - `find folder1 folder2 -name filename.txt -or -name public`: search under multiple root trees; use `-or` to search for multiple names/types
+  - `find . -type d -name '*.md' -not -path 'node_modules/*': use `-not` to exclude a path
+  - `find . -type f -size +100c`: files that have more than 100 characters (bytes)
+  - `find . -type f -size +100k -size -1M`: search based on file size (in bytes)
+  - `find . -type f -mtime +3`: files edited more than 3 days ago
+  - `find . -type f -mtime -1 -delete`: delete files matching search (edited in the last 24 hours)
+  - `find . -type f -exec cat {} \;`: pipe in commands to run on search results
+    - `\;` used to terminate and `{}` is filled with file names at the time of execution
+- `ln`: used to create links (or pointers to another file like windows shortcuts)
+  - `ln -s <original> <link>`: soft links; when original file is moved, link is broken
+- `gzep -k1 filename`: compresses file; `-k` specifies keep the original file; `-1` means level of compression from 1=least to 9=most
+  - use `-r` to compress all files in a directory
+  - use `-d` to decompress a file
+  - `gunzip` is like `gzip` but by default has the `-d` flag enabled
+- `tar -czf archive.tar.gz file1 file2`: write files to a zipped archive
+  - `tar -xf archive.tar -C directory`: extract files from an archive to a specific directory
+  - `-tf`: lists files in an archive
