@@ -1,4 +1,4 @@
-https://www.youtube.com/watch?v=X48VuDVv0do  |  
+https://www.youtube.com/watch?v=X48VuDVv0do    
 https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
 
 ## Intro to Kubernetes
