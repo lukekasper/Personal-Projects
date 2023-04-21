@@ -202,6 +202,7 @@ https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
 - helm 3 removed Tiller due to security concerns (too much control within K8 cluster)
   
 ## Volumes
+- a directory (possibly with some data)
 - no default data persistence between pod restarts (can lead to loss of data in databases)
   - if SQL pod "dies" data stored on it can be lost
 - storage requirements:
@@ -209,19 +210,60 @@ https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
   - must be available on all nodes
   - storage must survive even if entire cluster crashes
 - another application for persistent storage is read/write files to a directory
+- for DB persistence, use remote storage
 - persistent volume: cluster resource (like ram or CPU) that is used to store data
   - created using yaml file
   - is just an abstraction, so needs a physical storage as well
   - persistent volume is the interface between physical storage and cluster
+    - PV type depends on the physical storage it is backed by
   - must manage physical (or cloud) storage yourself outside of cluter
   - not in a namespace (available to entire cluster)
   - must be in cluster before pod that depends on it is created
-- for DB persistence, use remote storage
 - persistent volume claim (PVC): allows an appication (pod) to claim a persistent volume (PV)
   - specifies things like which volumes to claim (based on storage size or capacity and things like access type)
   - whatever PV satisfies this criteria (or claim) will be used for application
   - must also use this PVC in that pods configuration
   - must exist in same namespace as pod using the claim
-- pods -> request a volume through PV claim -> claim finds a PV in the cluster -> volume has a physicsal storage backend to create resource from -> volume is then mounted into the pod and the container
+  - container and application within that container can now read/write to storage
+  - mountPath is the path (specified in the container config file) where apps can access the data
+- layers of abstraction are so user (or developer) does not need to be concerned with where physical storage is or how its configured, just provide specifications on type of storage necessary for application and use PVC to claim adequate volume
+- Secret and ConfigMap are both local volumes, but aren't created using PV/PVC
+  - managed by K8
+  - mount these directly onto pod like you would a PVC
+- storage class:
+  - dynamically creates/previsions PV when a PVC claims it (automates proces)
+  - created using yaml config file (kind: StorageClass) via "provisioner" attribute
+  - can provide parameters for the storage we want to request for the PV
+  - another abstraction level for underlying storage provider and parameters of storage
+  - added to PVC config file to reference storage class that satisfies claims of PVC
+- pods -> request a volume through PV claim -> PVC requests storage from storage class -> SC provisions a PV in the cluster that meets the PVCs claim -> volume has a physicsal storage backend to create resource from -> volume is then mounted into the pod and the container
   
+## StatefulSet
+- used for stateful applications (ie databases (MySQL), any app that stores data to track state)
+- statless apps are deployed using deployment
+  - randomely addressed/deleted, can be created at the same time, and are identical
+- stateful apps are delplyed using stateful set
+  - can be used to replicate pods and configure storage
+  - replica pods are NOT identical (have their own identity); are not interchangeable
+  - only one pod can read and write to database to avoid data inconsistencies (master)
+    - other replica pods only have read access (workers/slaves)
+  - pods also do not have access to same physical storage
+    - must continuously synchronize data
+    - when a new pod is created, it clones previous pods storage and begins continuosly synchronizing
+  - storage contains state of pod as well as data (master vs slave or other characteristics of that particular pod)
+    - that way if pod dies, it can be replaced and new pod will contain all the same state info
+  - have fixed ordered names (not random hashes like stateless deployments)
+    - convention is <stateful set name> - <ordinal> (ie 0, 1, ...)
+  - each pod gets its on DNS endpoint as well
+  - if pod restarts, IP address changes but name/endpoint remains the same
+  - complex setup which requires you to configure alot yourself (not ideal for containerized environment)
+  
+## K8 Services
+- creates a stable (static) IP address for if a pod restarts or dies
+- provides load balancing
+- loose coupling (communication) between components within and outside of cluster
+- Cluster IP: most common/default service type
+  - 
+  
+
   
