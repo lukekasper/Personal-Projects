@@ -262,8 +262,35 @@ https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
 - creates a stable (static) IP address for if a pod restarts or dies
 - provides load balancing
 - loose coupling (communication) between components within and outside of cluster
+- sidecar container: run alongside main container in pod; shares same volume and network
+  - used for logging or monitoring agents
+  - have a seperate accessible port from main container
 - Cluster IP: most common/default service type
-  - 
-  
-
-  
+  - internal service that forwards request from ingress to nodes/pods
+  - abstraction layer that has its own IP address and port (arbitrary)
+  - service identifies endpoint pods through a service selector
+    - selector uses a list of labels to define which apps it can acces
+    - labels come from key-value pairs from app config files under metadata labels (that we define ourselves)
+  - target port defines which port to forward request to within pod
+  - also used to forward request from pod to databases within cluster
+    - services can themselves have multipe ports if they need to forward requests from 2 different pods/applications
+    - ie a pod sends requests to a service to access a database, and prometheus sends requests to a service to export DB logs (on a different DB port)
+- Headles Service: when client needs to commmunicate with a specific pod directly, or a pod needs to communicate with another pod directly
+  - useful for stateful applications
+    - pods are unique
+    - pods need to synchronize data with one another
+  - client must obtain IP address of each pod
+    - DNS lookup for service
+      - returns single IP address of service's ClusterIP address
+      - if you set clusterIP: None in service yaml file, it will return pod IP addresses for memebers of that service instead
+- Service type attributes:
+  - ClusterIP (default), NodePort, and LoadBalancer
+  - NodePort: 
+    - creates a static port on a node
+    - allows external traffic to access node directly without ingress (port range of 30000-32767)
+    - also automatically creates ClusterIP service for internal node management
+    - is available on all worker nodes
+    - routing external traffic this way is not very secure or efficient
+  LoadBalancer: better way to handle this
+    - node becomes accessible externally only through cloud providers load balancer
+      - functions similarly to a node port otherwise
