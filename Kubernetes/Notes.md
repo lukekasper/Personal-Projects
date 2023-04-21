@@ -65,7 +65,6 @@ https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
   - install necessary master/worker node processes
   - add it to the cluster
 
-
 ## Minikube and Kubectl
 - Minikube: way to test cluster setup locally (master and worker processes run together on one machine)
   - ran through a virtual box on laptop
@@ -186,3 +185,43 @@ https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master/
     - values.yaml file is used to fill in template placeholders
     - practical for CI/CD (use template files in build pipeline)
 - useful for same application across different environemnts (or K8 clusters)
+- structure:
+  - name of chart
+    - chart.yaml: meta info about chart (name, version, dependencies, ect)
+    - values.yaml: values for template files (default values to override
+    - charts folder: chart dependencies (if chart is dependent on another chart)
+    - templates folder: where template files are stored
+      - helm install <chartname> will fill template files with values from values.yaml
+      - can have other files like licenses or readme as well
+- can provide values during install cmd with: `helm install --values=my-values.yaml <chartname>`
+  - can use this to redefine values in default values.yaml file
+  - this will merge two values files into a .Values object
+- can also provide values directly in cmd line with: `helm install --set version=2.0.0`
+- helm version 2 allows for release management by tracking chart executions (Tiller)
+  - can rollback to previous versions if necessary
+- helm 3 removed Tiller due to security concerns (too much control within K8 cluster)
+  
+## Volumes
+- no default data persistence between pod restarts (can lead to loss of data in databases)
+  - if SQL pod "dies" data stored on it can be lost
+- storage requirements:
+  - must not depend on pod life cycle
+  - must be available on all nodes
+  - storage must survive even if entire cluster crashes
+- another application for persistent storage is read/write files to a directory
+- persistent volume: cluster resource (like ram or CPU) that is used to store data
+  - created using yaml file
+  - is just an abstraction, so needs a physical storage as well
+  - persistent volume is the interface between physical storage and cluster
+  - must manage physical (or cloud) storage yourself outside of cluter
+  - not in a namespace (available to entire cluster)
+  - must be in cluster before pod that depends on it is created
+- for DB persistence, use remote storage
+- persistent volume claim (PVC): allows an appication (pod) to claim a persistent volume (PV)
+  - specifies things like which volumes to claim (based on storage size or capacity and things like access type)
+  - whatever PV satisfies this criteria (or claim) will be used for application
+  - must also use this PVC in that pods configuration
+  - must exist in same namespace as pod using the claim
+- pods -> request a volume through PV claim -> claim finds a PV in the cluster -> volume has a physicsal storage backend to create resource from -> volume is then mounted into the pod and the container
+  
+  
