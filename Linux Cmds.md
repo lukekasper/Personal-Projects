@@ -83,3 +83,12 @@
 - `echo`: print to terminal
   - `echo "hello" >> output.txt`: append output to a file
   - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
+- `chown`: change ownership of files or directories
+- `chmod`: change permissions for a given file
+  - `drwxr-xr-x`: string denoting file permissions
+    - `-`: normal file
+    - `d`: directory
+    - `l`: link
+    - first set represents permissions of owner
+    - second set represents permissions of members of the group
+    - third set is permissions for everyone else
