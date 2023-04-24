@@ -54,3 +54,5 @@
   - can open multiple files and navigate using `:n` (next) and `:p` (prev)
 - `tail -f /var/log/system.log`: use to open a file and watch for changes
   - changes are printed in the window; great for monitoring log files
+- `ls -al | wc`: use `wc` with `|` to get info about a file or input
+  - returns: # of lines    # of words    # of bytes
