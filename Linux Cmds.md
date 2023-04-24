@@ -44,4 +44,3 @@
 - `cat file1 file2 > file3`: concatenate content of files into a new file (overwriting file if it exists)
   - `>>`: appends contents of files to new file
   - `-n`: print line numbers
-- 
