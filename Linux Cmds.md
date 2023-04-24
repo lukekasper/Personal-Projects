@@ -55,4 +55,31 @@
 - `tail -f /var/log/system.log`: use to open a file and watch for changes
   - changes are printed in the window; great for monitoring log files
 - `ls -al | wc`: use `wc` with `|` to get info about a file or input
-  - returns: # of lines    # of words    # of bytes
+  - returns: # of lines, # of words, # of bytes
+- `grep`: used to search in a file or the output of another command
+  - `less index.md | grep -n document.getElementById`: search file for "document.getElementById"
+  - `-n`: prints line numbers
+  - `-i`: searches case insensitive
+  - `-nC <num>`: prints n number of lines before and after grep result
+  - search string can be a regular expression
+  - `-v`: invert result
+- `sort <filename>` or `ls | sort`: sort a file or output of a command
+  - `-r`: reverses order
+  - `--ignore-case`: sort case insensitive
+  - `-n`: sort numerically
+  - `-u`: remove duplicate lines
+  - use with `uniq` to further tailor output
+    - `sort dogs.txt | uniq`: remove duplicates
+    - `-d`: display only duplicates
+    - `-u`: display only non-duplicates
+    - `-c`: count occurences of each line
+    - `sort dogs.txt | uniq -c | sort -nr`: sort lines by most frequent
+  - `diff file1 file2`: displays difference between two files
+    - 2a3 = 2nd file has an extra line at line 3
+    - 2d3 = 2nd file is missing a line at line 3
+    - `-y`: compares files line-by-line
+    - `-u`: display dfferences in Git format
+    - `-ur` or `-rq` to display differences between directories (content difference vs which files differ)
+  - `echo`: print to terminal
+    - `echo "hello" >> output.txt`: append output to a file
+    - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
