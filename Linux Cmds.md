@@ -74,12 +74,12 @@
     - `-u`: display only non-duplicates
     - `-c`: count occurences of each line
     - `sort dogs.txt | uniq -c | sort -nr`: sort lines by most frequent
-  - `diff file1 file2`: displays difference between two files
-    - 2a3 = 2nd file has an extra line at line 3
-    - 2d3 = 2nd file is missing a line at line 3
-    - `-y`: compares files line-by-line
-    - `-u`: display dfferences in Git format
-    - `-ur` or `-rq` to display differences between directories (content difference vs which files differ)
-  - `echo`: print to terminal
-    - `echo "hello" >> output.txt`: append output to a file
-    - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
+- `diff file1 file2`: displays difference between two files
+  - 2a3 = 2nd file has an extra line at line 3
+  - 2d3 = 2nd file is missing a line at line 3
+  - `-y`: compares files line-by-line
+  - `-u`: display dfferences in Git format
+  - `-ur` or `-rq` to display differences between directories (content difference vs which files differ)
+- `echo`: print to terminal
+  - `echo "hello" >> output.txt`: append output to a file
+  - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
