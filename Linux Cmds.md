@@ -44,3 +44,13 @@
 - `cat file1 file2 > file3`: concatenate content of files into a new file (overwriting file if it exists)
   - `>>`: appends contents of files to new file
   - `-n`: print line numbers
+  - `cat file1 | anothercommand`: feed file's content into another command
+- `less <filename>`: to view a file's content in a concise UI
+  - `q`: quit
+  - `b`: navigate page-by-page
+  - `G` jump to end of page and `g` to jump back to start
+  - `/ <word>` to search forward in document and `? <word>` to search backwards
+  - `v`: open text editor (usually `vim`)
+  - can open multiple files and navigate using `:n` (next) and `:p` (prev)
+- `tail -f /var/log/system.log`: use to open a file and watch for changes
+  - changes are printed in the window; great for monitoring log files
