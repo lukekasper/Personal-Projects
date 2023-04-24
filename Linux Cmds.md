@@ -1,3 +1,5 @@
+**https://www.freecodecamp.org/news/the-linux-commands-handbook/**
+
 ## Common Linux Cmds:
 - `man <command>`: prints out cmd manual
   - `tldr <command>`: abbreviated overview of command
@@ -34,3 +36,12 @@
 - `tar -czf archive.tar.gz file1 file2`: write files to a zipped archive
   - `tar -xf archive.tar -C directory`: extract files from an archive to a specific directory
   - `-tf`: lists files in an archive
+-`alias ll='ls -al'`: create an alias for a cmd with optional flags
+  - calling `alias` with no options shows all defined aliases
+  - resets once shell is closed unless defined in shell configuration (`~/.bashrc` or `~/.profile` or `~/.bash_profile`)
+  - single quotes: variable is defined at definition time
+  - double quptes: variable is defined at invocation time
+- `cat file1 file2 > file3`: concatenate content of files into a new file (overwriting file if it exists)
+  - `>>`: appends contents of files to new file
+  - `-n`: print line numbers
+- 
