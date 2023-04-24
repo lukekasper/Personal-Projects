@@ -35,7 +35,7 @@
   - `gunzip` is like `gzip` but by default has the `-d` flag enabled
 - `tar -czf archive.tar.gz file1 file2`: write files to a zipped archive
   - `tar -xf archive.tar -C directory`: extract files from an archive to a specific directory
-  - `-tf`: lists files in an archive
+  - `-tf`: lists files in an archive 
 -`alias ll='ls -al'`: create an alias for a cmd with optional flags
   - calling `alias` with no options shows all defined aliases
   - resets once shell is closed unless defined in shell configuration (`~/.bashrc` or `~/.profile` or `~/.bash_profile`)
