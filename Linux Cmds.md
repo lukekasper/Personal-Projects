@@ -19,7 +19,7 @@
 - `find . -name '*.js'`: prints the relative path for a file with the given extension in the current directory
   - `find . -type d -iname src`: d = directories, f = files, l = symboolic links; iname performs case-insensitive search
   - `find folder1 folder2 -name filename.txt -or -name public`: search under multiple root trees; use `-or` to search for multiple names/types
-  - `find . -type d -name '*.md' -not -path 'node_modules/*': use `-not` to exclude a path
+  - `find . -type d -name '*.md' -not -path 'node_modules/*'`: use `-not` to exclude a path
   - `find . -type f -size +100c`: files that have more than 100 characters (bytes)
   - `find . -type f -size +100k -size -1M`: search based on file size (in bytes)
   - `find . -type f -mtime +3`: files edited more than 3 days ago
