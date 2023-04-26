@@ -3,9 +3,6 @@
 ## Common Linux Cmds:
 
 ### File and Search Operations
-- `man <command>`: prints out cmd manual
-  - `tldr <command>`: abbreviated overview of command
-  - use the `q` key to escape the man page
 - `ls -al <pathway>`: returns additional info about files in a directory
   - from left to right: file permissions, number of links to the file, owner, group, file size (bytes), last modification time, name
   - `a` option is what shows hidden files as well (prefaced by a `.`)
@@ -31,25 +28,17 @@
     - `\;` used to terminate and `{}` is filled with file names at the time of execution
 - `ln`: used to create links (or pointers to another file like windows shortcuts)
   - `ln -s <original> <link>`: soft links; when original file is moved, link is broken
-- `gzep -k1 filename`: compresses file; `-k` specifies keep the original file; `-1` means level of compression from 1=least to 9=most
+- `gzip -k1 filename`: compresses file; `-k` specifies keep the original file; `-1` means level of compression from 1=least to 9=most
   - use `-r` to compress all files in a directory
   - use `-d` to decompress a file
   - `gunzip` is like `gzip` but by default has the `-d` flag enabled
 - `tar -czf archive.tar.gz file1 file2`: write files to a zipped archive
   - `tar -xf archive.tar -C directory`: extract files from an archive to a specific directory
   - `-tf`: lists files in an archive 
-- `alias ll='ls -al'`: create an alias for a cmd with optional flags
-  - calling `alias` with no options shows all defined aliases
-  - resets once shell is closed unless defined in shell configuration (`~/.bashrc` or `~/.profile` or `~/.bash_profile`)
-  - single quotes: variable is defined at definition time
-  - double quptes: variable is defined at invocation time
 - `cat file1 file2 > file3`: concatenate content of files into a new file (overwriting file if it exists)
   - `>>`: appends contents of files to new file
   - `-n`: print line numbers
   - `cat file1 | anothercommand`: feed file's content into another command
-- `echo`: print to terminal
-  - `echo "hello" >> output.txt`: append output to a file
-  - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
 - `less <filename>`: to view a file's content in a concise UI
   - `q`: quit
   - `b`: navigate page-by-page
@@ -165,6 +154,11 @@
   - `fg <jobID>`: switch back to specified program and bring it to the foreground
 - `ctrl-Z`: suspends a program
 - `bg <jobID>`: resume running a program in the background
+- `crontab`: way to interact with jobs that run periodically at specific intervals
+  - `-l`: show jobs already defined by you
+  - `-e`: edit and add new jobs (automatically opens vim)
+    - use https://crontab-generator.org/ for syntax
+    - `ctrl-X` to save
   
 ### Command Operations
 - `type`: gives information about how a command is interpreted
@@ -178,6 +172,14 @@
   - `-n1`: used with `-p` checks for confirmation after each iteration of `rm`
   - `command1 | xargs -I % /bin/bash -c 'command2 %; command3 %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with `-I`
     - `testing cat todelete.txt | xargs -p -I % sh -c 'ls %; rm %'`
+- `man <command>`: prints out cmd manual
+  - `tldr <command>`: abbreviated overview of command
+  - use the `q` key to escape the man page
+- `alias ll='ls -al'`: create an alias for a cmd with optional flags
+  - calling `alias` with no options shows all defined aliases
+  - resets once shell is closed unless defined in shell configuration (`~/.bashrc` or `~/.profile` or `~/.bash_profile`)
+  - single quotes: variable is defined at definition time
+  - double quptes: variable is defined at invocation time
   
 ### User Interactions
 - `whoami`: print user logged in to terminal (`who am i` prints additional info)
@@ -189,3 +191,30 @@
   - must be enabled to use `sudo` and enter commands by entering your user's password (not root's password)
   - `sudo nano /etc/hosts`: edit a system config file normally permission locked
   - `sudo -i`: start a shell as root
+  - `-u <username>`: to run a command as a particular user other than root
+- `passwd`: change a password
+  - if root user, can use `passwd <username> <new password>` to change password for any user
+
+### Network
+- `ping <host>`: continuosly send requests to a server via domain name or IP address
+  - end with `ctrl-C` or by setting number of requests with `-c <num>`
+  - prints statistics on results when stopped
+- `traceroute <host>`: gathers information about how the packet travels to the host (defaults to sending 3 requests)
+
+### Prompt Window
+- `echo`: print to terminal
+  - `echo "hello" >> output.txt`: append output to a file
+  - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
+- `clear`: clear terminal window
+  - `-x`: preserves history and allows user to scroll back
+- `history`: show command history
+  - `!<command number>`: call a command by number from the history
+  - `history | grep docker`: to search history by command name
+- `./<script_name>`: execute a script
+
+### Variables
+- `export TEST="test"`: make variables available to child processes (like shell scripts)
+  - `export PATH=$PATH:/new/path`: append to PATH variable
+  - can also be used when creating new variables in `.bash_profile` or `.bashrc` config files
+  - `-n`: remove a variable
+  - with no arguement, prints all exported variables
