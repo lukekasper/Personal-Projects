@@ -47,6 +47,9 @@
   - `>>`: appends contents of files to new file
   - `-n`: print line numbers
   - `cat file1 | anothercommand`: feed file's content into another command
+- `echo`: print to terminal
+  - `echo "hello" >> output.txt`: append output to a file
+  - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
 - `less <filename>`: to view a file's content in a concise UI
   - `q`: quit
   - `b`: navigate page-by-page
@@ -82,9 +85,6 @@
   - `-y`: compares files line-by-line
   - `-u`: display dfferences in Git format
   - `-ur` or `-rq` to display differences between directories (content difference vs which files differ)
-- `echo`: print to terminal
-  - `echo "hello" >> output.txt`: append output to a file
-  - `echo "The path variable is $PATH"`: interpolate environmental variables (escape special chars with `\`)
 - `chown`: change ownership of files or directories
 - `chmod`: change permissions for a given file
   - `drwxr-xr-x`: string denoting file permissions
@@ -112,7 +112,27 @@
 - `df -h <directoryname>`: to get information about the volumes the directory is mounted on
 - `basename <pathway>`: returns name of file or directory pathway points to
 - `dirname <pathway>`: returns the opposite of basename; pathway in which final directory or file lives in
-
+- `vim <filename>`: file editor
+  - `i`: inters "insert" mode to edit text
+    - `esc` key goes back to cmd mode
+    - `x`: delete char
+    - `A`: go to end of current line
+    - `0`: go to start of line
+    - `dw` on first char of a word deletes the word (`ew` preserves whitespace)
+      - `d3w` deletes multiple words (3)
+    - `dd` deletes entire line and `d$` deletes entire line from where cursor is at
+  - `:wq`: saves file and quits vim
+  - `:q!`: exits without saving
+  - `u`: undo
+  - `ctrl-r`: redo
+- `emacs <filename>`: UNIX file editor
+  - `ctrl-x` and `ctrl-w` when you are done
+    - confirm file
+    - confirm overwrite
+  - `ctrl-x` and `ctrl-c` to exit
+- `nano <filename>`: beginner file editor
+  - quit using `ctrl-X`
+  
 ### Processes
 - `ps`: inspect processes running on computer
   - `ax`: shows all process (not just the ones assigned to the current user)
@@ -146,7 +166,7 @@
 - `ctrl-Z`: suspends a program
 - `bg <jobID>`: resume running a program in the background
   
-### Commands
+### Command Operations
 - `type`: gives information about how a command is interpreted
 - `which <cmd>`: returns path to the specified cmd
   - will not work for aliases or built-in shell functions
@@ -156,5 +176,16 @@
     - `rm` is ran twice, one for each line in "todelete.txt"
   - `-p`: prints a confirmation prompt with actions that will take place
   - `-n1`: used with `-p` checks for confirmation after each iteration of `rm`
-  - `command1 | xargs -I % /bin/bash -c 'command2 %; command3 %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with`-I`
+  - `command1 | xargs -I % /bin/bash -c 'command2 %; command3 %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with `-I`
     - `testing cat todelete.txt | xargs -p -I % sh -c 'ls %; rm %'`
+  
+### User Interactions
+- `whoami`: print user logged in to terminal (`who am i` prints additional info)
+- `who`: prints users logged into system
+- `su <username>`: switch to another user
+  - starts a new shell as another user
+  - `exit` returns back to current user's shell
+- `sudo`: run command as root
+  - must be enabled to use `sudo` and enter commands by entering your user's password (not root's password)
+  - `sudo nano /etc/hosts`: edit a system config file normally permission locked
+  - `sudo -i`: start a shell as root
