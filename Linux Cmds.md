@@ -1,6 +1,8 @@
 **https://www.freecodecamp.org/news/the-linux-commands-handbook/**
 
 ## Common Linux Cmds:
+
+### File and Search Operations
 - `man <command>`: prints out cmd manual
   - `tldr <command>`: abbreviated overview of command
   - use the `q` key to escape the man page
@@ -86,9 +88,68 @@
 - `chown`: change ownership of files or directories
 - `chmod`: change permissions for a given file
   - `drwxr-xr-x`: string denoting file permissions
-    - `-`: normal file
-    - `d`: directory
-    - `l`: link
-    - first set represents permissions of owner
-    - second set represents permissions of members of the group
-    - third set is permissions for everyone else
+    - first letter:
+      - `-`: normal file
+      - `d`: directory
+      - `l`: link
+    - then, 3 sets of 3 values
+      - first set represents permissions of owner
+      - second set represents permissions of members of the group
+      - third set is permissions for everyone else
+    - each set has 3 values:
+      - `rwx`: read, write, and execution access
+      - anyting that is removed is replaced with a `-`
+  - use `chmod` with a space and letter, a `+` or `-`, and then enter a permission to add or remove (`r`,`w`,`x`)
+    - personas: `a` = all; `u` = user; `g` = group; `o` = others
+    - `chmod o-rwx filename`: others (not the owner, not in the same group of the file) cannot read, write or execute the file
+    - can use `-r` to apply permissions to all files in a directory
+- `umask`: changes default permissions for new files
+- `du`: shows size of a directory (in bytes)
+  - `*`: shows file sizes in directory
+  - `-h`: makes notation more readable
+  - `-a`: prints directory and file sizes within those directories
+  - `du -h <directory> | sort -nr | head`: return largest 10 directories and their sizes
+- `df -h <directoryname>`: to get information about the volumes the directory is mounted on
+- `basename <pathway>`: returns name of file or directory pathway points to
+- `dirname <pathway>`: returns the opposite of basename; pathway in which final directory or file lives in
+
+### Processes
+- `ps`: inspect processes running on computer
+  - `ax`: shows all process (not just the ones assigned to the current user)
+    - `axww`: avoids cutting the process output short
+  - `ps axww | grep "Visual Studio Code"`: to search for a specific process
+  - info that is returned:
+    - First is PID: process ID
+    - Second is TT: terminal ID
+    - Third is STAT state of process
+      - I: process is idle
+      - R: runnable process
+      - S: process is sleeping
+      - T: stopped process
+      - U: uninterrubptible wait
+      - Z: dead process
+    - TIME: how long process has been running
+- `top`: gives UI for real-time info about processes running on system
+  - `q` or `ctrl-C` to quit
+  - `top -o mem`: to sort by memory utilized (as oppose to CPU default)
+- `kill <PID>`: used to interact with (terminate by default) processes
+  - `-HUP`: hang up; sent when terminal window is closed before terminating the process
+  - `-INT`: interrupt; same as `ctrl-C`
+  - `-KILL`: sent to operating system kernel, which immediately stops and terminates process
+  - `-CONT`: resume a stopped process
+  - `-STOP`: sent to OS kernel, which stops process
+- `killall <name>`: terminate all processes associated with the program <name>
+  - can also send any signal associated with kill above
+- `jobs -l`: prints job number and process ID of processes running in the background
+  - `top &`: will specify to run the top cmd in the background (using `&`)
+  - `fg <jobID>`: switch back to specified program and bring it to the foreground
+- `ctrl-Z`: suspends a program
+- `bg <jobID>`: resume running a program in the background
+  
+### Commands
+- `type`: gives information about how a command is interpreted
+- `which <cmd>`: returns path to the specified cmd
+  - will not work for aliases or built-in shell functions
+- `nohup <command>`: command will run even after session is closed
+- `command1 | xargs command2`: converts standard input to arguements for command execution (necessary for using `|` with some commands)
+  - 
