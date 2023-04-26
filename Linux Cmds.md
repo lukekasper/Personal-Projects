@@ -152,4 +152,3 @@
   - will not work for aliases or built-in shell functions
 - `nohup <command>`: command will run even after session is closed
 - `command1 | xargs command2`: converts standard input to arguements for command execution (necessary for using `|` with some commands)
-  - 
