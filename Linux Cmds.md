@@ -156,4 +156,5 @@
     - `rm` is ran twice, one for each line in "todelete.txt"
   - `-p`: prints a confirmation prompt with actions that will take place
   - `-n1`: used with `-p` checks for confirmation after each iteration of `rm`
-  -`testing cat todelete.txt | xargs -p -I % sh -c 'ls %; rm %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with`-I`
+  - `command1 | xargs -I % /bin/bash -c 'command2 %; command3 %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with`-I`
+    - `testing cat todelete.txt | xargs -p -I % sh -c 'ls %; rm %'`
