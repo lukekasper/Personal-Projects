@@ -152,3 +152,8 @@
   - will not work for aliases or built-in shell functions
 - `nohup <command>`: command will run even after session is closed
 - `command1 | xargs command2`: converts standard input to arguements for command execution (necessary for using `|` with some commands)
+  - `cat todelete.txt | xargs rm`: pipe output of "todelete.txt" (which contains line-by-line list of files to delte) into `rm`
+    - `rm` is ran twice, one for each line in "todelete.txt"
+  - `-p`: prints a confirmation prompt with actions that will take place
+  - `-n1`: used with `-p` checks for confirmation after each iteration of `rm`
+  -`testing cat todelete.txt | xargs -p -I % sh -c 'ls %; rm %'`: allows the user to run multiple cmds by storing the output into a placeholder variable with`-I`
