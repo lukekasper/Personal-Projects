@@ -211,6 +211,14 @@
   - `!<command number>`: call a command by number from the history
   - `history | grep docker`: to search history by command name
 - `./<script_name>`: execute a script
+- `uname`: prints OS codename
+  - `-m`: hardware name
+  - `-p`: processor architecture name
+  - `-s`: OS name
+  - `-r`: print release
+  - `-v`: version
+  - `-n`: node network name
+  - `-a`: all info
 
 ### Variables
 - `export TEST="test"`: make variables available to child processes (like shell scripts)
@@ -218,3 +226,9 @@
   - can also be used when creating new variables in `.bash_profile` or `.bashrc` config files
   - `-n`: remove a variable
   - with no arguement, prints all exported variables
+- `env`: passes environmental variables without setting them on the outer environment
+  - `env USER=flavio node app.js`: set "USER" variable for Node.js application; "node" is set to the node program pathway
+  - `env -i /usr/local/bin/node app.js`: clear all env variables
+  - with no arguements, prints all environmental variables
+  - `-u`: makes env variables inacessible inside of program (ie `env -u HOME node app.js`)
+`printenv <var_name>`: to print variable value
