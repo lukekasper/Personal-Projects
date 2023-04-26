@@ -224,6 +224,7 @@
 - `export TEST="test"`: make variables available to child processes (like shell scripts)
   - `export PATH=$PATH:/new/path`: append to PATH variable
   - can also be used when creating new variables in `.bash_profile` or `.bashrc` config files
+    - `vim ~/.bash_profile` and use `export` to add variables to persist across multiple sessions
   - `-n`: remove a variable
   - with no arguement, prints all exported variables
 - `env`: passes environmental variables without setting them on the outer environment
