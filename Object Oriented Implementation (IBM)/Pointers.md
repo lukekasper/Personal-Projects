@@ -15,8 +15,10 @@
       - `ptr + 1 == &arr[1]`
       - `*(ptr + 1) == arr[1];`
   - pointer comparisons: can use relationsl operators to compare two pointers as long as the variables are related to one another
-- array names often decay to pointers, meaning `*(arr + i) == arr[i]` without the need to declare a seperate pointer for "arr"
-  - there are a few cases where this is not true
+- arrays and pointers:
+  - array names often decay to pointers, meaning `*(arr + i) == arr[i]` without the need to declare a seperate pointer for "arr"
+    - there are a few cases where this is not true
+  - a pointer to an array points to the address of the first element of that array
 - can declare an array of pointers using: `int *ptr[MAX];`
   - each element in the array is a pointer to an int value
   - can be done for any variable type
@@ -25,5 +27,6 @@
 - functions can take pointers as arguements
   - arrays can also be passed as parameters to function calls in place of a pointer
 - pointers can also be returned from functions: `int * myFunction() {}`
-  - 
+  - to avoid returning the address of a local variable outside of the function, define local variable as "static"
+  
   
