@@ -1,4 +1,4 @@
-### Notes on Pointers:
+## Pointers:
 - `&`: denotes a variables memory address
 - Pointer: variable whose value is the address of another variable
   - syntax is: <type> \*<var_name>;
@@ -29,4 +29,11 @@
 - pointers can also be returned from functions: `int * myFunction() {}`
   - to avoid returning the address of a local variable outside of the function, define local variable as "static"
   
-  
+## References:
+- alias to an already existing variable
+  - syntax: `int& r = x;`
+- cannot have a NULL reference
+- once intiialized, a reference cannot change
+- must be initialized at time of declaration
+- do not return a reference to a local variable (out of scope will result in compiler error)
+  - instead, return a reference on a static variable
