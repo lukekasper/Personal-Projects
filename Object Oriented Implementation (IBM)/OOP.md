@@ -84,7 +84,7 @@
 - when two methods have the same name and invocation in parent and child class, use "virtual" key word in base class method 
 - method overriding is using a pointer to hold the address for a specific object to ensure correct class method is invoked
   - a pointer is invoked through: "<class_name> * <pointer_name> = &<object_name>"
-  - pointers that refer to the base class can only rerfer to members that the subclass objects inherit from the base class
+  - pointers that refer to the base class can only refer to members that the subclass objects inherit from the base class
 - a virtual function is declared in a baseclass and then overriden (or redefined) in a derived class
 - when you refer to a sub class object using a pointer, you can:
   - call a virtual function for that object
