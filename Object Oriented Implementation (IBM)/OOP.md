@@ -78,7 +78,7 @@
   - multilevel: parent class of one derived class is itself derived from another parent class
   - hybrid: combination of inheritance types
 - inheritence is invoked through "class <derived> : <access modifier> <base>
-  
+
 ## Polymorphism
 - ability for a method to do different things based on the object it is acting on
 - when two methods have the same name and invocation in parent and child class, use "virtual" key word in base class method 
