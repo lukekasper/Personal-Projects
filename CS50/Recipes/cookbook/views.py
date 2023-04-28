@@ -166,7 +166,7 @@ def update_rating(request, name):
     recipe.user_rating = str(rating_dict)
     recipe.save()
 
-    return JsonResponse({"avg_rating": recipe.avg_rating()})
+    return JsonResponse({"avg_rating": recipe.avg_rating(), "num_ratings": recipe.num_ratings()})
 
 
 @csrf_exempt
@@ -288,3 +288,14 @@ def add_comment(request, title):
         return JsonResponse({"comment": comment.serialize()})
 
     return JsonResponse({"message": "Post Error."}, status=404)
+
+
+@login_required
+def remove_comment(request, id):
+
+    # get comment by id and delete from database
+    if Comment.objects.get(id=id):
+        comment = Comment.objects.get(id=id)
+        comment.delete()
+
+    return JsonResponse({"message": "Comment Removed."}, status=200)

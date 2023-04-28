@@ -19,5 +19,6 @@ urlpatterns = [
     path("cuisine_recipes/<str:cuisine>", views.cuisine_recipes, name="cuisine_recipes"),
     path("favorites", views.favorites, name="favorites"),
     path("update_favorites/<str:title>", views.update_favorites, name="update_favorites"),
-    path("add_comment/<str:title>", views.add_comment, name="add_comment")
+    path("add_comment/<str:title>", views.add_comment, name="add_comment"),
+    path("remove_comment/<int:id>", views.remove_comment, name="remove_comment")
 ]

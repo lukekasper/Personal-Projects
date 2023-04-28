@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // run when username is clicked
     if (document.querySelector('#usrname')) {
         document.querySelector('#usrname').addEventListener('click', () => {
-            const usrname = document.querySelector('#name').innerHTML;
+            let usrname = document.querySelector('#name').innerHTML;
             load_recipes(user=usrname, cuisine='');
             history.pushState({}, '', usrname);
         });
@@ -145,34 +145,12 @@ function make_recipe_html(recipe) {
 
     // make comments div
     const commentsDiv = make_html_element('', 'comments-div_'+recipe.title, 'comments-div', 'div');
-    commentsDiv.append(make_html_element('Comments:', '', 'comments-header', 'h7'));
+    commentsDiv.append(make_html_element('Comments:', '', 'comments-header', 'h6'));
+    commentsDiv.append(make_html_element('', 'comments-container_'+recipe.title, 'comments-container', 'div'));
     commentsDiv.append(make_html_element('', 'comments-inner_'+recipe.title, 'comments-inner', 'div'));
 
-    // create star rating system
-    const stars = document.createElement('p');
-    const s1 = document.createElement('span');
-    const s2 = document.createElement('span');
-    const s3 = document.createElement('span');
-    const s4 = document.createElement('span');
-    const s5 = document.createElement('span');
-
-    let span_list = [s1, s2, s3, s4, s5];
-
-    // loop through the star spans, and check the number based on the recipe rating
-    for (let i=0; i<5; i++) {
-        if (i+1 <= Math.round(recipe.rating)) {
-            span_list[i].setAttribute('class', 'fa fa-star checked');
-        }
-        else {
-            span_list[i].setAttribute('class', 'fa fa-star');
-        }
-        span_list[i].setAttribute('id', recipe.title+'_star_'+i);
-
-        span_list[i].addEventListener('mouseover', () => color_stars(recipe.title, i, span_list));
-        span_list[i].addEventListener('mouseout', () => uncolor_stars(recipe.title, recipe.rating, span_list));
-        span_list[i].addEventListener('click', () => update_rating(recipe.title, i, span_list, recipe.rating));
-        stars.append(span_list[i]);
-    }
+    // add star rating system
+    let stars = make_stars(recipe);
 
     // create comments button
     const comments_button = make_html_element('Show Comments', 'comments-button_'+recipe.title, 'comments-button', 'button');
@@ -182,14 +160,12 @@ function make_recipe_html(recipe) {
     const line_hr = document.createElement('hr');
     const title = make_html_element(recipe.title, 'title_'+recipe.title, 'title', 'p');
     const image = make_image_html(recipe.image, 'image');
-    const rating = make_html_element(recipe.rating, recipe.title+'_rating', 'rating', 'span');
 
     // append info to outer div
     imageDiv.append(image);
     infoDiv.append(title);
     infoDiv.append(make_html_element("Category: " + recipe.category, recipe.title+'_category', 'category', 'p'));
     infoDiv.append(make_html_element(recipe.timestamp, recipe.title+'_timestamp', 'timestamp', 'p'));
-    infoDiv.append(rating);
     infoDiv.append(stars);
     infoDiv.append(comments_button);
     outerDiv.append(imageDiv);
@@ -210,6 +186,46 @@ function make_recipe_html(recipe) {
     image.addEventListener('click', () => load_recipe(recipe.title));
 }
 
+// create star rating system
+function make_stars(recipe) {
+
+    const stars = document.createElement('p');
+    const s1 = document.createElement('span');
+    const s2 = document.createElement('span');
+    const s3 = document.createElement('span');
+    const s4 = document.createElement('span');
+    const s5 = document.createElement('span');
+
+    let span_list = [s1, s2, s3, s4, s5];
+
+    // loop through the star spans, and check the number based on the recipe rating
+    for (let i=0; i<5; i++) {
+        if (i+1 <= Math.round(recipe.rating)) {
+            span_list[i].setAttribute('class', 'fa fa-star checked');
+        }
+        else {
+            span_list[i].setAttribute('class', 'fa fa-star');
+        }
+        span_list[i].setAttribute('id', recipe.title+'_star_'+i);
+
+        // only allow a user rating if signed in
+        if (document.querySelector('#usrname')) {
+            span_list[i].addEventListener('mouseover', () => color_stars(recipe.title, i, span_list));
+            span_list[i].addEventListener('mouseout', () => uncolor_stars(recipe.title, recipe.rating, span_list));
+            span_list[i].addEventListener('click', () => update_rating(recipe.title, i));
+        }
+        stars.append(span_list[i]);
+    }
+
+    // add average and number of ratings and append to stars div
+    const rating = make_html_element(recipe.rating, recipe.title+'_rating', 'rating', 'span');
+    const num_ratings = make_html_element("("+recipe.num_ratings+")", recipe.title+'num_ratings', 'num_ratings', 'span');
+    stars.append(rating);
+    stars.append(num_ratings);
+
+    return stars
+}
+
 // create html for showing comments section or hiding it
 function show_comments(comments, title) {
 
@@ -217,7 +233,19 @@ function show_comments(comments, title) {
 
         // show comments div
         document.querySelector('#comments-div_'+title).style.display = 'block';
+        document.querySelector('#comments-div_'+title).animate(
+            {
+                height: ["5px", "5px", "220px"],
+                width: ["0%", "38%", "38%"],
+                lineHeight: ["0%", "0%", "100%"],
+                lineWidth: ["0%", "100%", "100%"],
+                padding: ["0px", "0px", "10px"],
+            },
+            400
+        );
+
         document.querySelector('#comments-inner_'+title).innerHTML = '';
+        document.querySelector('#comments-container_'+title).innerHTML = '';
 
         if (comments != null) {
             comments.forEach(comment => {
@@ -227,19 +255,23 @@ function show_comments(comments, title) {
         }
 
         // make textarea to add a comment
-        const add_comment_box = make_html_element('', 'add_comment-box'+title, 'add_comment_box', 'textarea');
+        const add_comment_box = make_html_element('', 'add_comment-box_'+title, 'add_comment_box', 'textarea');
         add_comment_box.setAttribute('placeholder','Add a comment...');
         document.querySelector('#comments-inner_'+title).append(add_comment_box);
 
-        // if the user has something written in the textarea, submit comment when enter key is struck
-        if (add_comment_box.value != '') {
+        // make button to add comment
+        const add_comment_button = make_html_element('Add Comment', 'add_comment-but_'+title, 'btn btn-sm btn-outline-primary', 'button');
+        document.querySelector('#comments-inner_'+title).append(add_comment_button);
+        add_comment_button.style.width = "95px";
+        add_comment_button.style.height = "25px";
+        add_comment_button.style.fontSize = "11px";
 
-            add_comment_box.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    add_comment(add_comment_box.value, title);
-                }
-            });
-        }
+        // if the user has something written in the textarea, submit comment and append html when 'Add Button' is clicked
+        add_comment_button.addEventListener('click', () => {
+            if (add_comment_box.value.length > 1) {
+                add_comment(add_comment_box.value, title);
+            }
+        });
 
         // change button html
         document.querySelector('#comments-button_'+title).innerHTML = 'Hide Comments';
@@ -247,18 +279,58 @@ function show_comments(comments, title) {
 
     else {
         // hide comments div
-        document.querySelector('#comments-div_'+title).style.display = 'none';
+        document.querySelector('#comments-div_'+title).animate(
+            {
+                height: ["220px", "220px", "5px"],
+                width: ["38%", "38%", "0%"],
+                lineHeight: ["100%", "0%", "0%"],
+                lineWidth: ["100%", "0%", "0%"],
+                padding: ["10px", "0px", "0px"],
+            },
+            200
+        );
+        setTimeout(()=> {document.querySelector('#comments-div_'+title).style.display = 'none'},180);
         document.querySelector('#comments-button_'+title).innerHTML = 'Show Comments'
     }
 }
 
 function make_comment_html(comment, title) {
+
+    // make html for comment
     const comment_p = make_html_element('', 'comment-p_'+comment.id, 'comment-p', 'p');
-    const poster = make_html_element(comment.poster + ': ', comment.poster+'comment', 'comment-poster', 'span');
-    const comment_txt = make_html_element(comment.comment, 'comment_txt', comment.id, 'span');
+    const poster = make_html_element(comment.poster + ':&nbsp;', comment.poster+'comment', 'comment-poster', 'span');
+    const comment_txt = make_html_element(comment.comment, comment.id, 'comment_txt', 'span');
     comment_p.append(poster);
     comment_p.append(comment_txt);
-    document.querySelector('#comments-inner_'+title).append(comment_p);
+
+    // add an option to delete comment if it the signed in user posted it
+    let usrname = document.querySelector('#name').innerHTML;
+    const x = make_image_html("https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png", 'x'+comment.id);
+    x.setAttribute('class','x');
+    comment_p.append(x);
+    x.style.display = 'none';
+    document.querySelector('#comments-container_'+title).prepend(comment_p);
+
+    if (typeof usrname !== 'undefined' && usrname == comment.poster) {
+
+        // display when mouseover
+        comment_p.addEventListener('mouseover', () => {x.style.display = 'block'});
+
+        // hide when mouse-off
+        comment_p.addEventListener('mouseout', () => {x.style.display = 'none'});
+
+        // if clicked, delete comment from front-end and backend
+        x.addEventListener('click', () => remove_comment(comment, comment_p));
+    }
+}
+
+function remove_comment(comment, comment_p) {
+
+    // send API request to remove comment from backend
+    fetch(`/remove_comment/${comment.id}`)
+    .then(() => {
+        comment_p.remove();
+    })
 }
 
 // update comment model on backend
@@ -270,10 +342,10 @@ function add_comment(comment_txt, title) {
             comment: `${comment_txt}`
         })
     })
-
     .then(response => response.json())
     .then(data => {
         make_comment_html(data.comment, title);
+        document.querySelector('#add_comment-box_'+title).value = '';
     })
 }
 
@@ -297,7 +369,7 @@ function make_image_html(image_src, id) {
 }
 
 //update rating in django model and style css accordingly
-function update_rating(title, i, span_list, rating) {
+function update_rating(title, i) {
 
     // update the rating on the backend
     fetch('/update_rating/'+title, {
@@ -306,26 +378,11 @@ function update_rating(title, i, span_list, rating) {
             rating: i+1
         })
     })
-
     .then(response => response.json())
     .then(data => {
 
-        // update avg rating html for selected recipe
-        document.querySelector('#'+title+'_rating').innerHTML = data.avg_rating
-
-        // style stars according to user rating to provide front-end feedback and remove event listener
-        for (j=0; j<5; j++) {
-
-            if (j<=i) {
-                span_list[j].style.color = 'Blue';
-            }
-            else {
-                span_list[j].style.color = 'Black';
-            }
-            document.querySelector('#'+title+'_star_'+j).removeEventListener('mouseover', color_stars);
-            document.querySelector('#'+title+'_star_'+j).removeEventListener('mouseout', uncolor_stars);
-        }
-
+        // update avg rating html for selected recipe and reload recipes
+        document.querySelector('#'+title+'_rating').innerHTML = data.avg_rating;
         load_recipes(user='', cuisine='');
     });
 }
@@ -333,7 +390,7 @@ function update_rating(title, i, span_list, rating) {
 // color stars when mouse over
 function color_stars(title, i, span_list) {
 
-    // style stars according to user rating to provide front-end feedback and remove event listener
+    // style stars according to user rating to provide front-end feedback
     for (j=0; j<5; j++) {
 
         if (j<=i) {
@@ -348,10 +405,10 @@ function color_stars(title, i, span_list) {
 //uncolor stars when mouse is off stars
 function uncolor_stars(title, rating, span_list) {
 
-    // style stars according to user rating to provide front-end feedback and remove event listener
+    // style stars according to user rating to provide front-end feedback
     for (j=0; j<5; j++) {
 
-        if (j<=rating) {
+        if (j<rating) {
             span_list[j].style.color = 'Orange';
         }
         else {
@@ -375,18 +432,27 @@ function load_recipe(title) {
     .then(response => response.json())
     .then(data => {
 
-        document.querySelector('#recipe-image').innerHTML = '';
-        document.querySelector('#recipe-info').innerHTML = '';
-
-        // add title to page header
-        document.querySelector('#recipe-title').innerHTML = data.recipe.title;
+        document.querySelector('#recipe-image-div').innerHTML = '';
+        document.querySelector('#top-recipe-info').innerHTML = '';
+        document.querySelector('#recipe-info-lists').innerHTML = '';
 
         // create recipe html
         const image = make_image_html(data.recipe.image, 'recipe-image');
-        const poster = make_html_element(data.recipe.poster, 'recipe-poster', '', 'p');
-        const category = make_html_element(data.recipe.category, 'recipe-category', '', 'p');
-        const cooktime = make_html_element(data.recipe.cooktime, 'recipe-cooktime', '', 'p');
-        const timestamp = make_html_element(data.recipe.timestamp, 'recipe-timestamp', '', 'p');
+
+        // add title to page header
+        const title = make_html_element(data.recipe.title, 'recipe-title', 'recipe-title', 'h2');
+
+        // make recipe header
+        let stars = make_stars(data.recipe);
+        stars.setAttribute('id','single-recipe-stars');
+        const poster_container = make_html_element("|&nbsp;&nbsp;&nbsp;&nbsp;Recipe by ", 'poster-container', '', 'p');
+        const poster = make_html_element(data.recipe.poster, 'recipe-poster', '', 'span');
+        poster_container.append(poster);
+        const timestamp = make_html_element("|&nbsp;&nbsp;&nbsp;&nbsp;" + data.recipe.timestamp, 'recipe-timestamp', '', 'p');
+        const top_div = make_html_element('', 'top-div', '', 'div');
+        top_div.append(stars);
+        top_div.append(poster_container);
+        top_div.append(timestamp);
 
         // split strings into lists
         const ingredients_list = data.recipe.ingredients.split(',');
@@ -394,9 +460,9 @@ function load_recipe(title) {
         const notes_list = data.recipe.note.split(',');
 
         // make outer list html
-        const ing_ul = make_html_element('', 'ing_ul', '', 'ul');
-        const dir_ol = make_html_element('', 'dir_ol', '', 'ol');
-        const notes_ul = make_html_element('', 'notes_ul', '', 'ul');
+        const ing_ul = make_html_element('', 'ing_ul', 'recipe_list_items', 'ul');
+        const dir_ol = make_html_element('', 'dir_ol', 'recipe_list_items', 'ol');
+        const notes_ul = make_html_element('', 'notes_ul', 'recipe_list_items', 'ul');
 
         // append ingredients to ul
         ingredients_list.forEach(ingredient => {
@@ -418,19 +484,54 @@ function load_recipe(title) {
             // if note is not empty
             if (note != '') {
                 note = trim_chars(note);
-                notes_ul.append(make_html_element(note, 'note_li', '', 'li'));
+                notes_ul.append(make_html_element(note, 'note_li', 'recipe_list_items', 'li'));
             }
         })
 
+        const category = make_html_element(data.recipe.category, '', 'info', 'div');
+        const cooktime = make_html_element(data.recipe.cooktime, '', 'info', 'div');
+
+        // make box for category and time
+        const cat_container = make_html_element('', 'cat-container', 'recipe-container', 'div');
+        const time_container = make_html_element('', 'time-container', 'recipe-container', 'div');
+        const info_box = make_html_element('', 'recipe-info_box', '', 'div');
+
+        const cat_title = make_html_element('Category:', 'cat-title', 'title', 'div');
+        const time_title = make_html_element('Cooktime:', 'time-title', 'title', 'div');
+
+        cat_container.append(cat_title);
+        cat_container.append(category);
+        time_container.append(time_title);
+        time_container.append(cooktime);
+
+        info_box.append(cat_container);
+        info_box.append(time_container);
+
+        const box_div = make_html_element('', 'box_div', 'box_div', 'div');
+        box_div.append(info_box);
+
+        // make containers and add info for ingredients, directions
+        const ing_div = make_html_element('Ingredients:', 'ing_div', 'recipe_list_div', 'div');
+        ing_div.append(ing_ul);
+
+        const dir_div = make_html_element('Directions:', 'dir_div', 'recipe_list_div', 'div');
+        dir_div.append(dir_ol);
+
         // append recipe info and image to index layout
-        document.querySelector("#recipe-image").append(image);
-        document.querySelector("#recipe-info").append(poster);
-        document.querySelector("#recipe-info").append(category);
-        document.querySelector("#recipe-info").append(cooktime);
-        document.querySelector("#recipe-info").append(timestamp);
-        document.querySelector("#recipe-info").append(ing_ul);
-        document.querySelector("#recipe-info").append(dir_ol);
-        document.querySelector("#recipe-info").append(notes_ul);
+        document.querySelector("#recipe-image-div").append(image);
+        document.querySelector("#top-recipe-info").append(title);
+        document.querySelector("#top-recipe-info").append(top_div);
+        document.querySelector("#top-recipe-info").append(box_div);
+        document.querySelector("#recipe-info-lists").append(make_html_element('', 'hr-box', '', 'hr'));
+        document.querySelector("#recipe-info-lists").append(ing_div);
+        document.querySelector("#recipe-info-lists").append(dir_div);
+
+        // if notes exist, append a div for them
+         if (notes_list.length != 0) {
+            const notes_div = make_html_element('Notes:', 'notes_div', 'recipe_list_div', 'div');
+            notes_div.append(notes_ul);
+            document.querySelector("#recipe-info-lists").append(notes_div);
+         }
 
         // widget to add/remove recipe from favorites
         if (data.favorite_flag == "None") {
@@ -459,7 +560,7 @@ function load_recipe(title) {
 }
 
 // update user's favorite recipes
-function update_favorites(title) {
+function update_favorites(title, flag) {
 
     // send API request to update user's favorite recipes list
     fetch('/update_favorites/'+title)
@@ -467,8 +568,6 @@ function update_favorites(title) {
     // reload recipe page
     .then(response => response.json())
     .then(data => {
-        document.querySelector('#favorites-button').removeEventListener('click', () =>
-        update_favorites(title, flag), true);
 
         // update button logic to opposite state
         if (data.flag == "True") {

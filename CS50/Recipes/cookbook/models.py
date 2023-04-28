@@ -53,17 +53,24 @@ class Recipe(models.Model):
 
         return rating_dict
 
-    # get the avaerage value of the user ratings for display
+    # get the number of ratings for a given recipes
+    def num_ratings(self):
+        if self.user_rating_dict():
+            return len(self.user_rating_dict().values());
+        else:
+            return 0
+
+    # get the average value of the user ratings for display
     def avg_rating(self):
         if self.user_rating_dict():
-            return round(sum(self.user_rating_dict().values())/len(self.user_rating_dict().values()), 1)
+            return round(sum(self.user_rating_dict().values())/self.num_ratings(), 1)
         else:
             return 0
 
     # get all the comments for a specified recipe
     def stringify_comments(self):
         if self.recipe_comments.all():
-            return [comment.serialize() for comment in self.recipe_comments.order_by("-timestamp").all()]
+            return [comment.serialize() for comment in self.recipe_comments.order_by("timestamp").all()]
         else:
             return None
 
@@ -80,6 +87,7 @@ class Recipe(models.Model):
             "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
             "note": self.note,
             "rating": self.avg_rating(),
+            "num_ratings": self.num_ratings(),
             "comments": self.stringify_comments()
         }
 
