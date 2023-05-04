@@ -1,0 +1,13 @@
+## Commands:
+- `git fetch origin`: get most up-to-date origin branch of repository
+- `git status`: track staged/unstaged changes from local vs remote repository
+- `git checkout -f <branch name>`: foreces a change to the specified brnach
+  - `git checkout -- "<file name>"`: pull master version of named file from repository
+- `git pull`: pulls current branch from remote repository
+-`git branch <branch name>`: create a branch
+  - `git branch -d <branch name>`: delete named branch
+- `git add`: stage files for commit
+  - `.`: all files
+  - `*.cpp`: all files with extension "cpp"
+- `git commit -m "message"`: commit changes with specified message
+- `git push`: push changes to remote repository
