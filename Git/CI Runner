@@ -1,0 +1,19 @@
+Steps to install Gitlab CI Runner:
+
+1) Copy Runner exe from SRES (Or Ben copy on flyqual-c\osterb to desktop/laptop
+2) Open git bash and navigate to folder with exe in it
+3) ./gitlab-runner-windows-amd64.exe register
+4) When prompted for gitlab-ci coordninator, enter: https://git.web.boeing.com
+5) When prompted for gitlab ci token for this runner, need to go to Gitlab and do stuff
+6) In gitlab, go to the settings > CI menu (hint: you must be a maintainer or owner of the repo in order to see/cahnge these)
+7) In the runners section, disable shared runners. These are on some generic Boeing server and FQ&A has no control over them
+8) Navigate to the section "Set up specific Runner manually"
+9) Copy registration token from firefox into the prompt in git bash
+10) Enter description for the Runner. A good description will include the asset tag and maybe location.
+11) Enter tags for the runner. A tag is certain softwares you can use on that particular PC. For example, if you want to run using MATLAB R2019A, the tag could be "R2019A"
+12) When prompted for the executor, use "shell"
+13) ./gitlab-runner-windows-amd64.exe run
+
+
+Notes: git commit -m "[ci skip]" in the message will not trigger pipeline
+Custom notification set on per user basis and per project basis to get email on successful pipline
