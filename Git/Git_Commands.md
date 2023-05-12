@@ -11,3 +11,5 @@
   - `*.cpp`: all files with extension "cpp"
 - `git commit -m "message"`: commit changes with specified message
 - `git push`: push changes to remote repository
+- `git stash`: save changes on local working branch so a pull does delete them
+  - `git stash pop`: re-apply changes that were stashed
