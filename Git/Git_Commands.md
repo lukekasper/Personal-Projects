@@ -4,8 +4,6 @@
 - `git checkout -f <branch name>`: foreces a change to the specified brnach
   - `git checkout -- "<file name>"`: pull master version of named file from repository
 - `git pull`: pulls current branch from remote repository
--`git branch <branch name>`: create a branch
-  - `git branch -d <branch name>`: delete named branch
 - `git add`: stage files for commit
   - `.`: all files
   - `*.cpp`: all files with extension "cpp"
@@ -13,3 +11,5 @@
 - `git push`: push changes to remote repository
 - `git stash`: save changes on local working branch so a pull does delete them
   - `git stash pop`: re-apply changes that were stashed
+- `git branch <branch_name>`, `git checkout`, and `git push`: create new branch from current one, change to that branch, and push to repository
+  - `git branch -d <branch name>`: delete named branch
