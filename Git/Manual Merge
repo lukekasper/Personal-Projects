@@ -46,6 +46,7 @@ Manual Merge:
 						◊ Must make sure differences in old version are not simply discarded (we may still want those)
 					® When one conflict is resolved, save and debug the next one
 						◊ Good to have peer review process inserted here
+			§ When finished, git add file changes, git commit, and git push	
 		○ To exit process:
 			§ Close git Bash window
 			§ Git checkout development branch you are working on
