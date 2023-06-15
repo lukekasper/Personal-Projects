@@ -64,6 +64,8 @@ References: https://www.tutorialspoint.com/cplusplus
   - arrays can also be passed as parameters to function calls in place of a pointer
 - pointers can also be returned from functions: `int * myFunction() {}`
   - to avoid returning the address of a local variable outside of the function, define local variable as "static"
+- the "this" pointer gives an object access to all of its member functions
+  -  `int compare(Box box) {return this->Volume() > box.Volume();};`: where Volume is a member function of Box
   
 ### References:
 - alias to an already existing variable
