@@ -32,6 +32,7 @@ References: https://www.tutorialspoint.com/cplusplus
 - can name a structure and treat it as a data type
   - `struct myDataType {int a; string b;};`
   - `myDataType myVar;`: creates a variable with the myDataType structure
+- typedef can be used to alias structures
 
 ### Pointers:
 - `&`: denotes a variables memory address
