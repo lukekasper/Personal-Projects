@@ -9,7 +9,10 @@
 ###Structures
 - combine various related variables into a single place
 - able to contain different data types
-- `struct {
-    int myNum;
-    string myString;
-  } myStructure;`
+- declare: `struct {int myNum; string myString;} myStructure;`
+- assing variables: `myStructure.myNum = 1`
+- can also assign a single structure to multiple variables
+- can name a structure and treat it as a data type
+  - `struct myDataType {int a; string b;};`
+  - `myDataType myVar;`: creates a variable with the myDataType structure
+
