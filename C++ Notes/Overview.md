@@ -1,5 +1,14 @@
 References: https://www.tutorialspoint.com/cplusplus
 
+### Storage Class
+- static: keeps local variables between function calls
+  - local variables maintain their values between calls
+  - for global variables, it restricts the variable's scope to within the file
+- extern: used to declare a global variable or function defined in another file
+
+### Operators
+- `condition ? x : y`: if condition is true, it returns x, otherwise it returns y
+
 ### Arrays
 - don't have to specify size of an array, compiler will figure that out
   - also can declare an array without specifying elements, they can be added later
@@ -7,6 +16,12 @@ References: https://www.tutorialspoint.com/cplusplus
   - to get the number of elements, use `sizeof(array) / sizeof(int)`
 - for-each loop: loop through elements in an array directly
   - `for (type variableName: arrayName) {}`
+
+### Strings
+- `char someString[] = "string";`: to declare a null terminated string
+- C++ also supports a string class, by adding `#include <string>`
+  - `string str = "Hello";`
+  - supports things like `+` and `.size()`
 
 ### Structures
 - combine various related variables into a single place
