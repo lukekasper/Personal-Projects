@@ -1,3 +1,5 @@
+References: https://www.tutorialspoint.com/cplusplus
+
 ### Arrays
 - don't have to specify size of an array, compiler will figure that out
   - also can declare an array without specifying elements, they can be added later
