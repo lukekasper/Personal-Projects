@@ -9,7 +9,7 @@
   - `*.cpp`: all files with extension "cpp"
 - `git commit -m "message"`: commit changes with specified message
 - `git push`: push changes to remote repository
-  - git push --set-upstream origin dev/Luke: set local branch to track remote repository branch
+  - `git push --set-upstream origin dev/Luke`: set local branch to track remote repository branch
 - `git stash`: save changes on local working branch so a pull does delete them
   - `git stash pop`: re-apply changes that were stashed
 - `git branch <branch_name>`, `git checkout`, and `git push`: create new branch from current one, change to that branch, and push to repository
