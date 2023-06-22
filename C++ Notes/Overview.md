@@ -103,3 +103,7 @@ References: https://www.tutorialspoint.com/cplusplus
   - use composition over inheritance when possible
     - composition is building a complex object using several smaller objects, rather than inheriting those properties from a base class
     - does not totally exclude use of inheritance, you must consider the relationship between the objects to determine which method (or both) is appropriate
+- encapsulation is the process of bundling together data and the functions that utilize them within a class, and keeping that info hidden from other classes (unless necessary to share)
+
+## Files and Streams
+- 
