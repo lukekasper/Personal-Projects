@@ -108,3 +108,11 @@ References: https://www.tutorialspoint.com/cplusplus
 ### Files and Streams
 - use seekg or seekp to place file pointer at appropriate locations within file (see example)
 - best practice is to close file after use
+
+### Dynamic Memory
+- stack: variables declared inside the funciton take up memory from the stack
+- heap: unused memory that can be used to dynamically allocate when program runs
+- you won't always know in advance how much memory will be needed, so you can determine this at runtime
+  - this can be done using the "new" operator
+- use "delete" operator once you are not in need of that memory anymore to de-allocate
+- 
