@@ -96,7 +96,7 @@ References: https://www.tutorialspoint.com/cplusplus
 - do not have access to the "this" pointer
 - they only have access to static data members, other static functions, and any other functions outside of the class
 
-## Data Abstraction
+### Data Abstraction
 - how to use access modifiers:
   - keep members private unless necessary to access outside of class
   - use protected for inheritance
@@ -105,5 +105,6 @@ References: https://www.tutorialspoint.com/cplusplus
     - does not totally exclude use of inheritance, you must consider the relationship between the objects to determine which method (or both) is appropriate
 - encapsulation is the process of bundling together data and the functions that utilize them within a class, and keeping that info hidden from other classes (unless necessary to share)
 
-## Files and Streams
-- 
+### Files and Streams
+- use seekg or seekp to place file pointer at appropriate locations within file (see example)
+- best practice is to close file after use
