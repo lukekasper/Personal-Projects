@@ -96,3 +96,10 @@ References: https://www.tutorialspoint.com/cplusplus
 - do not have access to the "this" pointer
 - they only have access to static data members, other static functions, and any other functions outside of the class
 
+## Data Abstraction
+- how to use access modifiers:
+  - keep members private unless necessary to access outside of class
+  - use protected for inheritance
+  - use composition over inheritance when possible
+    - composition is building a complex object using several smaller objects, rather than inheriting those properties from a base class
+    - does not totally exclude use of inheritance, you must consider the relationship between the objects to determine which method (or both) is appropriate
