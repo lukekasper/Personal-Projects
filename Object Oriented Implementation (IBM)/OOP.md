@@ -126,6 +126,7 @@
   - Handle exception gracefully and then continue to execute program
 - Try: block of code where exceptions may occur and throws an exception
 - Catch: handles the exception
+  - to handle any exception, use `catch(...)`
 - Throw: exception to throw when an issue occurs
 - user defined exceptions can override or inherit from parent class
   - must include an exception header
