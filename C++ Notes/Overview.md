@@ -66,6 +66,12 @@ References: https://www.tutorialspoint.com/cplusplus
   - to avoid returning the address of a local variable outside of the function, define local variable as "static"
 - the "this" pointer gives an object access to all of its member functions
   -  `int compare(Box box) {return this->Volume() > box.Volume();};`: where Volume is a member function of Box
+- Benefits:
+  - save the memory.
+  - reduce the length and complexity of a program.
+  - allow the passing of arrays and strings to function more efficiently.
+  - make it possible to return more than one value from the function.
+  - increase the processing speed. 
   
 ### References:
 - alias to an already existing variable
