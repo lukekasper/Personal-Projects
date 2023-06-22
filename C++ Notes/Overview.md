@@ -81,3 +81,18 @@ References: https://www.tutorialspoint.com/cplusplus
 - must be initialized at time of declaration
 - do not return a reference to a local variable (out of scope will result in compiler error)
   - instead, return a reference on a static variable
+
+## Copy Constructor
+- used to:
+  - initialize one object from another of the same type
+  - copy an object to pass it as an argument to a function
+  - copy an object to return it from a function
+- can be inefficient if copying large objects
+
+## Static Members
+- static members are shared by all objects of a class (independent of a particular object creation)
+- automatically initialized to zero
+- for static functions, they can be called even if no objects of that class exist
+- do not have access to the "this" pointer
+- they only have access to static data members, other static functions, and any other functions outside of the class
+
