@@ -11,7 +11,7 @@ class Box {
       }
 };
 int main() {
-   Box* myBoxArray = new Box[4];
+   Box* myBoxArray = new Box[4]; // allocate memory for an array of 4 box objects
    delete [] myBoxArray; // Delete array
 
    return 0;
