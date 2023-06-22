@@ -115,4 +115,4 @@ References: https://www.tutorialspoint.com/cplusplus
 - you won't always know in advance how much memory will be needed, so you can determine this at runtime
   - this can be done using the "new" operator
 - use "delete" operator once you are not in need of that memory anymore to de-allocate
-- 
+  - for an array, use `delete [] pvalue;` regardless of the dimensions of the array (no need for [][])
