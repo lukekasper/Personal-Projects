@@ -142,3 +142,16 @@ References: https://www.tutorialspoint.com/cplusplus
   - __FILE__: contains the current file name of the program when it is being compiled
   - __DATE__: contains a string of the form month/day/year that is the date of the translation of the source file into object code
   - __TIME__: contains a string of the form hour:minute:second that is the time at which the program was compiled
+
+### Signal Handling
+- signals are interrupts delivered to a process by the OS system
+- can generate interrupts using ctrl+c
+- <csignal> can catch certain interrupts:
+  - SIGABRT: abnormal termination of the program, such as a call to abort
+  - SIGFPE: erroneous arithmetic operation, such as a divide by zero or an operation resulting in overflow
+  - SIGILL: detection of an illegal instruction
+  - SIGINT: receipt of an interactive attention signal
+  - SIGSEGV: an invalid access to storage
+  - SIGTERM: termination request sent to the program
+- `signal()` function is used to trap unexpected events
+- `raise()` function can generate signals
