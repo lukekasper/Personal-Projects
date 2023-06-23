@@ -18,7 +18,7 @@ int main () {
 
    cout << "Enter your age: "; 
    cin >> data;
-   cin.ignore();
+   cin.ignore();    // used to clear buffer space taken up by clicking the enter key
    
    // again write inputted data into the file.
    outfile << data << endl;
@@ -45,3 +45,18 @@ int main () {
 
    return 0;
 }
+
+// use below functions to place file-position pointer at appropriate location within file to read or write
+/*
+// position to the nth byte of fileObject (assumes ios::beg)
+fileObject.seekg( n );
+
+// position n bytes forward in fileObject
+fileObject.seekg( n, ios::cur );
+
+// position n bytes back from end of fileObject
+fileObject.seekg( n, ios::end );
+
+// position at end of fileObject
+fileObject.seekg( 0, ios::end );
+*/
