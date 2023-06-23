@@ -127,3 +127,18 @@ References: https://www.tutorialspoint.com/cplusplus
   - writing a namespace definition either creates a new one, or adds to the existing namespace if it already exists
 - namespaces can also be nested
   - to access methods within a nested namespace, use: `using namespace first_space::second_space;`
+
+### Preprocessors
+- give instructions to the compiler to preprocess the information before actual compilation starts
+- some examples: #include, #define, #ifdef DEBUG, #if 0, #ifndef NULL
+- use `#ifdef DEBUG` to define lines of code for debugging purposes
+  - DEBUG must be defined during compilation for these lines to be enabled
+  - use `g++ -DDEBUG example.cpp -o example` for example when compiling to enable debug mode
+  - or `#define DEBUG` to enable it at the beginning of the source file
+- `#` operator causes a replacement-text token to be converted to a string surrounded by quotes
+- `##` operator is used to concatenate two tokens
+- predefined C++ macros:
+  - __LINE__: contains the current line number of the program when it is being compiled
+  - __FILE__: contains the current file name of the program when it is being compiled
+  - __DATE__: contains a string of the form month/day/year that is the date of the translation of the source file into object code
+  - __TIME__: contains a string of the form hour:minute:second that is the time at which the program was compiled
