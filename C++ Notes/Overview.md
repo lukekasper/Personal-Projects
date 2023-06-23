@@ -116,3 +116,14 @@ References: https://www.tutorialspoint.com/cplusplus
   - this can be done using the "new" operator
 - use "delete" operator once you are not in need of that memory anymore to de-allocate
   - for an array, use `delete [] pvalue;` regardless of the dimensions of the array (no need for [][])
+- useful for managing limited resources efficiently
+- for objects that need a longer lifetime or need to be accessed from different scopes or functions
+- must manage memory manually to avoid memory leaks (forgetting to deallocate memory after usage)
+- using smart pointers is an option to handle dynamic memory allocation and deallocation automatically
+
+### Namespaces
+- used to differentiate functions or variables with the same name
+- namespaces can be defined over multiple files
+  - writing a namespace definition either creates a new one, or adds to the existing namespace if it already exists
+- namespaces can also be nested
+  - to access methods within a nested namespace, use: `using namespace first_space::second_space;`
