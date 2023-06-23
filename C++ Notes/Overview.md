@@ -155,3 +155,21 @@ References: https://www.tutorialspoint.com/cplusplus
   - SIGTERM: termination request sent to the program
 - `signal()` function is used to trap unexpected events
 - `raise()` function can generate signals
+
+### Multithreading
+- process-based: run multiple programs concurrently
+- thread-based: run pieces of the same program concurrently
+- to create a thread using POSIX
+  - `#include <pthread.h>`
+  - `pthread_create (thread, attr, start_routine, arg)`
+    - thread: opaque, unique identifier for the new thread returned by the subroutine
+    - attr: opaque attribute object that may be used to set thread attributes. You can specify a thread attributes object, or NULL for the default values
+    - start_routine: C++ routine that the thread will execute once it is created
+    - arg: single argument that may be passed to start_routine. It must be passed by reference as a pointer cast of type void. NULL may be used if no argument is to be passed
+  - `pthread_exit (status)` to terminate a thread
+- joining two threads together ensures one executes before executing the next thread
+- threads should either be joined or detatched to prevent memory leakage
+
+### Web Programming in C++
+- CGI: Common Gateway Interface is the standards that define how info is exchanged between a web server and a custom script
+- 
