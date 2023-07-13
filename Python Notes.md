@@ -25,7 +25,8 @@
 - dictionary.items():
   - returns an object containing key-value pairs as tuples in a list
 
-### Advanced Python Concepts
+
+## Advanced Python Concepts
 Tuple Unpacking + Tuple Unpacking With *:
 - `person = ['bob', 30, 'male']`
   `name, age, gender = person`  
