@@ -53,7 +53,7 @@ Magic methods for python classes:
 `*args`: pass as a paramater to a function to allow funcitons to take any number of positional arguements  
   - will be stored in as a tuple in "args"
 
-**kwargs: pass as a paramater to a function to allow funcitons to take any number of keyword arguements  
+`**kwargs`: pass as a paramater to a function to allow funcitons to take any number of keyword arguements  
   - will be stored in as a dict in "kwargs"  
 
 
