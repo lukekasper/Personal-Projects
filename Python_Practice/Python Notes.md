@@ -71,5 +71,5 @@
 
 #### Decorators
 - functions that take in another function, tweak how the funciton works, and return another function
-- 
+- See example "Decorator.py"
 
