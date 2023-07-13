@@ -1,4 +1,5 @@
-Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
+### Arrays: 
+- https://www.studytonight.com/post/list-slicing-in-python-with-examples
 - eval(): mathematically evaluates a string expression
 - count = collections.Counter(s): gives back a dictionary with word occurences count (must "import collectoins" library)
 - for idx, ch in enumerate(s): steps through an array 's' using variable 'ch', and tracks the index of that array element using 'idx'
@@ -23,3 +24,23 @@ Arrays: https://www.studytonight.com/post/list-slicing-in-python-with-examples
 
 - dictionary.items():
   - returns an object containing key-value pairs as tuples in a list
+
+### Advanced Python Concepts
+Tuple Unpacking + Tuple Unpacking With *:
+- `person = ['bob', 30, 'male']`
+- `name, age, gender = person`
+- `# name='bob, age=30, gender='male'`
+
+- `fruits = ['apple', 'orange', 'pear', 'pineapple', 'durian', 'banana']`
+- `first, second, *others = fruits`
+- `# first='apple', second='orange'`
+- `# others = ['pear', 'pineapple', 'durian', 'banana']`
+
+List Comprehension: make a list (or dictionary/set) in one line of code
+- `l4 = [i for i in range(1,5) if i%2==1]   # [1,3,5]`
+- `d1 = {i:i**2 for i in range(1,4)}        # {1:1, 2:4, 3:9}`
+
+Combine conditionals into a single line using ternary operator
+- `score = 57`
+  `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`
+  `# grade = 'pass'`
