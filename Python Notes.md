@@ -42,5 +42,5 @@ List Comprehension: make a list (or dictionary/set) in one line of code
 
 Combine conditionals into a single line using ternary operator
 - `score = 57`
-  `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`
-  `# grade = 'pass'`
+- `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`
+- `# grade = 'pass'`
