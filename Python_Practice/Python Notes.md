@@ -49,6 +49,7 @@
 #### Magic methods for python classes:
 - `def __str__(self)`: returns specified string when you print the class object
 - `def __gt__(self, otherDog)`: provides guidance on how to compare two class objects
+- `def __bool__(self)`: provides custom guidance on how to evaluate the boolean logic of the object
 
 #### args & kwargs
 `*args`: pass as a paramater to a function to allow funcitons to take any number of positional arguements
@@ -57,4 +58,18 @@
 `**kwargs`: pass as a paramater to a function to allow funcitons to take any number of keyword arguements
   - will be stored in as a dict in "kwargs"  
 
+#### if __name__ == ‘__main__’
+- use this statement to run lines of code only if that file is ran directly
+- if funciton is called from another file/program, code in this conditional will not be executed
+
+#### truthy and falsy rules
+- falsy: values of zero, any empty sequence (char, list, dict, set), object of type "None" evaluates to False
+- truthy is opposite
+
+#### Web API building libraries
+- Python FastAPI and Python Flask are great for APIs and web applications
+
+#### Decorators
+- functions that take in another function, tweak how the funciton works, and return another function
+- 
 
