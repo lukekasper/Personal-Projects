@@ -38,7 +38,7 @@ Tuple Unpacking + Tuple Unpacking With *:
 
 List Comprehension: make a list (or dictionary/set) in one line of code
 - `l4 = [i for i in range(1,5) if i%2==1]   # [1,3,5]`
-- `d1 = {i:i**2 for i in range(1,4)}        # {1:1, 2:4, 3:9}`
+- `d1 = {i:i**2 for i in range(1,4)}        # {1:1, 2:4, 3:9}`  
 
 Combine conditionals into a single line using ternary operator
 - `score = 57`  
