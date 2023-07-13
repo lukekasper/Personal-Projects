@@ -80,3 +80,9 @@
 #### Method chaining
 - can chain multiple methods together to save lines of code
 - s = s.strip().lower().split()
+  
+#### Python Project Setup
+- Tools like "black" for formatting and "pylint" for syntax checking are useful and save development time
+- Can make the two compatible in your `pyproject.toml` file using:
+  - `[tool.pylint.format]`
+    `max-line-length = "88"`
