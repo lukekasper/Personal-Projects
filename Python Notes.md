@@ -29,7 +29,7 @@
 Tuple Unpacking + Tuple Unpacking With *:
 - `person = ['bob', 30, 'male']`
 - `name, age, gender = person`
-- `# name='bob, age=30, gender='male'`
+- `# name='bob, age=30, gender='male'`  
 
 - `fruits = ['apple', 'orange', 'pear', 'pineapple', 'durian', 'banana']`
 - `first, second, *others = fruits`
@@ -41,6 +41,6 @@ List Comprehension: make a list (or dictionary/set) in one line of code
 - `d1 = {i:i**2 for i in range(1,4)}        # {1:1, 2:4, 3:9}`
 
 Combine conditionals into a single line using ternary operator
-- `score = 57`
-- `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`
-- `# grade = 'pass'`
+- `score = 57`  
+  `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`  
+  `# grade = 'pass'`
