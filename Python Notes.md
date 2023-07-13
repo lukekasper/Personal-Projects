@@ -28,13 +28,13 @@
 ### Advanced Python Concepts
 Tuple Unpacking + Tuple Unpacking With *:
 - `person = ['bob', 30, 'male']`
-- `name, age, gender = person`
-- `# name='bob, age=30, gender='male'`  
-
-- `fruits = ['apple', 'orange', 'pear', 'pineapple', 'durian', 'banana']`
-- `first, second, *others = fruits`
-- `# first='apple', second='orange'`
-- `# others = ['pear', 'pineapple', 'durian', 'banana']`
+  `name, age, gender = person`  
+  `# name='bob, age=30, gender='male'`  
+  
+- `fruits = ['apple', 'orange', 'pear', 'pineapple', 'durian', 'banana']`  
+  `first, second, *others = fruits`  
+  `# first='apple', second='orange'`  
+  `# others = ['pear', 'pineapple', 'durian', 'banana']`  
 
 List Comprehension: make a list (or dictionary/set) in one line of code
 - `l4 = [i for i in range(1,5) if i%2==1]   # [1,3,5]`
