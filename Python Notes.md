@@ -49,6 +49,7 @@ Combine conditionals into a single line using ternary operator
 Magic methods for python classes:
 - `def __str__(self)`: returns specified string when you print the class object
 - `def __gt__(self, otherDog)`: provides guidance on how to compare two class objects
+
   
 `*args`: pass as a paramater to a function to allow funcitons to take any number of positional arguements
   - will be stored in as a tuple in "args"
