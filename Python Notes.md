@@ -45,3 +45,16 @@ Combine conditionals into a single line using ternary operator
 - `score = 57`  
   `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`  
   `# grade = 'pass'`
+
+Magic methods for python classes:
+- `class Dog():`  
+    `def __init__(self, name, age):`  
+      `self.name = name`  
+      `self.age = age  
+
+    `def __str__(self):`  
+      `return f'Dog(name={self.name}, age={self.age})'`  
+
+    `def __gt__(self, otherDog):`  
+      `return self.age > otherDog.age`
+  
