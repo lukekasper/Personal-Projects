@@ -27,7 +27,7 @@
 
 
 ## Advanced Python Concepts
-Tuple Unpacking + Tuple Unpacking With *:
+#### Tuple Unpacking + Tuple Unpacking With *:
 - `person = ['bob', 30, 'male']`
   `name, age, gender = person`  
   `# name='bob, age=30, gender='male'`  
@@ -37,22 +37,23 @@ Tuple Unpacking + Tuple Unpacking With *:
   `# first='apple', second='orange'`  
   `# others = ['pear', 'pineapple', 'durian', 'banana']`  
 
-List Comprehension: make a list (or dictionary/set) in one line of code
+#### List Comprehension: make a list (or dictionary/set) in one line of code
 - `l4 = [i for i in range(1,5) if i%2==1]   # [1,3,5]`
 - `d1 = {i:i**2 for i in range(1,4)}        # {1:1, 2:4, 3:9}`  
 
-Combine conditionals into a single line using ternary operator
+#### Combine conditionals into a single line using ternary operator
 - `score = 57`  
   `grade = 'A*' if score>90 else 'pass' if score>50 else 'fail'`  
   `# grade = 'pass'`
 
-Magic methods for python classes:
+#### Magic methods for python classes:
 - `def __str__(self)`: returns specified string when you print the class object
 - `def __gt__(self, otherDog)`: provides guidance on how to compare two class objects
-\
+
+#### args & kwargs
 `*args`: pass as a paramater to a function to allow funcitons to take any number of positional arguements
   - will be stored in as a tuple in "args"
-\
+
 `**kwargs`: pass as a paramater to a function to allow funcitons to take any number of keyword arguements
   - will be stored in as a dict in "kwargs"  
 
