@@ -73,3 +73,10 @@
 - functions that take in another function, tweak how the funciton works, and return another function
 - See example "Decorator.py"
 
+#### Generators + the ‘yield’ Keyword
+- "yield" is like "return" but does not stop function execution
+- function becomes a generator function and can have multiple outputs
+
+#### Method chaining
+- can chain multiple methods together to save lines of code
+- s = s.strip().lower().split()
