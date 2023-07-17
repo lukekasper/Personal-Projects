@@ -60,7 +60,4 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 - must bind host ports to the specified ports that the containers are set to listen to
   - container port is based on pulled image
   - without port binding, the container is unreachable
- 
-### Debugging Containers
-
   - specify port binding during the run cmd
