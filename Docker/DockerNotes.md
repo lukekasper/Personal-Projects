@@ -48,12 +48,13 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 - `docker ps`: list running containers
   - add `-a` to get history of running/stopped containers
 - `docker stop <id>`: stop container
-- `docker start <id>`: restart container
+- `docker start <id>`: restart stopped container
 - `docker logs <id>`: print logs
   - can also use container name instead of id
-- `docker exec -it <id> /bin/bash`: enter container terminal (in bash) as root user
+- `docker exec -it <id or name> /bin/bash`: enter container terminal (in bash) as root user
   - able to view and navigate virtual file system in container
   - can print environmental variables, ect
+  - `exit` to leave terminal
 
 ### Ports
 - containers have their own ports which differ from the host machine
@@ -61,3 +62,7 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
   - container port is based on pulled image
   - without port binding, the container is unreachable
   - specify port binding during the run cmd
+
+### Workflow with Docker
+<img width="1259" alt="Screen Shot 2023-07-18 at 3 11 17 PM" src="https://github.com/lukekasper/Personal-Projects/assets/28813582/606653e3-517f-4b97-b0ae-c3e4c86a9864">
+
