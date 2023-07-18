@@ -43,7 +43,7 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 - `docker pull <image name>`: pull docker image from url
 - `docker run <image name>`: start up container from pulled image
   - add `-d` before image name to run in detatched mode and allow command line access
-  - add `-p<host port>:<container port>` to bind ports
+  - add `-p <host port>:<container port>` to bind ports
   - add `--name <container name>` to name container
 - `docker ps`: list running containers
   - add `-a` to get history of running/stopped containers
@@ -66,3 +66,17 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 ### Workflow with Docker
 <img width="1259" alt="Screen Shot 2023-07-18 at 3 11 17 PM" src="https://github.com/lukekasper/Personal-Projects/assets/28813582/606653e3-517f-4b97-b0ae-c3e4c86a9864">
 
+### Docker Network (example at 01:15:00)
+- when Docker containers started, they run on an isolated Docker network
+- can connect containers within this network using just the container names because they are in the same network
+- applications running outside of this Docker network can connect using "localhost:<port number>"
+- `docker network create <network name>`: to create a new network connection
+- when running the container image, must supply:
+  - port of the host and container using `-p <host:container port>`
+  - environmental variables (suggested on Docker Hub) using `-e <env variable=value>`
+  - container name using `--name <container name>`
+  - network using `--net <network name>`
+
+### Docker Compose
+- way to automate running multiple containers with configurations
+  - structured in a yaml configuration file
