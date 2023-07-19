@@ -54,6 +54,7 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 - `docker exec -it <id or name> /bin/bash`: enter container terminal (in bash) as root user
   - able to view and navigate virtual file system in container
   - can print environmental variables, ect
+  - some containers may not have bash installed, use sh instead
   - `exit` to leave terminal
 
 ### Ports
