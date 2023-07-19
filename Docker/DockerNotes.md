@@ -94,5 +94,16 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 - base application image on some known image as a starting point
   - for our application use node js image as a starting point since that makes up the backend
   - will automatically have node installed in image
-- configure environemntal variables in Dockerfile
-- 
+- can configure environemntal variables in Dockerfile
+  - probably better to do this in Docker-Compose
+  - if something changes you can override it in Docker-Compose rather than needing to rebuild the image
+- Use "RUN" to create directory inside of the container, not on host computer
+  - RUN allows execution of any linux commands in container environment
+- COPY command executes on the host machine
+  - `COPY <source> <target>`
+- CMD executes an entrypoint linux cmd
+  - `CMD ["node","server.js"]`
+  - runs commands within the brackets
+  - since CMD is entrypoint, can only contain one within Dockerfile
+    - runs the server and thats it
+- Dockerfile is part of application code just like Docker-Compose
