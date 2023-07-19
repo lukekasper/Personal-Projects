@@ -80,3 +80,19 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 ### Docker Compose
 - way to automate running multiple containers with configurations
   - structured in a yaml configuration file
+- when you restart a container, everything configured within that container is reset
+  - no data persistence
+- `docker-compose -f <yaml name> up -d`: start all containers in yaml file
+- `docker-compose -f <yaml name> down`: stop all containers in yaml file
+  - also removes the network
+ 
+### Dockerfile
+- to deploy, applicatin must be packaged into its own container
+  - ie from a javascript node js application
+- Jenkins automates this functionality and pushes it to a Docker repository
+- Dockerfile: blueprint for building images
+- base application image on some known image as a starting point
+  - for our application use node js image as a starting point since that makes up the backend
+  - will automatically have node installed in image
+- configure environemntal variables in Dockerfile
+- 
