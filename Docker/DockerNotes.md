@@ -107,3 +107,14 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
   - since CMD is entrypoint, can only contain one within Dockerfile
     - runs the server and thats it
 - Dockerfile is part of application code just like Docker-Compose
+- Dockerfile must be named "Dockerfile" exactly
+- to build an image using a Dockerfile:
+  - `docker build -t <image name>:<tag> <location of Dockerfile>`
+- in order to use Jenkins:
+  - must commit this Dockerfile to the repository along with the code
+  - Jenkins or Github will then create an image from this Dockerfile
+  - in a development team, this image would then be pushed to a Docker repository for dev teams to checkout and test
+- whenver you adjust a Dockerfile, you must rebuild the image
+  - `docker rmi <id>`: delete an image
+  - `docker rm <id>`: delete a container
+  - cannot delete an image if a stopped container is using that image, must remove container first
