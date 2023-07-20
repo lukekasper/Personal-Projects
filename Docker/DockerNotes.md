@@ -1,4 +1,4 @@
-![image](https://github.com/lukekasper/Personal-Projects/assets/28813582/c2c48ad4-89d5-4103-a1d1-e73aa2ed6607)reference: https://www.youtube.com/watch?v=3c-iBn73dDE
+reference: https://www.youtube.com/watch?v=3c-iBn73dDE
 
 ### Overview
 - container: way to package an application with all necessary dependencies and configurations
