@@ -158,3 +158,6 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
   - useful if containers need to share data
 - when setting up volumes in Docker-compose, you must figure out what path the database type stores the data within the container folder hierarchy
   - different for each db type (Postgres, Mysql, ect), can be found through google search
+- Docker volumes on mac: "/var/lib/docker/volumes"
+  - Mac OS actually creates a linux VM to store the volume data
+  - folder location won't be available at the above pathway
