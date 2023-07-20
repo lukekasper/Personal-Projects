@@ -122,39 +122,39 @@
 - in a typical application with a lot of files, you would want to compress these into a singular artifact and copy that into a Docker image container
 
 ### Docker Registry
-	- private Docker repository (on AWS ECR for example)
-	- each Docker image has its own repository (specific to AWS)
-		- within this repository are different tags (or versions) of the same image
-	- to push to repository:
-		- must login to private repo
-			- if it is pushed from a Jenkins server, you must give Jenkins the credentials of the private repo in order to push a Docker image
-		- must tag image
-			- image naming in Docker registries: <registryDomain>/<imageName>:<tag>
-			- tagging image adds information about the private repo to the image name to let docker know where to push the image
-			- `docker tag <app_name>:<version> <registryName>`
+- private Docker repository (on AWS ECR for example)
+- each Docker image has its own repository (specific to AWS)
+  - within this repository are different tags (or versions) of the same image
+  - to push to repository:
+    - must login to private repo
+      - if it is pushed from a Jenkins server, you must give Jenkins the credentials of the private repo in order to push a Docker image
+    - must tag image
+      - image naming in Docker registries: <registryDomain>/<imageName>:<tag>
+      - tagging image adds information about the private repo to the image name to let docker know where to push the image
+      - `docker tag <app_name>:<version> <registryName>`
 
 ### Deploy Containerized App
-	- to pull container from private Docker repo, dev server must have login info
-		- not necessary for public Docker Hub images
-	- include the repository domain in the docker-compose file in order to start application along with other accompanying containers
+- to pull container from private Docker repo, dev server must have login info
+  - not necessary for public Docker Hub images
+- include the repository domain in the docker-compose file in order to start application along with other accompanying containers
 
 ### Persisting Data with Volumes
-	- data is stored within a container typically in the virtual file system
-		- when the container is restarted, the file system is as well and the data is lost
-	- docker Volumes:
-		- host file system (physical) is mounted into the virtual file system of Docker
-		- data gets automatically replicated into the host file system
-	- types of Volumes:
-		- Host Volume: 
-			- `docker run -v <host directory>:<container directory>` to assign the storage pathway
-			- you decide where on the host side the file system reference is made
-		- Anonymous Volume:
-			- `docker run -v <container directory>`: automatically generates a folder at "/var/lib/volumes/…" on the host machine that gets mounted to the container
-		- Named Volume: 
-			- `docker run -v <name>:<container directory>`: can reference this volume by name
-			- typically used in production environments
-	- volume creation can also be done using Docker-compose
-	- can mount the same host storage to multiple containers
-		- useful if containers need to share data
-	- when setting up volumes in Docker-compose, you must figure out what path the database type stores the data within the container folder hierarchy
-		- different for each db type (Postgres, Mysql, ect), can be found through google search
+- data is stored within a container typically in the virtual file system
+  - when the container is restarted, the file system is as well and the data is lost
+- docker Volumes:
+  - host file system (physical) is mounted into the virtual file system of Docker
+  - data gets automatically replicated into the host file system
+- types of Volumes:
+  - Host Volume: 
+    - `docker run -v <host directory>:<container directory>` to assign the storage pathway
+    - you decide where on the host side the file system reference is made
+  - Anonymous Volume:
+    - `docker run -v <container directory>`: automatically generates a folder at "/var/lib/volumes/…" on the host machine that gets mounted to the container
+  - Named Volume: 
+    - `docker run -v <name>:<container directory>`: can reference this volume by name
+    - typically used in production environments
+- volume creation can also be done using Docker-compose
+- can mount the same host storage to multiple containers
+  - useful if containers need to share data
+- when setting up volumes in Docker-compose, you must figure out what path the database type stores the data within the container folder hierarchy
+  - different for each db type (Postgres, Mysql, ect), can be found through google search
