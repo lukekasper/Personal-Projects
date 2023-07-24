@@ -1,6 +1,4 @@
 Docker Containerization ToDo list:
-- update requirements.txt to include all app dependencies
-  - check for installations using `pip list`
 - save the AppleScript code as an application:
   - Click on "File" in the menu bar, then select "Save..."
   - Choose a location to save the application.
