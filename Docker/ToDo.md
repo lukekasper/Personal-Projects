@@ -31,5 +31,5 @@ Additional tasks:
 - use black linting code for formatting
 - integration tests for interaction between app add db?
 - seperate github action workflows for ci and cd
-- consider deploying on a cloud environment
-- create automated databse migration scripts
+- consider deploying on a cloud environment using kubernetes
+- create automated database migration scripts
