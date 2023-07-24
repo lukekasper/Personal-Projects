@@ -92,6 +92,9 @@ function generate_page(title, api_path, id) {
 
 function load_recipes(user, cuisine) {
 
+    let start = 0;
+    let end = start + 9;
+
     // hide recipe view and show all recipes
     document.querySelector('#all_recipes').style.display = 'block';
     document.querySelector('#recipe-view').style.display = 'none';
@@ -104,23 +107,40 @@ function load_recipes(user, cuisine) {
 
     // get requested recipes and generate html (user recipes, recipes by cuisine, or all recipes)
     if (user != '') {
-        query_recipes('/my_recipes', 'user_recipes', user+"'s Recipes")
+        query_recipes('/my_recipes', 'user_recipes', user+"'s Recipes", start, end);
     }
-
     else if (cuisine != '') {
-        query_recipes('/cuisine_recipes/'+cuisine, 'cuisine_recipes', '"' + cuisine + '" Recipes')
+        query_recipes('/cuisine_recipes/'+cuisine, 'cuisine_recipes', '"' + cuisine + '" Recipes', start, end);
+    }
+    else {
+        query_recipes('/all_recipes', 'recipes', 'All Recipes', start, end);
     }
 
-    else {
-        query_recipes('/all_recipes', 'recipes', 'All Recipes')
-    }
+    // if bottom of screen is reached, load the next 10 recipes
+    window.onscroll = () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            start += 10; // update counter
+            end += 10;
+
+            // get requested recipes and generate html (user recipes, recipes by cuisine, or all recipes)
+            if (user != '') {
+                query_recipes('/my_recipes', 'user_recipes', user+"'s Recipes", start, end);
+            }
+            else if (cuisine != '') {
+                query_recipes('/cuisine_recipes/'+cuisine, 'cuisine_recipes', '"' + cuisine + '" Recipes', start, end);
+            }
+            else {
+                query_recipes('/all_recipes', 'recipes', 'All Recipes', start, end);
+            }
+        }
+    };
 }
 
 // query recipes and generate html
-function query_recipes(api_path, key, title) {
+function query_recipes(api_path, key, title, start, end) {
 
     // Send API request to get recipes
-    fetch(`${api_path}`)
+    fetch(`${api_path}?start=${start}&end=${end}`)
     .then(response => response.json())
     .then(data => {
 
@@ -139,33 +159,35 @@ function query_recipes(api_path, key, title) {
 function make_recipe_html(recipe) {
 
     // create an outer div for to contain image and post's info
-    const outerDiv = make_html_element('', 'outer-div_'+recipe.title, 'outer-div', 'div');
-    const imageDiv = make_html_element('', 'image-div_'+recipe.title, 'image-div', 'div');
-    const infoDiv = make_html_element('', 'info-div_'+recipe.title, 'info-div', 'div');
+    let recipe_title = recipe.title.replaceAll(" ","_")
+
+    const outerDiv = make_html_element('', 'outer-div_'+recipe_title, 'outer-div', 'div');
+    const imageDiv = make_html_element('', 'image-div_'+recipe_title, 'image-div', 'div');
+    const infoDiv = make_html_element('', 'info-div_'+recipe_title, 'info-div', 'div');
 
     // make comments div
-    const commentsDiv = make_html_element('', 'comments-div_'+recipe.title, 'comments-div', 'div');
+    const commentsDiv = make_html_element('', 'comments-div_'+recipe_title, 'comments-div', 'div');
     commentsDiv.append(make_html_element('Comments:', '', 'comments-header', 'h6'));
-    commentsDiv.append(make_html_element('', 'comments-container_'+recipe.title, 'comments-container', 'div'));
-    commentsDiv.append(make_html_element('', 'comments-inner_'+recipe.title, 'comments-inner', 'div'));
+    commentsDiv.append(make_html_element('', 'comments-container_'+recipe_title, 'comments-container', 'div'));
+    commentsDiv.append(make_html_element('', 'comments-inner_'+recipe_title, 'comments-inner', 'div'));
 
     // add star rating system
     let stars = make_stars(recipe);
 
     // create comments button
-    const comments_button = make_html_element('Show Comments', 'comments-button_'+recipe.title, 'comments-button', 'button');
-    comments_button.addEventListener('click', () => show_comments(recipe.comments, recipe.title));
+    const comments_button = make_html_element('Show Comments', 'comments-button_'+recipe_title, 'comments-button', 'button');
+    comments_button.addEventListener('click', () => show_comments(recipe.comments, recipe_title));
 
     // make html
     const line_hr = document.createElement('hr');
-    const title = make_html_element(recipe.title, 'title_'+recipe.title, 'title', 'p');
+    const title = make_html_element(recipe.title, 'title_'+recipe_title, 'title', 'p');
     const image = make_image_html(recipe.image, 'image');
 
     // append info to outer div
     imageDiv.append(image);
     infoDiv.append(title);
-    infoDiv.append(make_html_element("Category: " + recipe.category, recipe.title+'_category', 'category', 'p'));
-    infoDiv.append(make_html_element(recipe.timestamp, recipe.title+'_timestamp', 'timestamp', 'p'));
+    infoDiv.append(make_html_element("Category: " + recipe.category, recipe_title+'_category', 'category', 'p'));
+    infoDiv.append(make_html_element(recipe.timestamp, recipe_title+'_timestamp', 'timestamp', 'p'));
     infoDiv.append(stars);
     infoDiv.append(comments_button);
     outerDiv.append(imageDiv);
@@ -175,15 +197,15 @@ function make_recipe_html(recipe) {
     document.querySelector("#all_recipes").append(line_hr);
 
     // default to hiding comments
-    document.querySelector('#comments-div_'+recipe.title).style.display = 'none';
+    document.querySelector("#comments-div_"+recipe_title).style.display = 'none';
 
     // add event listener for poster to change color when moused over
     title.addEventListener('mouseover', () => {title.style.color = "Blue";});
     title.addEventListener('mouseout', () => {title.style.color = "Black";});
 
     // do the same for for clicking image or title of recipe
-    title.addEventListener('click', () => load_recipe(recipe.title));
-    image.addEventListener('click', () => load_recipe(recipe.title));
+    title.addEventListener('click', () => load_recipe(recipe_title));
+    image.addEventListener('click', () => load_recipe(recipe_title));
 }
 
 // create star rating system
@@ -197,6 +219,7 @@ function make_stars(recipe) {
     const s5 = document.createElement('span');
 
     let span_list = [s1, s2, s3, s4, s5];
+    let recipe_title = recipe.title.replaceAll(" ","_");
 
     // loop through the star spans, and check the number based on the recipe rating
     for (let i=0; i<5; i++) {
@@ -206,7 +229,7 @@ function make_stars(recipe) {
         else {
             span_list[i].setAttribute('class', 'fa fa-star');
         }
-        span_list[i].setAttribute('id', recipe.title+'_star_'+i);
+        span_list[i].setAttribute('id', recipe_title+'_star_'+i);
 
         // only allow a user rating if signed in
         if (document.querySelector('#usrname')) {
@@ -218,8 +241,8 @@ function make_stars(recipe) {
     }
 
     // add average and number of ratings and append to stars div
-    const rating = make_html_element(recipe.rating, recipe.title+'_rating', 'rating', 'span');
-    const num_ratings = make_html_element("("+recipe.num_ratings+")", recipe.title+'num_ratings', 'num_ratings', 'span');
+    const rating = make_html_element(recipe.rating, recipe_title+'_rating', 'rating', 'span');
+    const num_ratings = make_html_element("("+recipe.num_ratings+")", recipe_title+'num_ratings', 'num_ratings', 'span');
     stars.append(rating);
     stars.append(num_ratings);
 
@@ -381,8 +404,10 @@ function update_rating(title, i) {
     .then(response => response.json())
     .then(data => {
 
+        let recipe_title = title.replaceAll(" ","_");
+
         // update avg rating html for selected recipe and reload recipes
-        document.querySelector('#'+title+'_rating').innerHTML = data.avg_rating;
+        document.querySelector('#'+recipe_title+'_rating').innerHTML = data.avg_rating;
         load_recipes(user='', cuisine='');
     });
 }
@@ -416,6 +441,9 @@ function uncolor_stars(title, rating, span_list) {
         }
     }
 }
+/////////////////////////////////////////////////////////////////////////////////
+///////////////////////// LOAD INDIVIDUAL RECIPIES PAGE /////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 // load recipe page
 function load_recipe(title) {
@@ -428,7 +456,9 @@ function load_recipe(title) {
     document.querySelector('#favorites-view').style.display = 'none';
 
     // send API request to get recipe info
-    fetch('/recipe_page/'+title)
+    let recipe_title = title.replaceAll("_"," ")
+
+    fetch('/recipe_page/'+recipe_title)
     .then(response => response.json())
     .then(data => {
 
@@ -456,8 +486,8 @@ function load_recipe(title) {
 
         // split strings into lists
         const ingredients_list = data.recipe.ingredients.split(',');
-        const directions_list = data.recipe.instructions.split(',');
-        const notes_list = data.recipe.note.split(',');
+        const directions_list = data.recipe.instructions.split('"');
+        const notes_list = data.recipe.note.split('"');
 
         // make outer list html
         const ing_ul = make_html_element('', 'ing_ul', 'recipe_list_items', 'ul');
@@ -465,31 +495,47 @@ function load_recipe(title) {
         const notes_ul = make_html_element('', 'notes_ul', 'recipe_list_items', 'ul');
 
         // append ingredients to ul
-        ingredients_list.forEach(ingredient => {
+        let subrec_list = [];
+        return_recipes()
+            .then(recipes_list => {
+                ingredients_list.forEach(ingredient => {
+                    if (ingredient != '' && ingredient != '[' && ingredient != ']' && ingredient != ',') {
+                        let current_ingredient = trim_chars(ingredient);
+                        let current_ing_li = make_html_element(current_ingredient, 'ing_li_'+current_ingredient, 'ing_li_', 'li');
+                        ing_ul.append(current_ing_li);
 
-            // trim off extra " and ] characters
-            ingredient = trim_chars(ingredient);
-            ing_ul.append(make_html_element(ingredient, 'ing_li', '', 'li'));
-        })
+                        // check if any ingredient is also a recipe
+                        if (recipes_list.includes(current_ingredient)) {
+
+                            // add event listener for poster to change color when moused over
+                            current_ing_li.addEventListener('mouseover', changeColorToBlue);
+                            current_ing_li.addEventListener('mouseout', changeColorToBlack);
+
+                            // do the same for for clicking image or title of recipe
+                            current_ing_li.addEventListener('click', () => load_recipe(current_ingredient));
+
+                            subrec_list.push(current_ingredient);
+                        }
+                    }
+                })
+            });
 
         // append directions to ol
         directions_list.forEach(direction => {
-            direction = trim_chars(direction);
-            dir_ol.append(make_html_element(direction, 'dir_li', '', 'li'));
+            if (direction != '' && direction != '[' && direction != ']' && direction != ',') {
+                dir_ol.append(make_html_element(direction, 'dir_li', '', 'li'));
+            }
         })
 
         // append notes to ul
         notes_list.forEach(note => {
-
-            // if note is not empty
-            if (note != '') {
-                note = trim_chars(note);
+            if (note != '' && note != '[' && note != ']' && note != ',') {
                 notes_ul.append(make_html_element(note, 'note_li', 'recipe_list_items', 'li'));
             }
         })
 
-        const category = make_html_element(data.recipe.category, '', 'info', 'div');
-        const cooktime = make_html_element(data.recipe.cooktime, '', 'info', 'div');
+        const category = make_html_element(data.recipe.category, 'cat-info', 'info', 'div');
+        const cooktime = make_html_element(data.recipe.cooktime, 'time-info', 'info', 'div');
 
         // make box for category and time
         const cat_container = make_html_element('', 'cat-container', 'recipe-container', 'div');
@@ -510,6 +556,12 @@ function load_recipe(title) {
         const box_div = make_html_element('', 'box_div', 'box_div', 'div');
         box_div.append(info_box);
 
+        // make edit recipies button
+        const edit_button_div = make_html_element('', 'edit-button_div', 'button_div-button', 'div');
+        const edit_button = make_html_element('Edit Recipie', 'edit-button', 'btn btn-sm btn-outline-primary', 'button');
+        edit_button_div.append(edit_button);
+        edit_button.addEventListener('click', () => edit_view(subrec_list));
+
         // make containers and add info for ingredients, directions
         const ing_div = make_html_element('Ingredients:', 'ing_div', 'recipe_list_div', 'div');
         ing_div.append(ing_ul);
@@ -522,6 +574,7 @@ function load_recipe(title) {
         document.querySelector("#top-recipe-info").append(title);
         document.querySelector("#top-recipe-info").append(top_div);
         document.querySelector("#top-recipe-info").append(box_div);
+        document.querySelector("#top-recipe-info").append(edit_button_div);
         document.querySelector("#recipe-info-lists").append(make_html_element('', 'hr-box', '', 'hr'));
         document.querySelector("#recipe-info-lists").append(ing_div);
         document.querySelector("#recipe-info-lists").append(dir_div);
@@ -559,6 +612,97 @@ function load_recipe(title) {
     });
 }
 
+function changeColorToBlue(element) {
+  this.style.color = "blue";
+}
+
+function changeColorToBlack(element) {
+  this.style.color = "black";
+}
+
+// enter edit recipies view
+function edit_view(subrec_list) {
+
+    // remove event listeners for sub recipies
+    subrec_list.forEach(subrec => {
+
+        let id = "ing_li_"+subrec;
+        let subrec_el = document.getElementById(id);
+
+        subrec_el.removeEventListener('mouseover', changeColorToBlue);
+        subrec_el.removeEventListener('mouseout', changeColorToBlack);
+
+        // do the same for for clicking image or title of recipe
+        subrec_el.removeEventListener('click', () => load_recipe(subrec_el.innerHTML));
+    })
+
+
+    // assign recipie contents to variables
+    let edit_button = document.querySelector("#edit-button");
+    let edit_button_div = document.querySelector("#edit-button_div");
+
+    let cat_info = document.querySelector("#cat-info");
+    let time_info = document.querySelector("#time-info");
+
+    let ing_list = document.querySelector("#ing_ul");
+    let dir_list = document.querySelector("#dir_ol");
+    let notes_list = document.querySelector("#notes_ul");
+
+    // remove event listener
+    edit_button.removeEventListener('click', () => edit_view());
+
+    // update edit button text and add display message for user
+    edit_button.innerHTML = "Save Updates";
+    const text = "Click on content to bring up text editor.";
+    const display_message = make_html_element(text, 'edit_message', 'edit_message', 'p');
+    edit_button_div.append(display_message);
+
+    // add UI for editing different recipie contents
+    edit_UI(cat_info);
+    edit_UI(time_info);
+    edit_UI(ing_list);
+    edit_UI(dir_list);
+    edit_UI(notes_list);
+}
+
+// generic function to highlight content when mouse-over and add to text editor pop-up when clicked
+function edit_UI(current_el) {
+
+    // add event listener to highlight text for editing
+    current_el.addEventListener('mouseover', () => {
+        current_el.style.opacity = "0.5";
+        });
+    current_el.addEventListener('mouseout', () => {
+        current_el.style.opacity = "1.0";
+        });
+
+    // do the same for for clicking image or title of recipe
+    current_el.addEventListener('click', () => load_recipe(current_ingredient));
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+///////////////////////// SEARCH AND FAVORITED RECIPIES /////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+// query all recipes and return titles in a list format
+function return_recipes() {
+
+    let recipe_list = [];
+
+    // Send API request to get recipes
+    return fetch("/all_recipes")
+    .then(response => response.json())
+    .then(data => {
+
+        // loop through all of the recipes
+        data['recipes'].forEach(recipe => {
+            recipe_list.push(recipe.title);
+        })
+
+        return recipe_list
+    })
+}
+
 // update user's favorite recipes
 function update_favorites(title, flag) {
 
@@ -584,10 +728,10 @@ function trim_chars(text) {
 
     // trim off extra " and ] characters
     text = text.slice(1, -1);
-    if (text[0] == '"') {
+    if (text[0] == '"' || text[0] == ' ') {
         text = text.slice(1,);
     }
-    if (text.charAt(text.length-1) == '"') {
+    if (text.charAt(text.length-1) == '"' || text.charAt(text.length-1) == ' ') {
         text = text.slice(0,-1);
     }
     return text

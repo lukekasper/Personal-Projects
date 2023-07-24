@@ -103,16 +103,10 @@ def add_recipe(request):
         else:
             notes = ''
 
-        # see if any of the ingredients are a sub-recipe, if so add it as one and remove from ingredients
         ingredients = list(request.POST.get("ingredients").split(","))
         ingredients_str = ''
         for ingredient in ingredients:
-            if Recipe.objects.filter(title=ingredient):
-                sub_rec = Recipe.objects.get(title=ingredient)
-                ingredients.remove(ingredient)
-                recipe.sub_recipe.add(sub_rec)
-            else:
-                ingredients_str += ingredient + ","
+            ingredients_str += ingredient + ","
         ingredients_str = ingredients_str[:-1]
 
         # update recipe details
@@ -130,9 +124,22 @@ def all_recipes(request):
 
     recipes = Recipe.objects.all()
     recipes = recipes.order_by("-timestamp").all()
+    recipes_list = [recipe.serialize() for recipe in recipes]
+
+    # set start and end points
+    start = int(request.GET.get("start") or 0)
+    end = int(request.GET.get("end") or (len(recipes) - 1))
+
+    if start > len(recipes) - 1:
+        recipes_list = []
+    elif end > len(recipes) - 1:
+        end = len(recipes) - 1
+        recipes_list = recipes_list[start:end + 1]
+    else:
+        recipes_list = recipes_list[start:end + 1]
 
     # .serialize() creates a text string for json object
-    return JsonResponse({"recipes": [recipe.serialize() for recipe in recipes]})
+    return JsonResponse({"recipes": recipes_list})
 
 
 def get_recipe(request, name):
@@ -215,6 +222,18 @@ def my_recipes(request):
     user_recipes = Recipe.objects.filter(user=user)
     user_recipes = user_recipes.order_by("-timestamp").all()
 
+    # set start and end points
+    start = int(request.GET.get("start"))
+    end = start + 10
+    if start > len(user_recipes) - 1:
+        start = len(user_recipes) - 1
+        end = len(user_recipes) - 1
+    elif end > len(user_recipes) - 1:
+        end = len(user_recipes) - 1
+
+    # return appropriate recipes
+    user_recipes = user_recipes[start:end]
+
     # .serialize() creates a text string for json object
     return JsonResponse({"user_recipes": [recipe.serialize() for recipe in user_recipes]})
 
@@ -234,6 +253,18 @@ def cuisine_recipes(request, cuisine):
 
     recipes = Recipe.objects.filter(category=cuisine)
     recipes = recipes.order_by("-timestamp").all()
+
+    # set start and end points
+    start = int(request.GET.get("start"))
+    end = start + 10
+    if start > len(recipes) - 1:
+        start = len(recipes) - 1
+        end = len(recipes) - 1
+    elif end > len(recipes) - 1:
+        end = len(recipes) - 1
+
+    # return appropriate recipes
+    recipes = recipes[start:end]
 
     # .serialize() creates a text string for json object
     return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in recipes]})

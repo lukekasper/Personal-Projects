@@ -20,7 +20,6 @@ class Recipe(models.Model):
     title = models.CharField(max_length=50, null=True)
     ingredients = models.CharField(max_length=5000, null=True, blank=True)
     instructions = models.CharField(max_length=50000, null=True, blank=True)
-    sub_recipe = models.ManyToManyField('self', symmetrical=False, blank=True, related_name="recipes_contain")
     category = models.CharField(max_length=50, null=True)
     image = models.ImageField(upload_to='images/', blank=True)
     cooktime = models.CharField(max_length=50, null=True)
