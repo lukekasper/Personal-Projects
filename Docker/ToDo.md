@@ -34,3 +34,6 @@ Additional tasks:
 - consider deploying on a cloud environment using kubernetes
 - create automated database migration scripts
   - use `python manage.py makemigrations` and `python manage.py migrate` in automated deployment process
+- conduct security audit using github actions
+- documentation on setup, app usage, troubleshooting, ect.
+  - comprehensive ReadMe.
