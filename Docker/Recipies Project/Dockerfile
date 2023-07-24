@@ -10,7 +10,7 @@ WORKDIR /home/Recipies
 
 # Install system-level dependencies (for macOS, use brew instead of apt-get)
 RUN brew update && \
-    brew install mysql-connector-c pkg-config
+    brew install mysql pkg-config
 
 # install dependencies from requirements file
 RUN pip install -r requirements.txt
