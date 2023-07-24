@@ -8,6 +8,7 @@ Docker Containerization ToDo list:
   - Click "Save."
 
 General ToDos:
+- Finish up features and bug fixes on development side
 - Add in error handling on front and backend using:
   - back end:
     - `if request.method == 'POST':`
