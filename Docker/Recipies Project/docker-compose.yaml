@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Django application service
+  web:
+    build: ./Dockerfile
+    image: recipies_image:latest  # Replace with the name of your custom-built Django image
+    container_name: recipes_app
+    environment:
+      - DEBUG=1  # Set any necessary environment variables for your Django app
+    ports:
+      - "8000:8000"  # Expose Django app port
+    depends_on:
+      - mysql
+    volumes:
+      - recipies_data:/home/Recipies # Use the same named volume for Django app code persistence
+
+  # MySQL service
+  mysql:
+    image: mysql:latest
+    container_name: recipes_mysql
+    env_file: ./secret.env
+    ports:
+      - 8080:8080
+    volumes:
+      - recipies_data:/home/Recipies # Use the same named volume for Django app code persistence
+
+volumes:
+  recipies_data:
+    driver: local
+  
