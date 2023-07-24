@@ -32,3 +32,4 @@ Additional tasks:
 - integration tests for interaction between app add db?
 - seperate github action workflows for ci and cd
 - consider deploying on a cloud environment
+- create automated databse migration scripts
