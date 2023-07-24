@@ -88,7 +88,7 @@ reference: https://www.youtube.com/watch?v=3c-iBn73dDE
   - also removes the network
  
 ### Dockerfile
-- to deploy, applicatin must be packaged into its own container
+- to deploy, application must be packaged into its own container
   - ie from a javascript node js application
 - Jenkins automates this functionality and pushes it to a Docker repository
 - Dockerfile: blueprint for building images
