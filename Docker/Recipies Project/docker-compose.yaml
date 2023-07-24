@@ -6,8 +6,7 @@ services:
     build: ./Dockerfile
     image: recipies_image:latest  # Replace with the name of your custom-built Django image
     container_name: recipes_app
-    environment:
-      - DEBUG=1  # Set any necessary environment variables for your Django app
+    env_file: ./secret.env
     ports:
       - "8000:8000"  # Expose Django app port
     depends_on:
@@ -21,7 +20,7 @@ services:
     container_name: recipes_mysql
     env_file: ./secret.env
     ports:
-      - 8080:8080
+      - 3306:3306
     volumes:
       - recipies_data:/home/Recipies # Use the same named volume for Django app code persistence
 

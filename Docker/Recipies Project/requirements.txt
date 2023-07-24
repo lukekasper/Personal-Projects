@@ -1,1 +1,2 @@
-Django>=3.2,<4.0  # Make sure to use a compatible Django version
+Django==3.2.7  # Make sure to use a compatible Django version
+mysqlclient==2.0.3  # Include the correct version of mysqlclient

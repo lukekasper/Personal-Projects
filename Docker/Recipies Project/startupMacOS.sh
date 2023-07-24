@@ -24,6 +24,7 @@ else
     sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 fi
 
+echo "Starting application containers."
 docker-compose -f docker-compose.yaml up -d
 
 # Function to install Docker on macOS using Homebrew
