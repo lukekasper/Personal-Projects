@@ -4,13 +4,9 @@ FROM python:latest
 ENV ADMIN_USER=default_admin \
     ADMIN_PASSWORD=default_password
 
-RUN mkdir -p /home/Recipies
-COPY . /home/Recipies
-WORKDIR /home/Recipies
-
-# Install system-level dependencies (for macOS, use brew instead of apt-get)
-RUN brew update && \
-    brew install mysql pkg-config
+RUN mkdir -p /home/Recipes
+COPY . /home/Recipes
+WORKDIR /home/Recipes
 
 # install dependencies from requirements file
 RUN pip install -r requirements.txt
