@@ -1,9 +1,8 @@
 import json
-import re
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -68,13 +67,11 @@ def index(request):
     return render(request, "cookbook/index.html")
 
 
-@csrf_exempt
 @login_required
 def new_recipe(request):
     return render(request, "cookbook/new_recipe.html")
 
 
-@csrf_exempt
 @login_required
 def add_recipe(request):
 
@@ -117,7 +114,8 @@ def add_recipe(request):
 
         HttpResponseRedirect("index")
 
-    return JsonResponse({"message": "Post Error."}, status=404)
+    # For other request methods (e.g., GET, PUT, DELETE, etc.), return HTTP 405 Method Not Allowed
+    return HttpResponseNotAllowed(permitted_methods=["POST"])
 
 
 def all_recipes(request):

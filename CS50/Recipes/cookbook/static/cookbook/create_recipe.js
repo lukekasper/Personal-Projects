@@ -16,10 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#notes-button').addEventListener('click', add_note);
 
     // run when form is submitted
-    document.querySelector('#new_recipe-button').addEventListener('click', () => {
-
-          new_recipe();
-    });
+    document.querySelector('#new_recipe-button').addEventListener('click', new_recipe);
 });
 
 function add_ingredient() {
@@ -177,6 +174,48 @@ function add_note() {
     }
 }
 
+async function postData(url, data) {
+    try {
+        // Get the CSRF token value from the cookie
+        const csrfToken = getCookie('csrftoken');
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            // Handle non-OK responses (e.g., 4xx or 5xx status code)
+            console.error('Network response was not OK');
+            // Throw an error to jump to the catch block
+            throw new Error('Network response was not OK');
+        }
+
+        const responseData = await response.json();
+        // Handle the successful response data
+        console.log('Data received:', responseData);
+        // Return the data if needed
+        return responseData;
+
+    } catch (error) {
+
+        console.error('Error:', error);
+        // Display an error message to the user or perform other error handling
+    }
+}
+
+// Helper function to get the CSRF token value from the cookie
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// POST a new recipie to backend
 function new_recipe() {
 
     // get info from input field
@@ -195,12 +234,46 @@ function new_recipe() {
     };
 
     // send POST request to /new_post API
-    fetch('/add_recipe', options)
+    postData('/add_recipe', options)
+}
 
-    .then(response => response.json())
-    .then(response => {
-        console.log(response);
-    });
+////////////////////////// Asynchronous API call //////////////////////////
+async function postData(url, data) {
+    try {
+        // Get the CSRF token value from the cookie
+        const csrfToken = getCookie('csrftoken');
 
-    return false;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            // Handle non-OK responses (e.g., 4xx or 5xx status code)
+            console.error('Network response was not OK');
+            // Throw an error to jump to the catch block
+            throw new Error('Network response was not OK');
+        }
+
+        const responseData = await response.json();
+        // Handle the successful response data
+        console.log('Data received:', responseData);
+        // Return the data if needed
+        return responseData;
+
+    } catch (error) {
+        // Display an error message to the user or perform other error handling
+        console.error('Error:', error);
+    }
+}
+
+// Helper function to get the CSRF token value from the cookie
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
