@@ -49,6 +49,14 @@ def logout_view(request):
 
 
 def register(request):
+    """
+    Handles the user registration process. If the request method is POST, it
+    attempts to create a new user based on the provided username, email, and password. The
+    password must match the password confirmation for successful registration. If the
+    registration is successful, the user is logged in and redirected to the "index" page.
+
+    If the request method is not POST, it simply renders the registration page.
+    """
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -76,17 +84,31 @@ def register(request):
 
 
 def index(request):
+    """
+    Renders the index template (Home page).
+    """
     return render(request, "cookbook/index.html")
 
 
 @login_required
 def new_recipe(request):
+    """
+    Renders the "new_recipe.html" template, which displays the form for
+    creating a new recipe. The view is protected by the `@login_required` decorator, which
+    ensures that only authenticated users can access the form.
+    """
     return render(request, "cookbook/new_recipe.html")
 
 
 @login_required
 def add_recipe(request):
-
+    """
+    Allows authenticated users to add a new recipe to the cookbook by
+    submitting a POST request. The recipe information, including title, category, cooktime,
+    image, ingredients, directions, and optional notes, is extracted from the request data.
+    A new `Recipe` model instance is created and saved to the database with the provided
+    information.
+    """
     # create recipe from POST info
     if request.method == "POST":
 
@@ -139,7 +161,12 @@ def add_recipe(request):
 
 
 def all_recipes(request):
-
+    """
+    Retrieves all recipes from the database, sorted by the timestamp in
+    descending order. The recipes are then serialized into a JSON response, containing the
+    start and end points of the requested recipe list. The start and end points are
+    determined by the query parameters 'start' and 'end' in the request and used to paginate the response.
+    """
     try:
         recipes = Recipe.objects.all()
         recipes = recipes.order_by("-timestamp").all()
@@ -170,7 +197,12 @@ def all_recipes(request):
 
 
 def get_recipe(request, name):
-
+    """
+    Retrieves a specific recipe from the database based on its title
+    (name). The recipe is serialized into a JSON response, and if the user is authenticated,
+    a "favorite_flag" indicating whether the recipe is in the user's favorites list is also
+    included in the response.
+    """
     # get requested recipe and set favorite flag
     try:
         recipe = Recipe.objects.get(title=name)
@@ -192,7 +224,11 @@ def get_recipe(request, name):
 
 @login_required
 def update_rating(request, name):
-
+    """
+    Allows authenticated users to update the rating of a specific recipe
+    by submitting a PUT request. The request should include a JSON object containing the
+    "rating" attribute, which represents the new rating value (an integer between 1 and 5).
+    """
     # ensure request was a PUT
     if request.method == "PUT":
 
@@ -230,7 +266,12 @@ def update_rating(request, name):
 
 @login_required
 def search_recipes(request):
-
+    """
+    Allows authenticated users to search for recipes that contain specific
+    ingredients or have titles that match the search query. The search query is provided in
+    the request body as a JSON object with the "search" attribute, which contains a comma-
+    separated list of ingredients or a single recipe title.
+    """
     # get ingredients list and split into individual ingredients
     # try reading the json data
     try:
@@ -273,7 +314,12 @@ def search_recipes(request):
 
 @login_required
 def my_recipes(request):
-
+    """
+    Allows authenticated users to retrieve recipes they posted. The recipes
+    are filtered based on the signed-in user and are ordered by the timestamp of their
+    creation. The view returns a JSON response containing the requested recipes.  The start and end
+    parameters in the query request are used to paginate the response.
+    """
     try:
         # get signed-in user recipes posted by that user and order by post time
         user = request.user
@@ -305,7 +351,11 @@ def my_recipes(request):
 
 
 def cuisines(request):
-
+    """
+    Retrieves a list of unique cuisines from the database. 
+    It goes through all the recipes and extracts their categories (cuisines).
+    The unique categories are collected in a list and returned as a JSON response.
+    """
     # try loading cuisines
     try:
         recipes = Recipe.objects.all()
@@ -322,7 +372,12 @@ def cuisines(request):
 
 
 def cuisine_recipes(request, cuisine):
-
+    """
+    Retrieves all of the recipes of a specific cuisine from the database. The cuisine
+    is specified in the URL as a parameter. The recipes are ordered by their timestamp in descending order. 
+    The view returns a JSON response containing the requested recipes.
+    The start and end parameters supplied in the url are used to paginate the response.
+    """
     # try loading cuisine recipes
     try:
         recipes = Recipe.objects.filter(category=cuisine)
@@ -350,7 +405,11 @@ def cuisine_recipes(request, cuisine):
 
 @login_required
 def favorites(request):
-
+    """
+    Allows authenticated users to retrieve the recipes they have
+    favorited. The recipes are obtained from the "favorites" relationship of the current
+    user. The favorites are then serialized into a JSON response and returned.
+    """
     # try loading favorite recipes
     try:
         # get recipes favorited by signed in user
@@ -366,7 +425,13 @@ def favorites(request):
 
 @login_required
 def update_favorites(request, title):
-
+    """
+    Allows authenticated users to update the favorite status of a recipe.
+    The recipe's title is specified in the URL as a parameter, and the view checks if the
+    request method is a PUT request. If the recipe is already in the user's favorites, it
+    will be removed from the favorites list. If it is not in the favorites, it will be added.
+    The updated favorite status is returned as a JSON response.
+    """
     # ensure method was a PUT request
     if request.method == "PUT":
 
@@ -396,7 +461,13 @@ def update_favorites(request, title):
 
 @login_required
 def add_comment(request, title):
-
+    """
+    Allows authenticated users to add a new comment to a specific recipe.
+    The recipe's title is specified in the URL as a parameter, and the view checks if the
+    request method is a POST request. If so, the comment text is extracted from the request's
+    JSON data, and a new `Comment` object is created and saved to the database. The JSON
+    response contains the serialized representation of the newly created comment.
+    """
     if request.method == "POST":
 
         # get recipe, user, and comment info
@@ -416,7 +487,13 @@ def add_comment(request, title):
 
 @login_required
 def remove_comment(request, id):
-
+    """
+    Allows authenticated users to remove their own comments from a specific
+    recipe. The comment to be removed is specified by its unique identifier (ID) provided as
+    a URL parameter. The view checks if the request method is a POST request and if the
+    authenticated user is the author of the comment. If so, the comment is deleted from the
+    database. The view returns a JSON response indicating the status of the comment removal.
+    """
     # get comment by id and delete from database
     try:
         if Comment.objects.get(id=id):
