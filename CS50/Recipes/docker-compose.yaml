@@ -14,7 +14,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - recipes_data:/home/Recipes # Use the same named volume for Django app code persistence
+      - recipes_data:/home/Recipes    # Use the same named volume for Django app code persistence
 
   # MySQL service
   mysql:
@@ -28,7 +28,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - recipes_data:/home/Recipes # Use the same named volume for Django app code persistence
+      - recipes_data:/home/Recipes  # Volume for databse persistence
 
 volumes:
   recipes_data:
