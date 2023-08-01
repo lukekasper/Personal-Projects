@@ -24,6 +24,7 @@ General ToDos:
 - Testing and Deployment:
   - add in rudimentary unittesting for front/back end
   - create CI pipeline for automated testing and containerized deployment through github
+- Implement client-side and server-side caching
 
 Additional tasks:
 - use black linting code for formatting
