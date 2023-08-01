@@ -1,3 +1,6 @@
+// import api call functions from other js file
+import { getCookie } from "./create_recipe.js";
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // default load all recipes
@@ -35,17 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+/////////////////////////////////////////////////////////////////////////////////
+///////////////////////// ALL RECIPES HOME PAGE /////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+// load recipies based on user interaction (filter by cuisine, favorites, ect)
 function generate_page(title, api_path, id) {
+
+    // clean errors
+    document.querySelector("#query_error").innerHTML = '';
+    document.querySelector("#search_error").innerHTML = '';
 
     // update page title
     document.querySelector("#recipes-title").innerHTML = title;
 
-     // send API request to get cuisine info
-    fetch(`${api_path}`)
-    .then(response => response.json())
-    .then(data => {
+    // send API request to get page info
+    const responseJSON = getData(api_path);
 
-        // show cuisines view and hide all others
+    if (responseJSON.responseError.length === 0) {
+
+        // show page view and hide all others
+        const data = responseJSON.responseData;
         document.querySelector('#all_recipes').style.display = 'none';
         document.querySelector('#recipe-view').style.display = 'none';
         document.querySelector('#matched_recipes-view').style.display = 'none';
@@ -87,10 +100,18 @@ function generate_page(title, api_path, id) {
                 element.addEventListener('click', () => load_recipe(content));
             }
         });
-    })
+    };
+    else {
+        error = responseJSON.responseError;
+        document.querySelector("#query_error").innerHTML = error;
+    }
 }
 
 function load_recipes(user, cuisine) {
+
+    // clean errors
+    document.querySelector("#query_error").innerHTML = '';
+    document.querySelector("#search_error").innerHTML = '';
 
     let start = 0;
     let end = start + 9;
@@ -140,11 +161,12 @@ function load_recipes(user, cuisine) {
 function query_recipes(api_path, key, title, start, end) {
 
     // Send API request to get recipes
-    fetch(`${api_path}?start=${start}&end=${end}`)
-    .then(response => response.json())
-    .then(data => {
+    const responseJSON = getData(api_path, 'start', start, 'end', end);
+
+    if (responseJSON.responseError.length === 0) {
 
         // render a div for each post, displaying relevant info
+        const data = responseJSON.responseData;
         data[key].forEach(recipe => {
 
             // run function to generate html
@@ -153,7 +175,13 @@ function query_recipes(api_path, key, title, start, end) {
 
         // update page title
         document.querySelector('#recipes-title').innerHTML = title;
-    });
+    };
+
+    // display response error on front end
+    else {
+        const error = responseJSON.responseError;
+        document.querySelector("#query_error").innerHTML = error;
+    }
 }
 
 function make_recipe_html(recipe) {
@@ -211,15 +239,15 @@ function make_recipe_html(recipe) {
 // create star rating system
 function make_stars(recipe) {
 
-    const stars = document.createElement('p');
+    let recipe_title = recipe.title.replaceAll(" ","_");
+
+    const stars = make_html_element('', recipe_title+'_stars', 'stars', 'p');
     const s1 = document.createElement('span');
     const s2 = document.createElement('span');
     const s3 = document.createElement('span');
     const s4 = document.createElement('span');
     const s5 = document.createElement('span');
-
     let span_list = [s1, s2, s3, s4, s5];
-    let recipe_title = recipe.title.replaceAll(" ","_");
 
     // loop through the star spans, and check the number based on the recipe rating
     for (let i=0; i<5; i++) {
@@ -245,6 +273,10 @@ function make_stars(recipe) {
     const num_ratings = make_html_element("("+recipe.num_ratings+")", recipe_title+'num_ratings', 'num_ratings', 'span');
     stars.append(rating);
     stars.append(num_ratings);
+
+    // make element for error message
+    const error = make_html_element('', recipe_title+'_stars_error', 'error', 'p');
+    stars.append(error);
 
     return stars
 }
@@ -349,27 +381,36 @@ function make_comment_html(comment, title) {
 
 function remove_comment(comment, comment_p) {
 
-    // send API request to remove comment from backend
-    fetch(`/remove_comment/${comment.id}`)
-    .then(() => {
+    const url = `/remove_comment/${comment.id}`;
+    const responseJSON = getData(url);
+
+    // remove comment
+    if (responseJSON.responseError.length === 0) {
         comment_p.remove();
-    })
+    }
+    // otherwise, display the error message to the user
+    else {
+        let error = responseJSON.responseError;
+        document.querySelector('#query_error').innerHTML = error;
+    }
 }
 
 // update comment model on backend
 function add_comment(comment_txt, title) {
 
-    fetch('/add_comment/'+title, {
-        method: 'POST',
-        body: JSON.stringify({
-            comment: `${comment_txt}`
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
+    const url = '/add_comment/'+title;
+    const responseJSON = postData(url, JSON.stringify({comment: `${comment_txt}`}), 'POST');
+
+    // handle the response data
+    if (responseJSON.responseError.length === 0) {
         make_comment_html(data.comment, title);
         document.querySelector('#add_comment-box_'+title).value = '';
-    })
+    }
+    // otherwise, display the error message to the user
+    else {
+        let error = responseJSON.responseError;
+        document.querySelector('#query_error').innerHTML = error;
+    }
 }
 
 // make standard html text element
@@ -394,22 +435,20 @@ function make_image_html(image_src, id) {
 //update rating in django model and style css accordingly
 function update_rating(title, i) {
 
-    // update the rating on the backend
-    fetch('/update_rating/'+title, {
-        method: 'PUT',
-        body: JSON.stringify({
-            rating: i+1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
+    let url = '/update_rating/'+title;
+    let responseJSON = postData(url, JSON.stringify({rating: i+1}), 'PUT');
 
+    // if response was ok, update the recipe rating and reload the home page
+    if (responseJSON.responseError.length === 0) {
         let recipe_title = title.replaceAll(" ","_");
-
-        // update avg rating html for selected recipe and reload recipes
-        document.querySelector('#'+recipe_title+'_rating').innerHTML = data.avg_rating;
+        document.querySelector('#'+recipe_title+'_rating').innerHTML = responseJSON.responseData.avg_rating;
         load_recipes(user='', cuisine='');
-    });
+    }
+    // otherwise, display the error message to the user
+    else {
+        let stars_error = document.querySelector('#'+recipe_title+'_stars_error')
+        stars_error.innerHTML = responseJSON.responseError;
+    }
 }
 
 // color stars when mouse over
@@ -441,12 +480,17 @@ function uncolor_stars(title, rating, span_list) {
         }
     }
 }
+
 /////////////////////////////////////////////////////////////////////////////////
-///////////////////////// LOAD INDIVIDUAL RECIPIES PAGE /////////////////////////
+///////////////////////// LOAD INDIVIDUAL RECIPES PAGE //////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
 // load recipe page
 function load_recipe(title) {
+
+    // clean errors
+    document.querySelector("#query_error").innerHTML = '';
+    document.querySelector("#search_error").innerHTML = '';
 
     // show user profile view and hide others
     document.querySelector('#all_recipes').style.display = 'none';
@@ -456,11 +500,11 @@ function load_recipe(title) {
     document.querySelector('#favorites-view').style.display = 'none';
 
     // send API request to get recipe info
-    let recipe_title = title.replaceAll("_"," ")
+    let recipe_title = title.replaceAll("_"," ");
+    const url = '/recipe_page/'+recipe_title;
+    const responseJSON = getData(url);
 
-    fetch('/recipe_page/'+recipe_title)
-    .then(response => response.json())
-    .then(data => {
+    if (responseJSON.responseError.length === 0) {
 
         document.querySelector('#recipe-image-div').innerHTML = '';
         document.querySelector('#top-recipe-info').innerHTML = '';
@@ -556,9 +600,9 @@ function load_recipe(title) {
         const box_div = make_html_element('', 'box_div', 'box_div', 'div');
         box_div.append(info_box);
 
-        // make edit recipies button
+        // make edit recipes button
         const edit_button_div = make_html_element('', 'edit-button_div', 'button_div-button', 'div');
-        const edit_button = make_html_element('Edit Recipie', 'edit-button', 'btn btn-sm btn-outline-primary', 'button');
+        const edit_button = make_html_element('Edit Recipe', 'edit-button', 'btn btn-sm btn-outline-primary', 'button');
         edit_button_div.append(edit_button);
         edit_button.addEventListener('click', () => edit_view(subrec_list));
 
@@ -609,21 +653,27 @@ function load_recipe(title) {
             document.querySelector('#favorites-button').addEventListener('click', () =>
             update_favorites(data.recipe.title, data.favorite_flag), true);
         }
-    });
+    };
+
+    // otherwise display error message to the user
+    else {
+        error = responseJSON.responseError;
+        document.querySelector("#query_error").innerHTML = error;
+    }
 }
 
 function changeColorToBlue(element) {
-  this.style.color = "blue";
+    this.style.color = "blue";
 }
 
 function changeColorToBlack(element) {
-  this.style.color = "black";
+    this.style.color = "black";
 }
 
-// enter edit recipies view
+// enter edit recipes view
 function edit_view(subrec_list) {
 
-    // remove event listeners for sub recipies
+    // remove event listeners for sub recipes
     subrec_list.forEach(subrec => {
 
         let id = "ing_li_"+subrec;
@@ -676,12 +726,12 @@ function edit_UI(current_el) {
         current_el.style.opacity = "1.0";
         });
 
-    // do the same for for clicking image or title of recipe
-    current_el.addEventListener('click', () => load_recipe(current_ingredient));
+    // add highlighted text to pop-up editor TO DO!!!!
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-///////////////////////// SEARCH AND FAVORITED RECIPIES /////////////////////////
+///////////////////////// SEARCH AND FAVORITED RECIPES /////////////////////////?
 /////////////////////////////////////////////////////////////////////////////////
 
 // query all recipes and return titles in a list format
@@ -689,10 +739,9 @@ function return_recipes() {
 
     let recipe_list = [];
 
-    // Send API request to get recipes
-    return fetch("/all_recipes")
-    .then(response => response.json())
-    .then(data => {
+    const responseJSON = getData('/all_recipes');
+
+    if (responseJSON.responseError.length === 0) {
 
         // loop through all of the recipes
         data['recipes'].forEach(recipe => {
@@ -700,13 +749,22 @@ function return_recipes() {
         })
 
         return recipe_list
-    })
+    }
+    // otherwise display error message to the user
+    else {
+        error = responseJSON.responseError;
+        document.querySelector("#query_error").innerHTML = error;
+        return recipe_list
+    }
 }
 
 // update user's favorite recipes
 function update_favorites(title, flag) {
 
     // send API request to update user's favorite recipes list
+    const url = '/update_favorites/'+title;
+    const responseJSON = postData(url, title, 'PUT');
+
     fetch('/update_favorites/'+title)
 
     // reload recipe page
@@ -744,15 +802,12 @@ function search_recipes() {
     const search = document.querySelector("#search_box").value;
 
     // send API request to get recipes with listed ingredients
-    fetch('/search_recipes', {
-        method: 'POST',
-        body: JSON.stringify({
-            search: `${search}`
-        })
-    })
+    let responseJSON = getData('/search_recipes', 'search', search);
 
-    .then(response => response.json())
-    .then(data => {
+    // if response was ok, return list of matched recipes
+    if (responseJSON.responseError.length === 0) {
+
+        data = responseJSON.responseData;
 
         // show matched recipes view
         document.querySelector('#all_recipes').style.display = 'none';
@@ -801,5 +856,110 @@ function search_recipes() {
 
         // clear search bar
         document.querySelector('#search_box').value = '';
-    });
+    };
+
+    // otherwise display error message to the user
+    else {
+        error = responseJSON.responseError;
+        document.querySelector("#search_error").innerHTML = error;
+    }
+}
+
+////////////////////////// Asynchronous API call //////////////////////////
+// PUT or POST requests
+async function postData(url, data, apiMethod) {
+    let responseJSON = {responseData: '', responseError: ''};
+    try {
+        // Get the CSRF token value from the cookie
+        const csrfToken = getCookie('csrftoken');
+
+        if (apiMethod === 'PUT') {
+            const response = await fetch(url, {
+                method: apiMethod,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: data,
+            });
+        }
+        // remove json content type from headers
+        else {
+            const response = await fetch(url, {
+                method: apiMethod,
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
+                body: data,
+            });
+        }
+
+        // used to handle HTTP Error Responses
+        if (!response.ok) {
+            // If the response is not OK, handle the error
+            const errorMessage = await response.text();
+            console.error('Error:', errorMessage);
+            responseJSON.responseError = errorMessage;
+            return responseJSON
+        }
+
+        // if response is ok, return the data
+        responseJSON.responseData = await response.json();
+        return responseJSON
+
+    }
+    catch (error) {
+        // Handle the error that occurred during the asynchronous operation
+        console.error('Network error:', error);
+        responseJSON.responseError = error;
+        return responseJSON
+    }
+}
+
+// GET request
+async function getData(url, param1Name = '', data1 = '', param2Name = '', data2 = '') {
+    let responseJSON = {responseData: '', responseError: ''};
+
+    // Append the data as a query parameter to the URL
+    if (param2Name.length != 0) {
+        const urlWithParams = `${url}?${param1Name}=${encodeURIComponent(data1)}&${param2Name}=${encodeURIComponent(data2)}`;
+    }
+    else if (param1Name.length != 0) {
+        const urlWithParams = `${url}?${param1Name}=${encodeURIComponent(data1)}`;
+    }
+    else {
+        const urlWithParams = `${url};
+    }
+
+    try {
+        // Get the CSRF token value from the cookie
+        const csrfToken = getCookie('csrftoken');
+
+        const response = await fetch(urlWithParams, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+        });
+
+        // used to handle HTTP Error Responses
+        if (!response.ok) {
+            // If the response is not OK, handle the error
+            const errorMessage = await response.text();
+            console.error('Error:', errorMessage);
+            responseJSON.responseError = errorMessage;
+            return responseJSON
+        }
+
+        // if response is ok, return the data
+        responseJSON.responseData = await response.json();
+        return responseJSON
+    }
+    catch (error) {
+        // Handle the error that occurred during the asynchronous operation
+        console.error('Network error:', error);
+        responseJSON.responseError = error;
+        return responseJSON
+    }
 }
