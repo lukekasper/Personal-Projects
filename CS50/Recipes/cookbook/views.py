@@ -12,6 +12,14 @@ from .models import User, Recipe, Comment
 
 
 def login_view(request):
+    """
+    Handles the user login process. If the request method is POST, it attempts
+    to authenticate the user using the provided username and password. If the authentication
+    is successful, the user is logged in and redirected to the "index" page. If the
+    authentication fails, the login page is re-rendered with an error message.
+
+    If the request method is not POST, it simply renders the login page.
+    """
     if request.method == "POST":
 
         # Attempt to sign user in
@@ -32,6 +40,10 @@ def login_view(request):
 
 
 def logout_view(request):
+    """
+    Logs out the currently authenticated user by using the Django built-in
+    `logout` function. After logging out, the user is redirected to the "index" page.
+    """
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
