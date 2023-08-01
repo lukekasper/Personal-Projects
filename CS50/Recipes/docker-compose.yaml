@@ -3,8 +3,7 @@ version: '3.8'
 services:
   # Django application service
   web:
-    build: ./Dockerfile
-    image: recipes_image:latest  # Replace with the name of your custom-built Django image
+    build: .  # directory to Dockerfile (same directory as docker-compose file in this example)
     container_name: recipes_app
     environment:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
