@@ -6,7 +6,7 @@ from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import User, Recipe, Comment
 
@@ -90,96 +90,138 @@ def add_recipe(request):
         else:
             image = "images/no_image.jpeg"
 
-        # create recipe
-        recipe = Recipe(user=user, title=title, category=category, image=image, cooktime=cooktime)
-
-        # add directions and notes to recipe model (if notes were uploaded, otherwise leave blank)
-        directions = request.POST.get("instructions")
-        if request.POST.get("notes", False):
-            notes = request.POST.get("notes")
-        else:
-            notes = ''
-
+        # add ingredients and directions
         ingredients = list(request.POST.get("ingredients").split(","))
         ingredients_str = ''
         for ingredient in ingredients:
             ingredients_str += ingredient + ","
         ingredients_str = ingredients_str[:-1]
+        directions = request.POST.get("instructions")
 
-        # update recipe details
-        recipe.ingredients = ingredients_str
-        recipe.instructions = directions
+        # create recipe
+        recipe = Recipe(user=user, title=title, ingredients=ingredients_str, directions=directions, category=category,
+                        image=image, cooktime=cooktime)
+
+        # add notes to recipe model if notes were uploaded, otherwise leave blank
+        if request.POST.get("notes", False):
+            notes = request.POST.get("notes")
+        else:
+            notes = ''
         recipe.note = notes
-        recipe.save()
+
+        # try to create recipie
+        try:
+            recipe.save()
+
+        # catch issues with incomplete model fields
+        except IntegrityError:
+            # Handle the IntegrityError
+            error_message = "Some required fields are missing. Please fill out all the required fields."
+            return JsonResponse({"error": error_message}, status=400)
 
         HttpResponseRedirect("index")
 
     # For other request methods (e.g., GET, PUT, DELETE, etc.), return HTTP 405 Method Not Allowed
-    return HttpResponseNotAllowed(permitted_methods=["POST"])
+    error_message = "Only POST method is allowed for this URL."
+    return HttpResponseNotAllowed(permitted_methods=["POST"], content=error_message)
 
 
 def all_recipes(request):
 
-    recipes = Recipe.objects.all()
-    recipes = recipes.order_by("-timestamp").all()
-    recipes_list = [recipe.serialize() for recipe in recipes]
+    try:
+        recipes = Recipe.objects.all()
+        recipes = recipes.order_by("-timestamp").all()
+        recipes_list = [recipe.serialize() for recipe in recipes]
 
-    # set start and end points
-    start = int(request.GET.get("start") or 0)
-    end = int(request.GET.get("end") or (len(recipes) - 1))
+        # set start and end points
+        start = int(request.GET.get("start") or 0)
+        end = int(request.GET.get("end") or (len(recipes) - 1))
 
-    if start > len(recipes) - 1:
-        recipes_list = []
-    elif end > len(recipes) - 1:
-        end = len(recipes) - 1
-        recipes_list = recipes_list[start:end + 1]
-    else:
-        recipes_list = recipes_list[start:end + 1]
+        if start > len(recipes) - 1:
+            recipes_list = []
+        elif end > len(recipes) - 1:
+            end = len(recipes) - 1
+            recipes_list = recipes_list[start:end + 1]
+        else:
+            recipes_list = recipes_list[start:end + 1]
 
-    # .serialize() creates a text string for json object
-    return JsonResponse({"recipes": recipes_list})
+        # .serialize() creates a text string for json object
+        return JsonResponse({"recipes": recipes_list})
+
+    # Handle invalid input (e.g., non-integer values for start/end)
+    except ValueError:
+        return JsonResponse({"error": "Invalid input parameters."}, status=400)
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def get_recipe(request, name):
 
     # get requested recipe and set favorite flag
-    recipe = Recipe.objects.get(title=name)
-    favorite_flag = "None"
+    try:
+        recipe = Recipe.objects.get(title=name)
+        favorite_flag = "None"
 
-    # if the recipe is in the user's list of favorites, set favorite flag to True
-    if request.user.is_authenticated:
-        if recipe in request.user.favorites.all():
-            favorite_flag = "True"
-        else:
-            favorite_flag = "False"
+        # if the recipe is in the user's list of favorites, set favorite flag to True
+        if request.user.is_authenticated:
+            if recipe in request.user.favorites.all():
+                favorite_flag = "True"
+            else:
+                favorite_flag = "False"
 
-    return JsonResponse({"recipe": recipe.serialize(), "favorite_flag": favorite_flag})
+        return JsonResponse({"recipe": recipe.serialize(), "favorite_flag": favorite_flag})
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
-@csrf_exempt
 @login_required
 def update_rating(request, name):
 
-    # get recipe info and convert user ratings into a dictionary
-    recipe = Recipe.objects.get(title=name)
-    rating_dict = recipe.user_rating_dict()
-    signed_user = request.user.username
-    data = json.loads(request.body)
+    # ensure request was a PUT
+    if request.method == "PUT":
 
-    # either add new entry or update existing entry and save
-    rating_dict[signed_user] = data.get("rating")
-    recipe.user_rating = str(rating_dict)
-    recipe.save()
+        # get recipe info and convert user ratings into a dictionary
+        recipe = Recipe.objects.get(title=name)
 
-    return JsonResponse({"avg_rating": recipe.avg_rating(), "num_ratings": recipe.num_ratings()})
+        try:
+            rating_dict = recipe.user_rating_dict()
+            signed_user = request.user.username
+            data = json.loads(request.body)
+            rating = data.get("rating")
+
+            # check if rating is an int from 1-5
+            if not isinstance(rating, int) or rating < 1 or rating > 5:
+                return JsonResponse({"error": "Invalid rating. Rating must be an integer between 1 and 5."}, status=400)
+
+            # either add new entry or update existing entry and save
+            rating_dict[signed_user] = data.get("rating")
+            recipe.user_rating = str(rating_dict)
+
+            recipe.save()
+            return JsonResponse({"avg_rating": recipe.avg_rating(), "num_ratings": recipe.num_ratings()})
+
+        # return error code if invalid JSON data
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
+
+        # return error code if any other exception occurs
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    error_message = "Only PUT method is allowed for this URL."
+    return HttpResponseNotAllowed(permitted_methods=["PUT"], content=error_message)
 
 
-@csrf_exempt
 @login_required
 def search_recipes(request):
 
     # get ingredients list and split into individual ingredients
-    if request.method == "POST":
+    # try reading the json data
+    try:
         data = json.loads(request.body)
         search = data.get("search")
 
@@ -208,98 +250,139 @@ def search_recipes(request):
 
         return JsonResponse({"matched_recipes": list(matched_recipes)})
 
-    return JsonResponse({"message": "Post Error."}, status=404)
+    # return error code if invalid JSON data
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data in the request body."}, status=400)
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
-@csrf_exempt
 @login_required
 def my_recipes(request):
 
-    # get signed-in user recipes posted by that user and order by post time
-    user = request.user
-    user_recipes = Recipe.objects.filter(user=user)
-    user_recipes = user_recipes.order_by("-timestamp").all()
+    try:
+        # get signed-in user recipes posted by that user and order by post time
+        user = request.user
+        user_recipes = Recipe.objects.filter(user=user)
+        user_recipes = user_recipes.order_by("-timestamp").all()
 
-    # set start and end points
-    start = int(request.GET.get("start"))
-    end = start + 10
-    if start > len(user_recipes) - 1:
-        start = len(user_recipes) - 1
-        end = len(user_recipes) - 1
-    elif end > len(user_recipes) - 1:
-        end = len(user_recipes) - 1
+        # set start and end points
+        start = int(request.GET.get("start"))
+        end = start + 10
+        total_recipes = len(user_recipes)
 
-    # return appropriate recipes
-    user_recipes = user_recipes[start:end]
+        # Clamp start and end to valid values
+        start = max(min(start, total_recipes - 1), 0)
+        end = max(min(end, total_recipes - 1), 0)
 
-    # .serialize() creates a text string for json object
-    return JsonResponse({"user_recipes": [recipe.serialize() for recipe in user_recipes]})
+        # return appropriate recipes
+        user_recipes = user_recipes[start:end]
+
+        # .serialize() creates a text string for json object
+        return JsonResponse({"user_recipes": [recipe.serialize() for recipe in user_recipes]})
+
+    except ValueError:
+        # Handle invalid input (e.g., non-integer values for start/end)
+        return JsonResponse({"error": "Invalid input parameters."}, status=400)
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def cuisines(request):
 
-    recipes = Recipe.objects.all()
-    cuisines_list = set()
+    # try loading cuisines
+    try:
+        recipes = Recipe.objects.all()
+        cuisines_list = set()
 
-    for recipe in recipes:
-        cuisines_list.add(recipe.category)
+        for recipe in recipes:
+            cuisines_list.add(recipe.category)
 
-    return JsonResponse({"list": list(cuisines_list)})
+        return JsonResponse({"list": list(cuisines_list)})
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def cuisine_recipes(request, cuisine):
 
-    recipes = Recipe.objects.filter(category=cuisine)
-    recipes = recipes.order_by("-timestamp").all()
+    # try loading cuisine recipes
+    try:
+        recipes = Recipe.objects.filter(category=cuisine)
+        recipes = recipes.order_by("-timestamp").all()
 
-    # set start and end points
-    start = int(request.GET.get("start"))
-    end = start + 10
-    if start > len(recipes) - 1:
-        start = len(recipes) - 1
-        end = len(recipes) - 1
-    elif end > len(recipes) - 1:
-        end = len(recipes) - 1
+        # set start and end points
+        start = int(request.GET.get("start"))
+        end = start + 10
+        if start > len(recipes) - 1:
+            start = len(recipes) - 1
+            end = len(recipes) - 1
+        elif end > len(recipes) - 1:
+            end = len(recipes) - 1
 
-    # return appropriate recipes
-    recipes = recipes[start:end]
+        # return appropriate recipes
+        recipes = recipes[start:end]
 
-    # .serialize() creates a text string for json object
-    return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in recipes]})
+        # .serialize() creates a text string for json object
+        return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in recipes]})
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 @login_required
 def favorites(request):
 
-    # get recipes favorited by signed in user
-    recipes = request.user.favorites.all()
+    # try loading favorite recipes
+    try:
+        # get recipes favorited by signed in user
+        recipes = request.user.favorites.all()
 
-    # .serialize() creates a text string for json object
-    return JsonResponse({"list": [recipe.serialize() for recipe in recipes]})
+        # .serialize() creates a text string for json object
+        return JsonResponse({"list": [recipe.serialize() for recipe in recipes]})
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 @login_required
-@csrf_exempt
 def update_favorites(request, title):
 
-    # get signed-in user, recipe to update, and flag from PUT request
-    user = request.user
-    recipe = Recipe.objects.get(title=title)
+    # ensure method was a PUT request
+    if request.method == "PUT":
 
-    # update user's favorites according to flag logic
-    if recipe in user.favorites.all():
-        user.favorites.remove(recipe)
-        flag = "False"
-    else:
-        user.favorites.add(recipe)
-        flag = "True"
-    user.save()
+        # try to get signed-in user, recipe to update, and flag from PUT request
+        try:
+            user = request.user
+            recipe = Recipe.objects.get(title=title)
 
-    return JsonResponse({"flag": flag})
+            # update user's favorites according to flag logic
+            if recipe in user.favorites.all():
+                user.favorites.remove(recipe)
+                flag = "False"
+            else:
+                user.favorites.add(recipe)
+                flag = "True"
+            user.save()
+
+            return JsonResponse({"flag": flag})
+
+        # return error code if any other exception occurs
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    error_message = "Only PUT method is allowed for this URL."
+    return HttpResponseNotAllowed(permitted_methods=["PUT"], content=error_message)
 
 
 @login_required
-@csrf_exempt
 def add_comment(request, title):
 
     if request.method == "POST":
@@ -323,8 +406,21 @@ def add_comment(request, title):
 def remove_comment(request, id):
 
     # get comment by id and delete from database
-    if Comment.objects.get(id=id):
-        comment = Comment.objects.get(id=id)
-        comment.delete()
+    try:
+        if Comment.objects.get(id=id):
+            comment = Comment.objects.get(id=id)
+            if comment.user != request.user:  # Assuming you have an 'author' field in the Comment model
+                return JsonResponse({"message": "You are not authorized to delete this comment."}, status=403)
+            comment.delete()
+        return JsonResponse({"message": "Comment Removed."}, status=204)
 
-    return JsonResponse({"message": "Comment Removed."}, status=200)
+    # return error if comment does not exist
+    except ObjectDoesNotExist:
+        return JsonResponse({"message": "Comment not found."}, status=404)
+
+    # return error code if any other exception occurs
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+
