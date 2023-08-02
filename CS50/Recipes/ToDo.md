@@ -48,11 +48,11 @@ General ToDos:
 - Caching:
     - Implementation of back end caching using Django framework
         - memcached on local host
-        - @cache_page decorator used to cache entire views
-        - inline caching done for expensive queries
+        - @cache_page decorator used for per-view caching
+        - low-level API caching done for expensive queries
             - @receiver(post_save) and post_delete decorators used to handle updates to db
-    - Could extend to Redis db?
-    - Extend to front end using Cache-Control headers and ETags when deployed on actual web server
+    - Could extend to save cache on Redis db?
+    - Extend to front end using Cache-Control headers and ETags when deployed on actual web server (to do)
 - Security:
     - CSRF tokens sent from front end during API calls
     - Error handling:
