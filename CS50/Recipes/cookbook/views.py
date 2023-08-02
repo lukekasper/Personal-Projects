@@ -162,12 +162,14 @@ def add_recipe(request):
     return HttpResponseNotAllowed(permitted_methods=["POST"], content=error_message)
 
 
+@cache_page(60*10)  # Cache the view for 10 min
 def all_recipes(request):
     """
     Retrieves all recipes from the database, sorted by the timestamp in
     descending order. The recipes are then serialized into a JSON response, containing the
     start and end points of the requested recipe list. The start and end points are
     determined by the query parameters 'start' and 'end' in the request and used to paginate the response.
+    All recipes query is cached for 10 min.
     """
     try:
         recipes = Recipe.objects.all()
