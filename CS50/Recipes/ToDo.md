@@ -42,7 +42,7 @@ General ToDos:
     - MySQL db
 - Testing & CI/CD:
     - Unit testing with pytest (to do)
-    - Integration tests for interaction between app add db?
+    - Integration tests for interaction between app and db?
     - CI pipeline to automate testing (to do)
     - CD pipeline to automate containerization and db migrations (to do)
 - Caching:
