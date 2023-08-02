@@ -21,13 +21,13 @@ General ToDos:
 - Use "black" linting code for formatting
 - Integration tests for interaction between app add db?
 - Seperate github action workflows for ci and cd
-
+- Consider deploying on a cloud environment using kubernetes
 - Conduct security audit using github actions
 - Documentation on setup, app usage, troubleshooting, ect.
     - Comprehensive ReadMe.
 - Re-implement some of the front end using React.js
 
-### Overview of Application
+## Overview of Application
 - Front End:
     - Javascript to dynamically display front end
         - React framework (to do)
@@ -50,6 +50,7 @@ General ToDos:
         - Front end: try/catch methods used to catch network or response errors from back end and display error message to user
     - Environmental variables loaded through secret .env file kept offline from repository to enhance security
     - Security for image uploads? (to do)
+    - Conduct security audit using github actions (to do)
 - Deployment:
     - Custom docker image used to build application container
     - DockerHub off-the-shelf image used for mySQL db
