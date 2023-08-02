@@ -335,7 +335,8 @@ def search_recipes(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
-CACHE_KEY_PREFIX = "search_recipes_"
+CACHE_KEY_PREFIX1 = "search_recipes_"
+CACHE_KEY_PREFIX2 = "cuisine"
 
 
 @receiver(post_save, sender=Recipe)
@@ -346,7 +347,7 @@ def invalidate_search_recipes_cache(sender, instance, **kwargs):
     when a Recipe instance is saved (updated) or deleted.
     """
     # The cache key is based on the search parameter, so we need to clear all cached search results.
-    cache_keys = [key for key in cache.keys() if key.startswith(CACHE_KEY_PREFIX)]
+    cache_keys = [key for key in cache.keys() if key.startswith(CACHE_KEY_PREFIX1) or key.startswith(CACHE_KEY_PREFIX2)]
     cache.delete_many(cache_keys)
 
 
