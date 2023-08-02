@@ -23,6 +23,7 @@ General ToDos:
 - Integration tests for interaction between app add db?
 - Seperate github action workflows for ci and cd
 - Consider deploying on a cloud environment using kubernetes
+    - Handle multiple servers for scalability/load balancing
 - Conduct security audit using github actions
 - Documentation on setup, app usage, troubleshooting, ect.
     - Comprehensive ReadMe.
