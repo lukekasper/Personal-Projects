@@ -7,6 +7,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 from .models import User, Recipe, Comment
 
