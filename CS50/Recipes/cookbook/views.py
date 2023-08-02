@@ -88,6 +88,7 @@ def register(request):
 
 # cache version number
 ALLRECIPES_CACHE_VERSION = 1
+MYRECIPES_CACHE_VERSION = 1
 
 def index(request):
     """
@@ -160,6 +161,7 @@ def add_recipe(request):
             return JsonResponse({"error": error_message}, status=400)
 
         ALLRECIPES_CACHE_VERSION += 1
+        MYRECIPES_CACHE_VERSION += 1
         HttpResponseRedirect("index")
 
     # For other request methods (e.g., GET, PUT, DELETE, etc.), return HTTP 405 Method Not Allowed
@@ -349,6 +351,7 @@ def invalidate_search_recipes_cache(sender, instance, **kwargs):
 
 
 @login_required
+@cache_page(60*10, key_prefix="my_recipes_v" + str(MYRECIPES_CACHE_VERSION))
 def my_recipes(request):
     """
     Allows authenticated users to retrieve recipes they posted. The recipes
@@ -394,12 +397,23 @@ def cuisines(request):
     """
     # try loading cuisines
     try:
+
+        # check if the search results are already cached
+        cache_key = "cuisines"
+        cached_results = cache.get(cache_key)
+        if cached_results is not None:
+            return JsonResponse({"list": cached_results})
+        
         recipes = Recipe.objects.all()
         cuisines_list = set()
 
         for recipe in recipes:
             cuisines_list.add(recipe.category)
 
+        # cache the search results for 5 minutes
+        cache_timeout = 60 * 5
+        cache.set(cache_key, list(cuisines_list), cache_timeout)
+        
         return JsonResponse({"list": list(cuisines_list)})
 
     # return error code if any other exception occurs
