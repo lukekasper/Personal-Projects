@@ -431,6 +431,12 @@ def cuisine_recipes(request, cuisine):
     """
     # try loading cuisine recipes
     try:
+        # check if the search results are already cached
+        cache_key = "cuisine_recs"
+        cached_results = cache.get(cache_key)
+        if cached_results is not None:
+            return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in cached_results]})    
+        
         recipes = Recipe.objects.filter(category=cuisine)
         recipes = recipes.order_by("-timestamp").all()
 
@@ -445,6 +451,10 @@ def cuisine_recipes(request, cuisine):
 
         # return appropriate recipes
         recipes = recipes[start:end]
+
+        # cache the search results for 5 minutes
+        cache_timeout = 60 * 5
+        cache.set(cache_key, recipes, cache_timeout)
 
         # .serialize() creates a text string for json object
         return JsonResponse({"cuisine_recipes": [recipe.serialize() for recipe in recipes]})
