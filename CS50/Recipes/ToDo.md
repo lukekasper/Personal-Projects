@@ -43,6 +43,7 @@ General ToDos:
     - CD pipeline to automate containerization and db migrations (to do)
 - Caching:
     - Implementation of front end/back end caching using Django framework (memcached on local host)
+    - Could extend to Redis db?
 - Security:
     - CSRF tokens sent from front end during API calls
     - Error handling:
