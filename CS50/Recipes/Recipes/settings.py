@@ -48,6 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'Recipes.urls'
@@ -101,6 +104,20 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = "cookbook.User"
+
+
+# Caches
+# Choose the cache backend to use (memcached)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',  # Example: Memcached server address
+    }
+}
+
+# Set the cache timeout (in seconds) for static files
+CACHE_MIDDLEWARE_SECONDS = 600  # 10 min
+
 
 
 # Password validation
