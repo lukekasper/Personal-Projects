@@ -84,6 +84,8 @@ def register(request):
     else:
         return render(request, "cookbook/register.html")
 
+# cache version number
+ALLRECIPES_CACHE_VERSION = 1
 
 def index(request):
     """
@@ -155,6 +157,7 @@ def add_recipe(request):
             error_message = "Some required fields are missing. Please fill out all the required fields."
             return JsonResponse({"error": error_message}, status=400)
 
+        ALLRECIPES_CACHE_VERSION += 1
         HttpResponseRedirect("index")
 
     # For other request methods (e.g., GET, PUT, DELETE, etc.), return HTTP 405 Method Not Allowed
@@ -162,7 +165,8 @@ def add_recipe(request):
     return HttpResponseNotAllowed(permitted_methods=["POST"], content=error_message)
 
 
-@cache_page(60*10)  # Cache the view for 10 min
+# Cache the view for 10 min, if the version number changes due to a db update, re-cache the solution
+@cache_page(60*10, key_prefix="all_recipes_v" + str(ALLRECIPES_CACHE_VERSION))  
 def all_recipes(request):
     """
     Retrieves all recipes from the database, sorted by the timestamp in
@@ -200,6 +204,7 @@ def all_recipes(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
+@cache_page(60*10)    # cache the view for 10 min.  if recipe is updated, clear the cache
 def get_recipe(request, name):
     """
     Retrieves a specific recipe from the database based on its title
