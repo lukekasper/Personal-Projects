@@ -18,6 +18,7 @@ General ToDos:
   - create automated database migration scripts (cd)
       - use python manage.py makemigrations and python manage.py migrate in automated deployment process
 - Implement client-side and server-side caching
+    - clear cache when updating a recipe!
 - Use "black" linting code for formatting
 - Integration tests for interaction between app add db?
 - Seperate github action workflows for ci and cd
