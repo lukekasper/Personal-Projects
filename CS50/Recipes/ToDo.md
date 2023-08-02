@@ -28,6 +28,8 @@ General ToDos:
 - Documentation on setup, app usage, troubleshooting, ect.
     - Comprehensive ReadMe.
 - Re-implement some of the front end using React.js
+- Deployment on a real web server (nginx?)
+    - enable client-side caching using Cache-Control headers and ETags
 
 ## Overview of Application
 - Front End:
@@ -44,13 +46,13 @@ General ToDos:
     - CI pipeline to automate testing (to do)
     - CD pipeline to automate containerization and db migrations (to do)
 - Caching:
-    - Implementation of front end/back end caching using Django framework
+    - Implementation of back end caching using Django framework
         - memcached on local host
         - @cache_page decorator used to cache entire views
         - inline caching done for expensive queries
             - @receiver(post_save) and post_delete decorators used to handle updates to db
-        - static file caching used for front end through settings.py middleware
     - Could extend to Redis db?
+    - Extend to front end using Cache-Control headers and ETags when deployed on actual web server
 - Security:
     - CSRF tokens sent from front end during API calls
     - Error handling:
