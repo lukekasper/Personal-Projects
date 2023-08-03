@@ -66,7 +66,7 @@ class Recipe(models.Model):
         Get the number of ratings for a given recipes.
         """
         if self.user_rating_dict():
-            return len(self.user_rating_dict().values());
+            return len(self.user_rating_dict().values())
         else:
             return 0
 
