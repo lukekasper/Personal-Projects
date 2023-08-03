@@ -29,6 +29,7 @@ General ToDos:
     - Comprehensive ReadMe.
 - Re-implement some of the front end using React.js
     - Include packages: React, ReactDOM, Babel
+    - Try create_recipe.js?
 - Deployment on a real web server (nginx?)
     - enable client-side caching using Cache-Control headers and ETags
 
