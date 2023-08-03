@@ -11,6 +11,7 @@ General ToDos:
 - Finish up features and bug fixes on development side
     - Call recipes page by id, not title (in case multiple recipes with the same name exist)
     - Same with update rating, add comments, and favorites
+    - Add in function to create superuser with env variables and run in Dockerfile
 - Security concerns:
   - look into secure file uploads for images
 - Testing and Deployment:
