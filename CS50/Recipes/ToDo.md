@@ -9,6 +9,7 @@ Docker Containerization ToDo list:
 
 General ToDos:
 - Finish up features and bug fixes on development side
+    - Display individual recipes by id, not title (in case multiple recipes with the same name exist)
 - Security concerns:
   - look into secure file uploads for images
   - re-watch CS50 security lesson
