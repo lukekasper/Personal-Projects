@@ -140,7 +140,7 @@ def add_recipe(request):
         directions = request.POST.get("instructions")
 
         # create recipe
-        recipe = Recipe(user=user, title=title, ingredients=ingredients_str, directions=directions, category=category,
+        recipe = Recipe(user=user, title=title, ingredients=ingredients_str, instructions=directions, category=category,
                         image=image, cooktime=cooktime)
 
         # add notes to recipe model if notes were uploaded, otherwise leave blank
