@@ -13,9 +13,9 @@ General ToDos:
     - Same with update rating, add comments, and favorites
 - Security concerns:
   - look into secure file uploads for images
-  - re-watch CS50 security lesson
 - Testing and Deployment:
   - add in rudimentary unittesting for front/back end
+      - back end complete, use selenium example for front end
   - create CI pipeline for automated testing and containerized deployment through github (ci)
   - create automated database migration scripts (cd)
       - use python manage.py makemigrations and python manage.py migrate in automated deployment process
@@ -45,7 +45,9 @@ General ToDos:
     - Python/Django Framework
     - MySQL db
 - Testing & CI/CD:
-    - Unit testing with pytest (to do)
+    - Unit testing:
+        - Back end testing for model/method validation
+        - Front end testing using selenium
     - Integration tests for interaction between app and db?
     - CI pipeline to automate testing (to do)
     - CD pipeline to automate containerization and db migrations (to do)
