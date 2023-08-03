@@ -28,8 +28,6 @@ General ToDos:
 - Consider deploying on a cloud environment using kubernetes
     - Handle multiple servers for scalability/load balancing
 - Conduct security audit using github actions
-- Documentation on setup, app usage, troubleshooting, ect.
-    - Comprehensive ReadMe.
 - Re-implement some of the front end using React.js
     - Include packages: React, ReactDOM, Babel
     - Try create_recipe.js?
