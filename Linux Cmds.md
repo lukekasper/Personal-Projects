@@ -179,7 +179,7 @@
   - calling `alias` with no options shows all defined aliases
   - resets once shell is closed unless defined in shell configuration (`~/.bashrc` or `~/.profile` or `~/.bash_profile`)
   - single quotes: variable is defined at definition time
-  - double quptes: variable is defined at invocation time
+  - double quotes: variable is defined at invocation time
   
 ### User Interactions
 - `whoami`: print user logged in to terminal (`who am i` prints additional info)
