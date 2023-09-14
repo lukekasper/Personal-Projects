@@ -200,6 +200,7 @@
   - end with `ctrl-C` or by setting number of requests with `-c <num>`
   - prints statistics on results when stopped
 - `traceroute <host>`: gathers information about how the packet travels to the host (defaults to sending 3 requests)
+  `hostname -I`: print your computers IP address
 
 ### Prompt Window
 - `echo`: print to terminal
