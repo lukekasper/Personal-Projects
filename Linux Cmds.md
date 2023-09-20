@@ -234,3 +234,12 @@
   - with no arguements, prints all environmental variables
   - `-u`: makes env variables inacessible inside of program (ie `env -u HOME node app.js`)
 `printenv <var_name>`: to print variable value
+
+### Hot Keys
+- `ctrl+l`: clear terminal
+- `ctrl+a`: move cursor to start of line
+- `ctrl+e`: move cursor to end of line
+- `ctrl+alt_d`: minimize all terminal windows
+- `ctrl+k`: clear cmd line after cursor
+- `ctrl+w`: erase word preceding cursor
+- `ctrl+u`: erases cmd line up to cursor
