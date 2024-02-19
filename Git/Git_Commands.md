@@ -15,3 +15,7 @@
 - `git branch <branch_name>`, `git checkout`, and `git push`: create new branch from current one, change to that branch, and push to repository
   - `git branch -d <branch name>`: delete named branch
 - `git update-index --assume-unchanged <file>`: assume file has not changed (useful for logs) and stop tracking with `git status`
+- Workflow for pulling in branch updates:
+  - `git stash`
+  - `git pull origin <branch name>`
+  - `git stash apply`
