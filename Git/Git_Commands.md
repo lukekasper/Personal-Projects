@@ -2,7 +2,7 @@
 - `git fetch origin`: get most up-to-date origin branch of repository
 - `git status`: track staged/unstaged changes from local vs remote repository
 - `git checkout -f <branch name>`: foreces a change to the specified brnach
-  - `git checkout -- "<file name>"`: pull master version of named file from repository
+  - `git checkout --"<file name>"`: pull master version of named file from repository
 - `git pull`: pulls current branch from remote repository
 - `git add`: stage files for commit
   - `.`: all files
