@@ -69,6 +69,7 @@ plt.ylabel("Accuracy")
 # Display the plot
 plt.show()
 
+
 #### REGRESSION ####
 import numpy as np
 
@@ -141,3 +142,87 @@ rmse = mean_squared_error(y_test, y_pred, squared=False)
 # Print the metrics
 print("R^2: {}".format(r_squared))
 print("RMSE: {}".format(rmse))
+
+## Cross-Validation Performance ##
+# Cross Validation uses all portions of data (folds) to train model to avoid anomolies effecting the model
+# Import the necessary modules
+from sklearn.model_selection import KFold, cross_val_score
+
+# Create a KFold object
+kf = KFold(n_splits=6, shuffle=True, random_state=5)
+
+reg = LinearRegression()
+
+# Compute 6-fold cross-validation scores
+cv_scores = cross_val_score(reg, X, y, cv=kf)
+
+# Print scores
+print(cv_scores)
+
+# Print the mean
+print(np.mean(cv_results))
+
+# Print the standard deviation
+print(np.std(cv_results))
+
+# Print the 95% confidence interval
+print(np.quantile(cv_results, [0.025, 0.975]))
+
+## Regularized Regression ##
+# Regularization penalizes large coefficients
+# Hyperparameter: variable used to optimize model parameters
+# Lasso regularization can be used to assess feature importance
+
+# Import Ridge
+from sklearn.linear_model import Ridge
+alphas = [0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0]
+ridge_scores = []
+for alpha in alphas:
+  
+  # Create a Ridge regression model
+  ridge = Ridge(alpha=alpha)
+  
+  # Fit the data
+  ridge.fit(X_train, y_train)
+  
+  # Obtain R-squared
+  score = ridge.predict(X_test)
+  ridge_scores.append(ridge.score(X_test, y_test))
+print(ridge_scores)
+
+# Import Lasso
+from sklearn.linear_model import Lasso
+
+# Instantiate a lasso regression model
+lasso = Lasso(alpha=0.3)
+
+# Fit the model to the data
+lasso.fit(X, y)
+
+# Compute and print the coefficients
+lasso_coef = lasso.coef_
+print(lasso_coef)
+plt.bar(sales_columns, lasso_coef)
+plt.xticks(rotation=45)
+plt.show()
+
+
+#### Fine-Tuning Your Model ####
+## How Good is Your Model? ##
+# A better measure of accuracy can be determined using a Confusion Matrix (for class imbalance)
+# Precision (or positive predicted value), Recall (sensitivity), and F1 score (similar precision and recall) are also a quantities of interest
+
+# Import confusion matrix
+from sklearn.metrics import confusion_matrix, classification_report
+
+knn = KNeighborsClassifier(n_neighbors=6)
+
+# Fit the model to the training data
+knn.fit(X_train, y_train)
+
+# Predict the labels of the test data: y_pred
+y_pred = knn.predict(X_test)
+
+# Generate the confusion matrix and classification report
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
