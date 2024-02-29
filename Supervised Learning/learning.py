@@ -312,3 +312,32 @@ print("Tuned Logistic Regression Best Accuracy Score: {}".format(logreg_cv.best_
 
 
 #### Preprocessing and Pipelines ####
+## Preprocessing Data ##
+# Need to convert categorical data (like colors) into dummy numerical variables for sklearn to accept them
+# Common practice to use drop_first with dummy variables to avoid duplicating data (only 9 columns are needed to convey 10 categories)
+
+# Create music_dummies
+music_dummies = pd.get_dummies(music_df, drop_first=True)
+
+# Print the new DataFrame's shape
+print("Shape of music_dummies: {}".format(music_dummies.shape))
+
+# Create X and y
+X = music_dummies.drop("popularity", axis=1).values
+y = music_dummies["popularity"].values
+
+# Instantiate a ridge model
+ridge = Ridge(alpha=0.2)
+
+# Perform cross-validation
+scores = cross_val_score(ridge, X, y, cv=kf, scoring="neg_mean_squared_error")
+
+# Calculate RMSE
+rmse = np.sqrt(-scores)
+print("Average RMSE: {}".format(np.mean(rmse)))
+print("Standard Deviation of the target array: {}".format(np.std(y)))
+
+## Handle Missing Data ##
+# Can use drop NaNs or imputation (replace missing data with educated guesses), generally the mean is acceptable or the mode for categorical data
+# Must split training/test data before imputing, to avoid data leakage of test set to model
+# Pipelines can perform a series of transformations and create models automatically
