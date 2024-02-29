@@ -341,3 +341,81 @@ print("Standard Deviation of the target array: {}".format(np.std(y)))
 # Can use drop NaNs or imputation (replace missing data with educated guesses), generally the mean is acceptable or the mode for categorical data
 # Must split training/test data before imputing, to avoid data leakage of test set to model
 # Pipelines can perform a series of transformations and create models automatically
+# In a pipeline, each step but the last must be a transformer
+
+# Print missing values for each column
+print(music_df.isna().sum().sort_values())
+
+# Remove values where less than 5% are missing
+music_df = music_df.dropna(subset=["genre", "popularity", "loudness", "liveness", "tempo"])
+
+# Convert genre to a binary feature
+music_df["genre"] = np.where(music_df["genre"] == "Rock", 1, 0)
+
+print(music_df.isna().sum().sort_values())
+print("Shape of the `music_df`: {}".format(music_df.shape))
+
+# Import modules
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+
+# Instantiate an imputer
+imputer = SimpleImputer()
+
+# Instantiate a knn model
+knn = KNeighborsClassifier(3)
+
+# Build steps for the pipeline
+steps = [("imputer", imputer), 
+         ("knn", knn)]
+
+# Create the pipeline
+pipeline = Pipeline(steps)
+
+# Fit the pipeline to the training data
+pipeline.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = pipeline.predict(X_test)
+
+# Print the confusion matrix
+print(confusion_matrix(y_test, y_pred))
+
+## Centering and Scaling Data ##
+# Models use distance to inform them, if data is not on a similar scale, some features can disproportionally influence the model
+# Can standardize data by subtracting the mean and dividing by the variance (all features are centered around zero and have a variance of one)
+# Can subtract min and divide by range (all data is normalized to range from -1 to 1)
+
+# Import StandardScaler
+from sklearn.preprocessing import StandardScaler
+
+# Create pipeline steps
+steps = [("scaler", StandardScaler()),
+         ("lasso", Lasso(alpha=0.5))]
+
+# Instantiate the pipeline
+pipeline = Pipeline(steps)
+pipeline.fit(X_train, y_train)
+
+# Calculate and print R-squared
+print(pipeline.score(X_test, y_test))
+
+# Build the steps
+steps = [("scaler", StandardScaler()),
+         ("logreg", LogisticRegression())]
+pipeline = Pipeline(steps)
+
+# Create the parameter space
+parameters = {"logreg__C": np.linspace(0.001, 1, 20)}
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
+                                                    random_state=21)
+
+# Instantiate the grid search object
+cv = GridSearchCV(pipeline, param_grid=parameters)
+
+# Fit to the training data
+cv.fit(X_train, y_train)
+print(cv.best_score_, "\n", cv.best_params_)
+
+## Evaluating Multiple Models ##
+# Best to scale data before evaluating models out of the box; typically no tuning for evaluation
