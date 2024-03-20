@@ -34,4 +34,4 @@ function Book(title, author, pages, read) {
     return info_str
 }
 const donQuixote = new Book("Don Quixote", "Miguel de Cervantes", 909, True);
-console.log(donQuixote.info();)
+console.log(donQuixote.info());
