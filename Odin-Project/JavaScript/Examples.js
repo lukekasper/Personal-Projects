@@ -35,6 +35,9 @@ player2.sayHello(); // logs "Hello, I'm a player!"
 
 player1.valueOf(); // Output: Object { name: "steve", marker: "X", sayName: sayName() }
 
+// Can set prototype to make `Player` objects inherit from `Person`
+Object.setPrototypeOf(Player.prototype, Person.prototype);
+
 // Practice:
 function Book(title, author, pages, read) {
   this.title = title;
