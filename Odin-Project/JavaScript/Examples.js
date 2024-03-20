@@ -1,4 +1,4 @@
-// Javascript Objects
+//////////////////////////////////////// Javascript Objects ////////////////////////////////////////
 const myObject = {
   property: 'Value!',
   otherProperty: 77,
@@ -21,6 +21,19 @@ function Player(name, marker) {
 
 const player = new Player('steve', 'X');
 player1.sayName(); // logs 'steve'
+
+Object.getPrototypeOf(player1) === Player.prototype; // returns true
+Object.getPrototypeOf(player2) === Player.prototype; // returns true
+
+// Attributes and methods defined on the prototype object are available in all the created objects
+Player.prototype.sayHello = function() {
+   console.log("Hello, I'm a player!");
+};
+
+player1.sayHello(); // logs "Hello, I'm a player!"
+player2.sayHello(); // logs "Hello, I'm a player!"
+
+player1.valueOf(); // Output: Object { name: "steve", marker: "X", sayName: sayName() }
 
 // Practice:
 function Book(title, author, pages, read) {
