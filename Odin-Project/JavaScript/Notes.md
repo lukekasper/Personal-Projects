@@ -54,3 +54,6 @@
 - Dependency Inversion: create a wrapper or intermediary abstract class that facilitates API calls to the dependencies
   - This makes our high-level code only dependent on the wrapper and not the low-level dependency implementations explicitly
   - Can just make a new wrapper class for additional API needs rather than modify the high-level code
+
+ ## Linting with JavaScript
+ - https://github.com/airbnb/javascript
