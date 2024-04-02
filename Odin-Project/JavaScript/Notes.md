@@ -62,3 +62,11 @@
  - Using Prettier and ESLint together: https://github.com/prettier/eslint-config-prettier#installation
  - GitHub offers repository templates to expedite setup
    - Any repository can be marked as a template and reused in future new projects as a starting point
+  
+## Client-Side Form Validation
+- Accomplished in two ways: with built-in HTML form validation or with customizeable JavaScript
+  - Built-in validation can set parameters like: required, min/max length, min/max, type, regex pattern match
+  - `:valid` css pseudo-class allows specific styling to be applied to valid elements (same goes for `:invalid`)
+  - JavaScript is necessary to take control of the error messages
+    - https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_using_javascript
+    - https://www.w3schools.com/js/js_validation_api.asp
