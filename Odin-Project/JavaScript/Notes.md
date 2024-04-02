@@ -70,3 +70,17 @@
   - JavaScript is necessary to take control of the error messages
     - https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_using_javascript
     - https://www.w3schools.com/js/js_validation_api.asp
+
+## Asynchronous Code
+- Functions that happen in the background while the rest of your code executes
+- Callback: a function that is passed into another function as an argument and invoked within that outer function
+  - Most commonly an event listner pattern, which takes an anonymous function as input and executes it when the event is triggered
+  - Also common to use asynchronous functions for file/harddrive read operations or API calls to fetch data
+- Promise: an object that might produce a value at some point in the future
+  -  Most commonly used with the "fetch" api
+  -  must call 'resolve' or 'reject' methods based on the result of the given task
+  -  .then: used to react to the promise, recieving the 'result' from the resolve method
+  -  .catch callback is executed when the promise is rejected (like sending an error to print or be displayed)
+  -  .finally is called regardless of success or failure
+  -  Promise.all is used when you want to respond only when a series of asynchronous calls have completed
+  -   
