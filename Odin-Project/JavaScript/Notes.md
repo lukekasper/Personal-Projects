@@ -77,10 +77,11 @@
   - Most commonly an event listner pattern, which takes an anonymous function as input and executes it when the event is triggered
   - Also common to use asynchronous functions for file/harddrive read operations or API calls to fetch data
 - Promise: an object that might produce a value at some point in the future
-  -  Most commonly used with the "fetch" api
-  -  must call 'resolve' or 'reject' methods based on the result of the given task
-  -  .then: used to react to the promise, recieving the 'result' from the resolve method
-  -  .catch callback is executed when the promise is rejected (like sending an error to print or be displayed)
-  -  .finally is called regardless of success or failure
-  -  Promise.all is used when you want to respond only when a series of asynchronous calls have completed
-  -   
+  - Most commonly used with the "fetch" api
+  - Must call 'resolve' or 'reject' methods based on the result of the given task
+  - .then: used to react to the promise, recieving the 'result' from the resolve method
+  - .catch callback is executed when the promise is rejected (like sending an error to print or be displayed)
+  - .finally is called regardless of success or failure
+  - Promise.all is used when you want to respond only when a series of asynchronous calls have completed
+  - Promise.race is used to fire a callback whenever the first promise is resolved or rejected
+    - Could be used to query an API for a primary and secondary source and respond to the first available data
