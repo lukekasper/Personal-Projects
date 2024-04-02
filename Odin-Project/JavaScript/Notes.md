@@ -34,6 +34,8 @@
     - One to check if the game is over, and another to manipulate the DOM based on the bool return value
   - Loosely coupled objects: objects or classes are not heavily dependent on one another
     - Game logic should not depend on the user interface.  We can start writing the game logic using console.log() statements and later add the UI without affecting the game logic
+    - Publish/Subscribe relationships can incorporate a "mediator" class to facilitate communication and loose coupling
+      - JavaScript has a pub/sub library called PubSubJS
 - Open/Closed Principal: open for extension, closed for modification
   - Means we should be able to add new types to a class from outside without needing to change the code inside the class explicitly
   - Usually switch statements or multiple if statements are clues that Open/Closed Principal is being violated
