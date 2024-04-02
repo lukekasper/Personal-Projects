@@ -56,4 +56,9 @@
   - Can just make a new wrapper class for additional API needs rather than modify the high-level code
 
  ## Linting with JavaScript
- - https://github.com/airbnb/javascript
+ - Style guide: https://github.com/airbnb/javascript
+ - Linters: https://eslint.org/
+ - Automatic styling with Prettier: https://prettier.io/
+ - Using Prettier and ESLint together: https://github.com/prettier/eslint-config-prettier#installation
+ - GitHub offers repository templates to expedite setup
+   - Any repository can be marked as a template and reused in future new projects as a starting point
