@@ -20,3 +20,7 @@
   - `git pull origin <branch name>`
   - `git stash apply`
 - `git commit --amend --no-edit`: ammend the last commit without changing the message (when you forgot to add a file for example)
+
+
+## Conventional Commits:
+- https://conventionalcommits.org/en/v1.0.0/#summary
