@@ -85,3 +85,16 @@
   - Promise.all is used when you want to respond only when a series of asynchronous calls have completed
   - Promise.race is used to fire a callback whenever the first promise is resolved or rejected
     - Could be used to query an API for a primary and secondary source and respond to the first available data
+
+## Event Loop
+- The stack is synchronous code waiting to be executed
+- Event loop in JavaScript is how asynchronous code gets executed in the browser
+- Callback queue is where the asynchronous calls are stored prior to being executed in the call stack
+  - The event loop will only push an event from the callback queue to the call stack if the call stack is empty
+- Likewise, the Render Queue (when the browser will render display changes) is only able to update when the call stack is empty
+  - When someone says "don't block the stack", they mean don't clog up the call stack with slow-executing code which prevents callbacks from executing and display changes rendering
+- You can also flood the callback queue by including events that are constantly being triggered (like a general "on scroll")
+
+## APIs
+- Servers that are created for serving data for external use
+- 
