@@ -99,4 +99,8 @@
 - Servers that are created for serving data for external use
 - The "fetch" and "catch" methods (illustrated in my Recipes project) are the most common ways of accessing API info
   - May need to configure Cross Origin Resource Sharing (CORS) to make HTTP requests to outside sources
+  - Fetch methods will return a promise, so to access the underlying data, you will need to run a seocnd .then() call on response.json()
+  - The response.json() line converts the promise into a json object
 - Public APIs: https://github.com/n0shake/Public-APIs
+- Examples of fetch requests using await: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+- Async/await methodology is preferreed to .then() calls due to the better readability and ability to handle all errors inside of a try-catch block around the entire 
