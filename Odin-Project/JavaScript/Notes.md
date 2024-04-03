@@ -112,3 +112,14 @@
 ## Space/Time Complexity Cheat Sheet
 - https://www.bigocheatsheet.com/
 - Code for readability first, unless there is a noticeable impact to performance
+
+## Unit Testing
+- Jest is the most commonly used JavaScript TestRunner
+  - Can configure it to run on each save, to ensure code logic is sound right in the IDE
+  - Use "watch: jest --watch *.js" in package.json file and run `npm run watch` in command line
+  - https://jestjs.io/docs/using-matchers
+- Test Driven Development (TDD) is a dev technique that states we write a test prior writing code
+  - Keeps code modularized and focused on meeting requirements, easy to know what to develop next
+- Pure function:
+  - The function always returns the same result if the same arguments are passed in. It does not depend on any state, or data, change during a program’s execution. It must only depend on its input arguments.
+  - The function does not produce any observable side effects such as network requests, input and output devices, or data mutation.
