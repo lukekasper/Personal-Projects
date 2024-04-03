@@ -19,3 +19,4 @@
   - `git stash`
   - `git pull origin <branch name>`
   - `git stash apply`
+- `git commit --amend`: ammend the last commit (when you forgot to add a file for example)
