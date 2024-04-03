@@ -39,10 +39,16 @@ get('story.json').then(function(response) {
 
 // Promise.all with async/await
 const getDetails = async function() {
-  // Fire Both off
-  const wesPromise = axios.get('url1');
-  const scottPromise = axios.get('url2');
-  // wait for both to come back
-  const [wes, scott] = await Promise.all([wesPromise, scottPromise]);
-  // further processing ...
+
+  try {
+    // Fire Both off
+    const wesPromise = axios.get('url1');
+    const scottPromise = axios.get('url2');
+    // wait for both to come back
+    const [wes, scott] = await Promise.all([wesPromise, scottPromise]);
+    // further processing ...
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
