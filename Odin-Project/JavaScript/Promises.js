@@ -43,6 +43,6 @@ const getDetails = async function() {
   const wesPromise = axios.get('url1');
   const scottPromise = axios.get('url2');
   // wait for both to come back
-  const [wes, scott] = await Primse.all([wesPromise, scottPromise]);
+  const [wes, scott] = await Promise.all([wesPromise, scottPromise]);
   // further processing ...
 }
