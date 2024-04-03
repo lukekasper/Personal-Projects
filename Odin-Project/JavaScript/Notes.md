@@ -99,4 +99,4 @@
 - Servers that are created for serving data for external use
 - The "fetch" and "catch" methods (illustrated in my Recipes project) are the most common ways of accessing API info
   - May need to configure Cross Origin Resource Sharing (CORS) to make HTTP requests to outside sources
-- 
+- Public APIs: https://github.com/n0shake/Public-APIs
