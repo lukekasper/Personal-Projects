@@ -103,4 +103,5 @@
   - The response.json() line converts the promise into a json object
 - Public APIs: https://github.com/n0shake/Public-APIs
 - Examples of fetch requests using await: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-- Async/await methodology is preferreed to .then() calls due to the better readability and ability to handle all errors inside of a try-catch block around the entire 
+- Async/await methodology is preferreed to .then() calls due to the better readability and ability to handle all errors inside of a try-catch block around the entire
+  - Can pair await with Promise.all([]) to fire multiple async calls concurrently and wait to process until the last one is complete 
