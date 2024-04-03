@@ -35,3 +35,14 @@ get('story.json').then(function(response) {
 }, function(error) {
   console.error("Failed!", error);
 });
+
+
+// Promise.all with async/await
+const getDetails = async function() {
+  // Fire Both off
+  const wesPromise = axios.get('url1');
+  const scottPromise = axios.get('url2');
+  // wait for both to come back
+  const [wes, scott] = await Primse.all([wesPromise, scottPromise]);
+  // further processing ...
+}
