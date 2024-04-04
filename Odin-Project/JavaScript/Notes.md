@@ -118,6 +118,7 @@
   - Can configure it to run on each save, to ensure code logic is sound right in the IDE
   - Use "watch: jest --watch *.js" in package.json file and run `npm run watch` in command line
   - https://jestjs.io/docs/using-matchers
+  - Jest also offers mock testing libraries for mocking things like fetch calls
 - Test Driven Development (TDD) is a dev technique that states we write a test prior writing code
   - Keeps code modularized and focused on meeting requirements, easy to know what to develop next
 - Pure function:
