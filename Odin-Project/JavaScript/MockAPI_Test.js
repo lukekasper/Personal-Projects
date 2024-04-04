@@ -29,6 +29,30 @@ it('calls vatapi.com correctly', () => {
   }).then(result => expect(result).toBe(20*2*1.19))
 })
 
+// Using Jest mock calls
+const fakeFetch2 = jest.fn().mockReturnValue(Promise.resolve({
+    json: () => Promise.resolve({
+      rates: {
+        standard: {
+          value: 19
+        }
+      }
+    })
+  }))
+  return orderTotal(fakeFetch, fakeProcess, {
+    country: 'DE',
+    items: [
+      { 'name': 'Dragon waffles', price: 20, quantity: 2 }
+    ]
+  }).then(result => {
+    expect(result).toBe(20*2*1.19)
+    expect(fakeFetch).toBeCalledWith(
+      'https://vatapi.com/v1/country-code-check?code=DE',
+      { "headers": { "apikey": "key123" } }
+    )
+  })
+})
+
 it('Quantity', () =>
   orderTotal(null, null, {
     items: [
@@ -59,5 +83,22 @@ it('Happy path (Example 2)', () =>
     ]
   }).then(result => expect(result).toBe(60)))
 
-module.exports = orderTotal
-// module.exports = orderTotal
+
+// Function under test //
+//module.exports = orderTotal
+function orderTotal(fetch, process, order) {
+  const sumOrderItems = order =>
+    order.items.reduce((prev, cur) =>
+      cur.price * (cur.quantity || 1) + prev, 0)
+  if(order.country) {
+    return fetch('https://vatapi.com/v1/country-code-check?code=' + order.country, {
+      headers: {
+        apikey: process.env.VAT_API_KEY
+      }
+    })
+      .then(response => response.json())
+      .then(data => data.rates.standard.value)
+      .then(vat => sumOrderItems(order) * (1+vat/100))
+  }
+  return Promise.resolve(sumOrderItems(order))
+}
