@@ -1,0 +1,14 @@
+## Components
+- React functional components are functions that return JSX objects (html-like code)
+- Rect component names **must be capitalized** to function properly
+  - `quot;` can be used as a quotation mark in html to avoid linter errors
+- Rules of JSX:
+  - Return a single root element: must return a single top-level element, but can wrap multiple child elements in it
+    - Can use a React fragment `<>` if you do not want the child elmements to have a container
+  - Close all tags
+  - camelCase **most** things:
+    - Can't use dashes or reserved words like "class"
+- Use curly braces {} to reference a dynamic property inside the markup
+  - Can also use this to call functions directly in the markup
+  - Use curly braces as text or as attributes only in the markup
+  - Double curly braces {{ }} are used to contain JacaScript objects
