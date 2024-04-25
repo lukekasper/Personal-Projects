@@ -38,7 +38,7 @@
 - Open/Closed Principal: open for extension, closed for modification
   - Means we should be able to add new types to a class from outside without needing to change the code inside the class explicitly
   - Usually switch statements or multiple if statements are clues that Open/Closed Principal is being violated
-  - In print quiz example (https://www.youtube.com/watch?v=-ptMtJAdj40&list=PLZlA0Gpn_vH9kocFX7R7BAe_CvvOCO_p9&index=2):
+  - In [print quiz example](https://www.youtube.com/watch?v=-ptMtJAdj40&list=PLZlA0Gpn_vH9kocFX7R7BAe_CvvOCO_p9&index=2):
     - Rather than check for a question type in the printQuiz method and then follow the conditional tree to the appropriate print statement
       - This would force a new conditional every time we make a new question type
     - We can make a class for each type, and the class will know how to print itself calling a common printQuestionChoices method
