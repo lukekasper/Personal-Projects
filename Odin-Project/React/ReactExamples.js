@@ -49,28 +49,27 @@ function TodoList() {
 /////////////////////// PROPS ///////////////////////
 // Using Props to modifiy characteristics of a single reuseable component
 //function Button(props) {
-function Button({ text, color, fontSize }) {
+function Button({ text = "Click Me!", color = "blue", fontSize = 12, handleClick }) {
   const buttonStyle = {
     color: color,
     fontSize: fontSize + "px"
   };
 
-  return <button style={buttonStyle}>{text}</button>;
-}
-
-Button.defaultProps = {
-  text: "Click Me!",
-  color: "blue",
-  fontSize: 12
-};
-
-export default function App() {
   return (
-    <div>
-      <Button />
-      <Button text="Don't Click Me!" color="red" />
-      <Button fontSize={20} />
-    </div>
+    <button onClick={() => handleClick('https://www.theodinproject.com')} style={buttonStyle}>
+      {text}
+    </button>
   );
 }
 
+export default function App() {
+  const handleButtonClick = (url) => {
+    window.location.href = url;
+  };
+
+  return (
+    <div>
+      <Button handleClick={handleButtonClick} />
+    </div>
+  );
+}
