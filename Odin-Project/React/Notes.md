@@ -24,5 +24,5 @@
 ## Properties (Props)
 - Data passes from parent to child componenets via props
   - Data flow is unidirectional (data modified in a child will no propogate back to the parent)
-- Destructuring data objects in Javascript: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+- [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) data objects (props) in Javascript leads to more concise/readable code 
 - 
