@@ -48,23 +48,29 @@ function TodoList() {
 
 /////////////////////// PROPS ///////////////////////
 // Using Props to modifiy characteristics of a single reuseable component
-function Button(props) {
+//function Button(props) {
+function Button({ text, color, fontSize }) {
   const buttonStyle = {
-    color: props.color,
-    fontSize: props.fontSize + 'px'
+    color: color,
+    fontSize: fontSize + "px"
   };
 
-  return (
-    <button style={buttonStyle}>{props.text}</button>
-  );
+  return <button style={buttonStyle}>{text}</button>;
 }
+
+Button.defaultProps = {
+  text: "Click Me!",
+  color: "blue",
+  fontSize: 12
+};
 
 export default function App() {
   return (
     <div>
-      <Button text="Click Me!" color="blue" fontSize={12} />
-      <Button text="Don't Click Me!" color="red" fontSize={12} />
-      <Button text="Click Me!" color="blue" fontSize={20} />
+      <Button />
+      <Button text="Don't Click Me!" color="red" />
+      <Button fontSize={20} />
     </div>
   );
 }
+
