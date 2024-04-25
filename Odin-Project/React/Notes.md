@@ -43,9 +43,6 @@
     - Must update all variable objects together
     - If you want to update only one, use the syntax: `setPosition({ ...position, x: 100 })`
 - [Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure)
-- If you want to share state variables between two instances of the same component, that state must be defined in the closest shared parent (called lifting their state up)
-  - states are private/local to that component instance
-  - passing event handlers and data as props to the children allows the child component to toggle the state defined in the parent via a button or other event trigger
 - State rendering:
   - Same inputs must always return the same JSX
   - It should not change any objects or variables that existed before rendering
@@ -60,3 +57,11 @@
   - The current value is set when the component renders, and is not updated by the setState call, only when the component re-renders
   - To achieve this functionality, pass a callback to the setState function to invoke the state updater function
     - When a callback is passed to the setState function, it ensures that the latest state is passed in as an argument to the callback
+- If you want to share state variables between two instances of the same component, that state must be defined in the closest shared parent (called lifting their state up)
+  - States are private/local to that component instance, but can be passed to thier children via props
+  - Passing event handlers and data as props to the children allows the child component to toggle the state defined in the parent via a button or other event trigger
+- Single source of truth:
+  - For each piece of state, there is a specific component that holds that piece of information
+  - State can be propogated down to child components (when necessary) using props
+  - It's often necessary to lift the state up or move it down during development as an application scope grows/changes
+  - It’s useful to consider components as “controlled” (driven by props) or “uncontrolled” (driven by state).
