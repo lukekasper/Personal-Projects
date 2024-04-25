@@ -1,3 +1,4 @@
+/////////////////////// RENDERING ///////////////////////
 // Loop over a list of items using map function
 function List(props) {
   return (
@@ -25,6 +26,7 @@ function App() {
   );
 }
 
+
 // data with unique ids as keys
 const todos = [
   { task: "mow the yard", id: uuid() },
@@ -40,5 +42,29 @@ function TodoList() {
         <li key={todo.id}>{todo.task}</li>
       ))}
     </ul>
+  );
+}
+
+
+/////////////////////// PROPS ///////////////////////
+// Using Props to modifiy characteristics of a single reuseable component
+function Button(props) {
+  const buttonStyle = {
+    color: props.color,
+    fontSize: props.fontSize + 'px'
+  };
+
+  return (
+    <button style={buttonStyle}>{props.text}</button>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <Button text="Click Me!" color="blue" fontSize={12} />
+      <Button text="Don't Click Me!" color="red" fontSize={12} />
+      <Button text="Click Me!" color="blue" fontSize={20} />
+    </div>
   );
 }
