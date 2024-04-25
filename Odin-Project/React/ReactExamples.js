@@ -56,6 +56,7 @@ function Button({ text = "Click Me!", color = "blue", fontSize = 12, handleClick
   };
 
   return (
+    // This syntax with the anonomyous function is necessary to prevent the function from being called on rendering the component
     <button onClick={() => handleClick('https://www.theodinproject.com')} style={buttonStyle}>
       {text}
     </button>
@@ -71,5 +72,52 @@ export default function App() {
     <div>
       <Button handleClick={handleButtonClick} />
     </div>
+  );
+}
+
+
+// Nesting components and using the 'children' prop
+import Avatar from './Avatar.js';
+
+function Card({ children }) {
+  return (
+    <div className="card">
+      {children}
+    </div>
+  );
+}
+
+function Profile() {
+  return (
+    <Card>
+      <Avatar
+        size={100}
+        person={{ 
+          name: 'Katsuko Saruhashi',
+          imageId: 'YfeOqp2'
+        }}
+      />
+    </Card>
+  );
+}
+
+function Avatar({ person, size }) {
+  return (
+    <img
+      className="avatar"
+      src={getImageUrl(person)}
+      alt={person.name}
+      width={size}
+      height={size}
+    />
+  );
+}
+
+function getImageUrl(person, size = 's') {
+  return (
+    'https://i.imgur.com/' +
+    person.imageId +
+    size +
+    '.jpg'
   );
 }
