@@ -43,5 +43,20 @@
     - Must update all variable objects together
     - If you want to update only one, use the syntax: `setPosition({ ...position, x: 100 })`
 - [Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure)
-- If you want to share state variables between two instances of the same component, that state must be defined in the closest shared parent
+- If you want to share state variables between two instances of the same component, that state must be defined in the closest shared parent (called lifting their state up)
   - states are private/local to that component instance
+  - passing event handlers and data as props to the children allows the child component to toggle the state defined in the parent via a button or other event trigger
+- State rendering:
+  - Same inputs must always return the same JSX
+  - It should not change any objects or variables that existed before rendering
+  - "Strict mode" renders each component twice, to catch bugs due to unpredictable or poorly defined behavior
+- When updating Objects in state:
+  - Must create a new object from the current object's values, update that object's value of interest, and set the state using the new object
+  - If we set the state by updating the old object, the page is not guaranteed to re-render!
+- Updating nested objects involves making copies of objects all the way up from the part that changed, which can be very verbose
+  - Better to make a "flat" or "normalized" structure to make updating nested items easier
+  - https://react.dev/learn/choosing-the-state-structure
+- Updating a state multiple times in the same event handler using setState(val + 1) will not work
+  - The current value is set when the component renders, and is not updated by the setState call, only when the component re-renders
+  - To achieve this functionality, pass a callback to the setState function to invoke the state updater function
+    - When a callback is passed to the setState function, it ensures that the latest state is passed in as an argument to the callback
