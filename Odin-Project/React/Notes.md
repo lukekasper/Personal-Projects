@@ -25,4 +25,6 @@
 - Data passes from parent to child componenets via props
   - Data flow is unidirectional (data modified in a child will no propogate back to the parent)
 - [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) data objects (props) in Javascript leads to more concise/readable code 
-- 
+- Default properties can be defined where a explicit prop is absent
+  - This can be combined with prop destructuring syntax
+- Functions can also be supplied as props
