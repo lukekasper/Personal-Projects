@@ -20,3 +20,8 @@
   - If a component in the list has changed, rather than re-rendering the entire list we use a key to only re-render the component that has changed
   - [Uuid](https://www.npmjs.com/package/uuid) package can be used to generate a unique id or key
   - Do not generate a unique id for the key during the rendering process, will lead to a new key each render (which defeats the point of a unique key tied to a specific component)
+
+## Properties (Props)
+- Data passes from parent to child componenets via props
+  - Data flow is unidirectional (data modified in a child will no propogate back to the parent)
+- 
