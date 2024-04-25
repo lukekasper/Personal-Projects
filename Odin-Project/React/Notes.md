@@ -18,4 +18,4 @@
 - Use conditional operator "?" to filter returned components based on some criteria
 - Keys are used to track specific items in a list
   - If a component in the list has changed, rather than re-rendering the entire list we use a key to only re-render the component that has changed
-- [Uuid] (https://www.npmjs.com/package/uuid) package can be used to generate a unique id or key
+- [Uuid](https://www.npmjs.com/package/uuid) package can be used to generate a unique id or key
