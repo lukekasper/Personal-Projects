@@ -65,3 +65,21 @@
   - State can be propogated down to child components (when necessary) using props
   - It's often necessary to lift the state up or move it down during development as an application scope grows/changes
   - It’s useful to consider components as “controlled” (driven by props) or “uncontrolled” (driven by state).
+
+## Side Effects
+- When components in React need to interact/synchronize with an interface outside of the framework
+  - API call to a server for example
+- This is accomplished through the `useEffect` hook
+- `useEffect` hook runs on every render; but using a dependency array as a second argument allows us to re-render only when those dependencies are changed
+  - Leaving the dependency array blank will only run the effect on initial render
+  - Can also put in state variables to run effect on initial render or when state variables change
+- A cleanup function can be used to run each time before the next effect is ran, and one final time when the component is unmounted
+- Do not use an effect when not necessary:
+  - Not necessary when caluclating something based on other state variables; just caluclate the value and set it during render
+- Lifecycle of a component:
+  - A component mounts when it’s added to the screen
+  - A component updates when it receives new props or state, usually in response to an interaction
+  - A component unmounts when it’s removed from the screen
+- Effect lifecycle is independent of component
+  - It can either start synchronizing, or later stop synchronizing
+  - Body of the effect specifies how to start synchronizing, cleanup function specifies how to stop synchronizing
