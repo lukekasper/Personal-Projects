@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Line from './Line.jsx'
+import '../styles/Section.css'
 
 function Section({
   title,
