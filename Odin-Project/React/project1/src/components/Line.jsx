@@ -2,13 +2,22 @@ import { useState } from 'react'
 
 function Line({
   label,
-  info
+  info,
+  hidden,
+  id,
+  onInfoUpdate
 }) {
-
+  
   return (
     <p className="line">
       <span className="label">{label}: </span>
-      <span className="info">{info}</span>
+      <span className="info" style={{ display: hidden ? 'none' : 'block' }>{info}</span>
+      <input
+        className="input"
+        type="text" value={info}
+        style={{ display: hidden ? 'block' : 'none' }
+        onChange={(event) => onInfoUpdate(event.target.value)}
+      />
     </p>
   )
 }
