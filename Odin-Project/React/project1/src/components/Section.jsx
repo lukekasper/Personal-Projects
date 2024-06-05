@@ -3,10 +3,13 @@ import Line from './Line.jsx'
 
 function Section({
   title,
-  line_lst
+  lineList
 }) {
 
+  const infoListInit = lineList.map(line => line.info);
+
   const [hidden, setHidden] = useState(false);
+  const [infoList, setInfoList] = useState(infoListInit);
 
   function toggleInputVis() {
     setHidden(!hidden);
@@ -14,17 +17,28 @@ function Section({
 
   function submitInfo() {
     setHidden(!hidden);
-    // TODO - Submit info to update info state variable
+  }
+
+  const updateInfo = (newInfo, id) => {
+    const newInfoList = infoList.map(item => {
+      if (item.id === id) {
+        return { ...item, info: newInfo };
+      }
+      return item;  
+    });
+    setInfoList(newInfoList);
   }
 
   return (
     <div className="section">
       <h2>{title}</h2>
-      {line_lst.map((line) => {
+      {lineList.map((line, index) => {
         <Line
           label={line.label}
-          info={line.info}
+          info={infoList[index]}
           hidden={hidden}
+          id={id}
+          onInfoUpdate={updateInfo}
         />
       })}
       <button onClick={toggleInputVis} style={{ display: {hidden} ? 'none' : 'block' }}>
