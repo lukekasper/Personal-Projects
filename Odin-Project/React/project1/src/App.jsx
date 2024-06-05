@@ -27,15 +27,15 @@ function App() {
     <>
       <Section
         title="General Information"
-        line_lst=info1
+        lineList=info1
       />
       <Section
         title="Educational Experience"
-        line_lst=info2
+        lineList=info2
       />
       <Section
         title="Occupational Experience"
-        line_lst=info3
+        lineList=info3
       />
     </>
   )
