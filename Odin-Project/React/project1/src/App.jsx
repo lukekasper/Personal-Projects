@@ -5,22 +5,22 @@ import './App.css'
 function App() {
 
   info1 = [
-    { label: "Name", info: "Luke Kasper" },
-    { label: "Email", info: "fake25email@gmail.com" },
-    { label: "Phone Number", info: "(888) 888-8888" },
+    { id: 1, label: "Name", info: "Luke Kasper" },
+    { id: 2, label: "Email", info: "fake25email@gmail.com" },
+    { id: 3, label: "Phone Number", info: "(888) 888-8888" },
   ];
 
   info2 = [
-    { label: "School Name", info: "Rutgers" },
-    { label: "Major", info: "Physics" },
-    { label: "Graduation Date", info: "05/12/2018" },
+    { id: 4, label: "School Name", info: "Rutgers" },
+    { id: 5, label: "Major", info: "Physics" },
+    { id: 6, label: "Graduation Date", info: "05/12/2018" },
   ];
 
   info3 = [
-    { label: "Company Name", info: "Boeing" },
-    { label: "Position Title", info: "Engineer" },
-    { label: "Job Responsibilities", info: "Develop control law algorithms for V-22 flight control computers." },
-    { label: "Dates Worked", info: "05/12/2020 - 08/01/2023" },
+    { id: 7, label: "Company Name", info: "Boeing" },
+    { id: 8, label: "Position Title", info: "Engineer" },
+    { id: 9, label: "Job Responsibilities", info: "Develop control law algorithms for V-22 flight control computers." },
+    { id: 10, label: "Dates Worked", info: "05/12/2020 - 08/01/2023" },
   ];
   
   return (
