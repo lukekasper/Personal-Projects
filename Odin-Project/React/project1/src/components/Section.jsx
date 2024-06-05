@@ -11,6 +11,7 @@ function Section({
   const [hidden, setHidden] = useState(false);
   const [infoList, setInfoList] = useState(infoListInit);
 
+  /// Toggle state of buttons and info elements on button click
   function editInfo() {
     setHidden(!hidden);
   }
@@ -19,6 +20,8 @@ function Section({
     setHidden(!hidden);
   }
 
+  /// Ran when any info is changed in an input element
+  /// Checks the id of the input element and updates that item in the list
   const updateInfo = (newInfo, id) => {
     const newInfoList = infoList.map(item => {
       if (item.id === id) {
