@@ -4,6 +4,7 @@ import './App.css'
 
 function App() {
 
+  /// Initialization Info
   info1 = [
     { id: 1, label: "Name", info: "Luke Kasper" },
     { id: 2, label: "Email", info: "fake25email@gmail.com" },
