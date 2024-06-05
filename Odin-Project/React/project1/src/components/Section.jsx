@@ -11,7 +11,7 @@ function Section({
   const [hidden, setHidden] = useState(false);
   const [infoList, setInfoList] = useState(infoListInit);
 
-  function toggleInputVis() {
+  function editInfo() {
     setHidden(!hidden);
   }
 
@@ -41,7 +41,7 @@ function Section({
           onInfoUpdate={updateInfo}
         />
       })}
-      <button onClick={toggleInputVis} style={{ display: {hidden} ? 'none' : 'block' }}>
+      <button onClick={editInfo} style={{ display: {hidden} ? 'none' : 'block' }}>
         Edit {title}
       </button>
       <button onClick={submitInfo} style={{ display: {hidden} ? 'block' : 'none' }}>
