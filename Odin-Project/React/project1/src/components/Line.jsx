@@ -16,7 +16,7 @@ function Line({
         className="input"
         type="text" value={info}
         style={{ display: hidden ? 'block' : 'none' }
-        onChange={(event) => onInfoUpdate(event.target.value)}
+        onChange={(event) => onInfoUpdate(event.target.value, id)}
       />
     </p>
   )
