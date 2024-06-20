@@ -95,4 +95,5 @@
 - Choosing whether to put logic in an Effect or Event Handler:
   - If logic is caused by a particular interaction, keep it in the event handler
   - If it’s caused by the user seeing the component on the screen, keep it in the Effect
-- The hook `useSyncExternalStore` can be a more efficient way to fetch external data from an API
+- The hook `useSyncExternalStore` can be a more efficient way to sync an external data store with a React component
+  - It is also recommended to use a framework's built-in data fetching method rather than implementing Effects for efficiency
