@@ -90,3 +90,4 @@
 - useRef() is another React hook that stores information that can be retrieved later in the program
   - The major difference from useState is it <ins>does not</ins> trigger a re-render
   - Update or access the ref property through <ref_name>.current
+- Cache/memoize expensive computations using the `useMemo` hook
