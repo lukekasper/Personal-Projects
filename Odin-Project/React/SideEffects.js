@@ -89,10 +89,99 @@ export default function Page() {
 }
 
 //// Memoization ////
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
+import { initialTodos, createTodo, getVisibleTodos } from './todos.js';
 
-function TodoList({ todos, filter }) {
-  const [newTodo, setNewTodo] = useState('');
-  const visibleTodos = useMemo(() => getFilteredTodos(todos, filter), [todos, filter]);
-  // ...
+export default function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [showActive, setShowActive] = useState(false);
+  const [text, setText] = useState('');
+  const visibleTodos = useMemo(
+    () => getVisibleTodos(todos, showActive),
+    [todos, showActive]
+  );
+
+  function handleAddClick() {
+    setText('');
+    setTodos([...todos, createTodo(text)]);
+  }
+
+  return (
+    <>
+      <label>
+        <input
+          type="checkbox"
+          checked={showActive}
+          onChange={e => setShowActive(e.target.checked)}
+        />
+        Show only active todos
+      </label>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <button onClick={handleAddClick}>
+        Add
+      </button>
+      <ul>
+        {visibleTodos.map(todo => (
+          <li key={todo.id}>
+            {todo.completed ? <s>{todo.text}</s> : todo.text}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
+
+//// Update form when contact ID changes (Removed Effect) ////
+import { useState } from 'react';
+
+export default function EditContact(props) {
+  return (
+    <EditForm
+      {...props}
+      key={props.savedContact.id}
+    />
+  );
+}
+
+function EditForm({ savedContact, onSave }) {
+  const [name, setName] = useState(savedContact.name);
+  const [email, setEmail] = useState(savedContact.email);
+
+  return (
+    <section>
+      <label>
+        Name:{' '}
+        <input
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+      </label>
+      <label>
+        Email:{' '}
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+      </label>
+      <button onClick={() => {
+        const updatedData = {
+          id: savedContact.id,
+          name: name,
+          email: email
+        };
+        onSave(updatedData);
+      }}>
+        Save
+      </button>
+      <button onClick={() => {
+        setName(savedContact.name);
+        setEmail(savedContact.email);
+      }}>
+        Reset
+      </button>
+    </section>
+  );
+}
+
