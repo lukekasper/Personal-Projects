@@ -85,4 +85,7 @@
   - Body of the effect specifies how to start synchronizing, cleanup function specifies how to stop synchronizing
 - Each Effect in your code should represent a separate and independent synchronization process
   - Do not combine effects in order to simplify logic, as dependencies change this could result in unintended synchronizations
-- React linter should check taht all reactive values used in the Effect are declared as dependencies
+- React linter should check that all reactive values used in the Effect are declared as dependencies
+- useRef() is another React hook that stores information that can be retrieved later in the program
+  - The major difference from useState is it <u>does not</u> trigger a re-render
+  - Update or access the ref property through <ref_name>.current
