@@ -92,3 +92,6 @@
   - Update or access the ref property through <ref_name>.current
 - Cache/memoize expensive computations using the `useMemo` hook
 - Generally it is **not** a good idea to set the state inside of an effect, this will cause the entire component to render twice
+- Choosing whether to put logic in an Effect or Event Handler:
+  - If logic is caused by a particular interaction, keep it in the event handler
+  - If it’s caused by the user seeing the component on the screen, keep it in the Effect
