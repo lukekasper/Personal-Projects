@@ -75,7 +75,8 @@
   - Can also put in state variables to run effect on initial render or when state variables change
 - A cleanup function can be used to run each time before the next effect is ran, and one final time when the component is unmounted
 - Do not use an effect when not necessary:
-  - Not necessary when caluclating something based on other state variables; just caluclate the value and set it during render
+  - Transforming data for rendering
+  - To handle user events
 - Lifecycle of a component:
   - A component mounts when it’s added to the screen
   - A component updates when it receives new props or state, usually in response to an interaction
