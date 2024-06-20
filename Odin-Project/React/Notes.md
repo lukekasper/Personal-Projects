@@ -91,3 +91,4 @@
   - The major difference from useState is it <ins>does not</ins> trigger a re-render
   - Update or access the ref property through <ref_name>.current
 - Cache/memoize expensive computations using the `useMemo` hook
+- Generally it is **not** a good idea to set the state inside of an effect, this will cause the entire component to render twice
