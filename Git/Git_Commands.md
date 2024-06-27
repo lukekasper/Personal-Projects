@@ -21,7 +21,7 @@
   - `git pull origin <branch name>`
   - `git stash apply`
 - `git commit --amend --no-edit`: ammend the last commit without changing the message (when you forgot to add a file for example)
-
+- `git reset --hard origin/branch-name`: overwrite local branch to match remote branch
 
 ## Conventional Commits:
 - https://conventionalcommits.org/en/v1.0.0/#summary
