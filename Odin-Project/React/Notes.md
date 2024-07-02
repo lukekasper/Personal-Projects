@@ -102,4 +102,3 @@
     - Can also break this loop by using a reference in the `useRef` hook
   - Using objects as dependencies; a change to an object actually creates a new object, leading to rerender
     - Use a specific value of an object as a dependency instead
-  - 
