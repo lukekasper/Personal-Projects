@@ -97,3 +97,9 @@
   - If it’s caused by the user seeing the component on the screen, keep it in the Effect
 - The hook `useSyncExternalStore` can be a more efficient way to sync an external data store with a React component
   - It is also recommended to use a framework's built-in data fetching method rather than implementing Effects for efficiency
+- UseEffect can lead to infinite loops in the following scenarios:
+  - Using `useEffect` hook to update the state with no dependencies
+    - Can also break this loop by using a reference in the `useRef` hook
+  - Using objects as dependencies; a change to an object actually creates a new object, leading to rerender
+    - Use a specific value of an object as a dependency instead
+  - 
