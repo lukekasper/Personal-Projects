@@ -25,3 +25,7 @@
 
 ## Conventional Commits:
 - https://conventionalcommits.org/en/v1.0.0/#summary
+
+## Reset Last Commit:
+- `reset --soft HEAD~1`
+- `git push -f`
