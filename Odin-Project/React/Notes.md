@@ -102,3 +102,29 @@
     - Can also break this loop by using a reference in the `useRef` hook
   - Using objects as dependencies; a change to an object actually creates a new object, leading to rerender
     - Use a specific value of an object as a dependency instead
+
+## Type Checking with PropTypes
+- `npm install --save prop-types`
+- Can use this to enforce warnings on props that do not match a specified type
+- Can also provide default values for props when they are not supplied
+- https://legacy.reactjs.org/docs/typechecking-with-proptypes.html
+- This is **development only** and will not run in production
+
+## React Router
+- Library used to facilitate client-side routing for Single-Page Apss (SPAs)
+  - This will allow us to specify components to re-render based on the route (which would not happen otherwise for SPAs)
+- A router specifies which componets to render when a route is visited
+- A `Link` element can be used in place of the `a` tag to visit a route without refreshing the browser window
+- Nested routes can be used in conjunction with `Outlet` to render child components along with the parent
+  - `Outlet` will get replaced by the child element specified in the nested route
+- A default component can also be added by specifying the `index: true` argument in the children routes
+- You can also utilize information from the url route itself within the component using dynamic segments
+  - Prefacing part of a route with a ":" indicates that the path after that section is a dynamic segment
+  - They can be used in the component with the `useParams()` hook
+- An `errorElement` can be used as the default element in case of a bad url
+- Generally the routes portion is factored out into its own file
+- To pass data from a parent element to its child using `Outlet` we can use the context prop
+  - All outlets have a context prop built in
+  - We can pass anything to this prop (including objects)
+  - To access this state from within any child (or grandchild...) component of the parent, use the `useOutletContext()` hook
+- The [`<Navigate />` component](https://reactrouter.com/en/main/components/navigate) can be used to reroute the user to a desire URL or go back down the user's history
