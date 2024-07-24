@@ -137,7 +137,7 @@
   - By moving the request outside of the child and passing the data down as a prop, we can fire all requests simultaneously
 - Optimizing performance for data rendering depends on the application
   - Prioritize rendering the most important information first and build application style/loading around that
-- Requests have to be managed as browsers have a limit on how many parallel requests can be made at any time
+- Requests have to be managed as browsers are limited to **6 parallel requests** at any given time
 - Waterfall requests can be handled by:
   - `Promise.all` can be used to fire multiple requests simultaneously from a high level component and pass the data down as props
     - Can lead to confusing architecture/poor readability
@@ -152,3 +152,6 @@
       - Pre-fetching critical application data
       - Lazy-loaded components, where fetching is only done when components end up in the render tree
   - Axios and SWR are common fetching libraries that work with React
+  - `AbortController` can help avoid race conditions in `useEffect`
+    - Race conditions occur due to network lag, where responses may return in a different order than they were requested, leading to inconsistencies
+    - `AbortController` will cancel requests before subsequent ones are initiated (example shown in SideEffects.js)
