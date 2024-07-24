@@ -128,3 +128,10 @@
   - We can pass anything to this prop (including objects)
   - To access this state from within any child (or grandchild...) component of the parent, use the `useOutletContext()` hook
 - The [`<Navigate />` component](https://reactrouter.com/en/main/components/navigate) can be used to reroute the user to a desire URL or go back down the user's history
+
+## Fetching Data
+- `useEffect` can be used to populate component with data upon mounting
+- Have ability to set error and loading logic (as shown in API example in SideEffects.js)
+- It is often better to lift up the data fetching requests outside of the child component to avoid waterfall requests
+  - This can lead to performance impacts where a request is not fired until its parent component is done requesting data and has rendered
+  - By moving the request outside of the child and passing the data down as a prop, we can fire all requests simultaneously
