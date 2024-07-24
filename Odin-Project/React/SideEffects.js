@@ -188,9 +188,10 @@ function EditForm({ savedContact, onSave }) {
 ///////////// Fetch Data from an API /////////////
 import { useEffect, useState } from "react";
 
-const Image = () => {
+const useImageURL = () => {
   const [imageURL, setImageURL] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
   fetch("https://jsonplaceholder.typicode.com/photos", { mode: "cors" })
@@ -202,17 +203,22 @@ const Image = () => {
     })
     .then((response) => setImageURL(response[0].url))
     .catch((error) => setError(error));
+    .finally(() => setLoading(false));
   }, []);
 
-
-  return (
-    imageURL && (
-      <>
-        <h1>An image</h1>
-        <img src={imageURL} alt={"placeholder text"} />
-      </>
-    )
-  );
+  return { imageURL, error, loading };
 };
 
-export default Image;
+const Image = () => {
+  const { imageURL, error, loading } = useImageURL();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>A network error was encountered</p>;
+
+  return (
+    <>
+      <h1>An image</h1>
+      <img src={imageURL} alt={"placeholder text"} />
+    </>
+  );
+};
