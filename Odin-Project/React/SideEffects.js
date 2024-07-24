@@ -303,3 +303,41 @@ const App = () => {
     </>
   )
 }
+
+///////////// Fetch Data from an API - Abort Controller /////////////
+useEffect(() => {
+  const controller = new AbortController();
+
+  const fetchSinglePost = async () => {
+    try {
+      const postData = await getRequestWithNativeFetch(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        controller.signal
+      );
+      // ...
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('Aborted');
+        return;
+      }
+      // ...
+    } finally {}
+  };
+
+  fetchSinglePost();
+
+  return () => controller.abort();
+}, [postId]);
+
+export const getRequestWithNativeFetch = async (
+  url,
+  signal = null
+) => {
+  const response = await fetch(url, { signal });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error: Status ${response.status}`);
+  }
+
+  return response.json();
+};
