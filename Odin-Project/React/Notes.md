@@ -135,3 +135,20 @@
 - It is often better to lift up the data fetching requests outside of the child component to avoid waterfall requests
   - This can lead to performance impacts where a request is not fired until its parent component is done requesting data and has rendered
   - By moving the request outside of the child and passing the data down as a prop, we can fire all requests simultaneously
+- Optimizing performance for data rendering depends on the application
+  - Prioritize rendering the most important information first and build application style/loading around that
+- Requests have to be managed as browsers have a limit on how many parallel requests can be made at any time
+- Waterfall requests can be handled by:
+  - `Promise.all` can be used to fire multiple requests simultaneously from a high level component and pass the data down as props
+    - Can lead to confusing architecture/poor readability
+  -  Can also fire requests in parallel and await promises independently to render components as the data becomes available
+    -  Drawback to this it will cause the application to rerender multiple times
+    -  These approaches also hurt app architecture by not collocating data with the component
+  -  Can use data provider pattern to solve this problem: https://www.developerway.com/posts/how-to-fetch-data-in-react#part7.3
+  -  Can also move data fetching outside the component and save the data to a const object
+    - This will fetch the data before any app renders, and the promise can then be resolved in the `useEffect` hook
+    - Drawback to this is the browser limit on number of simultaneous fetch requests
+    - Use cases:
+      - Pre-fetching critical application data
+      - Lazy-loaded components, where fetching is only done when components end up in the render tree
+  - Axios and SWR are common fetching libraries that work with React
