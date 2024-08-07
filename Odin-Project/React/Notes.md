@@ -166,3 +166,8 @@
 - Component libraries like [Material UI](https://mui.com/) provide styled components for direct use
   - Some examples include:  dropdowns, drawers, calendars, toggles, and tabs
 - Sass provides additional features to add to CSS
+- Performance concerns:
+  - The more CSS, the longer the page takes to render on the first paint
+  - Large css libraries that contain unused styles can further impact performance
+  - Partitioning the styles into local css modules along with its respective component can help
+  - CSS-in-JS helps with this, but can cause delays due to lack of caching
