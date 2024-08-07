@@ -156,3 +156,13 @@
   - `AbortController` can help avoid race conditions in `useEffect`
     - Race conditions occur due to network lag, where responses may return in a different order than they were requested, leading to inconsistencies
     - `AbortController` will cancel requests before subsequent ones are initiated (example shown in SideEffects.js)
+
+## Styling in React
+- [CSS modules](https://www.makeuseof.com/react-components-css-modules-style/) allow locally scoped style classes to avoid name collisions
+  - They also provide the ability to extend css classes in other css classes using "compose" key word
+- JavaScript extends css and allows us to write styling logic based on state directly in the program
+  - [styled-components](https://styled-components.com/) is a common solution
+  - [CSSm utility frameworks](https://tailwindcss.com/) are made to work with React/jsx
+- Component libraries like [Material UI](https://mui.com/) provide styled components for direct use
+  - Some examples include:  dropdowns, drawers, calendars, toggles, and tabs
+- Sass provides additional features to add to CSS
