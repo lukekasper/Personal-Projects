@@ -171,3 +171,17 @@
   - Large css libraries that contain unused styles can further impact performance
   - Partitioning the styles into local css modules along with its respective component can help
   - CSS-in-JS helps with this, but can cause delays due to lack of caching
+
+## Context API
+- Used to hold data objects that can reduce the complexity of component-based frameworks
+  - Simplifies the process of passing data down to components
+  - Helps to eliminate prop "drill down"
+- `createContext`: takes in a number, string, or object and returns a context object that can be passed down to components
+- `useContext`: retrieve data stored through the createContext call; accepts context object as an argument
+- `ContextObject.Provider`: context object comes with Provider component that accepts a prop called value
+  - By wrapping child components in `ContextObject.Provider`, it allows the object to be available to the children
+  - In the children, call `useContext` to get the data
+- Drawbacks:
+  - Can lead to performance issues; all components using context re-render when context changes, even if the part of the context they used has not changed
+  - Code can be harder to follow if not well organized (less tracability without props)
+- Solution: use several smaller contexts instead of one large one
