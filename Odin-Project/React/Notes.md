@@ -185,3 +185,5 @@
   - Can lead to performance issues; all components using context re-render when context changes, even if the part of the context they used has not changed
   - Code can be harder to follow if not well organized (less tracability without props)
 - Solution: use several smaller contexts instead of one large one
+- [React Component Composition](https://www.robinwieruch.de/react-component-composition/) is also a potential solution to the prop drilling issue
+  - Makes use of the specialized/generic "children" props
