@@ -201,6 +201,15 @@
   - prints statistics on results when stopped
 - `traceroute <host>`: gathers information about how the packet travels to the host (defaults to sending 3 requests)
   `hostname -I`: print your computers IP address
+- `init`: used to tell the kernal what run level to start
+  - 0: halt, system shutdown
+  - 1: single-user mode, only root w/o networking
+  - 2: multi-user mode, no networking
+  - 3: multi-user mode, w/ networking non-gui based node
+  - 4: N/A, user defined level (not used)
+  - 5: x11, run level 3 w/ display manager
+  - 6: reboot, reboots the system
+  - Ex) `ssh <nodeName> init 6`: remotely reboots the node
 
 ### Prompt Window
 - `echo`: print to terminal
