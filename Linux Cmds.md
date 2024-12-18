@@ -110,10 +110,18 @@
     - `dw` on first char of a word deletes the word (`ew` preserves whitespace)
       - `d3w` deletes multiple words (3)
     - `dd` deletes entire line and `d$` deletes entire line from where cursor is at
+  - When in normal mode:
+    - `$`: jumps to end of current line
+    - `<number>yy`: yanks number of lines (copies) into memory
+    - `<number>dd`: cuts number of lines into memory
+    - `p` to paste lines below cursor position or `P` to paste them above cursor position
   - `:wq`: saves file and quits vim
   - `:q!`: exits without saving
   - `u`: undo
   - `ctrl-r`: redo
+  - `/`: enter search mode
+    - when in search mode, use `n` to pan through occurences and `N` to go to previous occurnece
+    - `?` can be used to perform backward search instead of using `/`
 - `emacs <filename>`: UNIX file editor
   - `ctrl-x` and `ctrl-w` when you are done
     - confirm file
