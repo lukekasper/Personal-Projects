@@ -50,6 +50,7 @@
   - changes are printed in the window; great for monitoring log files
 - `ls -al | wc`: use `wc` with `|` to get info about a file or input
   - returns: # of lines, # of words, # of bytes
+  - `ls -lart | grep -i <filename>`: returns only files that contain text <filename> in the name
 - `grep`: used to search in a file or the output of another command
   - `less index.md | grep -n document.getElementById`: search file for "document.getElementById"
   - `-n`: prints line numbers
