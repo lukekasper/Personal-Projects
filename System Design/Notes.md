@@ -45,3 +45,16 @@
  	- This job is sent to a queue on the backend while the user continues to browse the page
   	- Worker nodes are constantly checking the queue for new jobs, and when one is available they pick it up and execute
   	- When the job is complete, a signal is sent to the front end and the product is served
+ 
+#### Web Hosting
+- What to look for:
+	- SFTP vs FTP: need to have user info and passwords encrypted
+ 	- Shared host vs virtual private server (VPS)
+		- VPS: you get your own slice of the server in an isolated enviornment
+  		- Means you don't need to contend for resources
+		- Data will still not be private from the web hosting company itself (can reboot machine in single user mode)
+- Scaling:
+	- Vertical: add more RAM or performance per machine
+ 		- Only can upgrade machines so much
+   		- Solid State Drives (SSDs): provide faster disk writing operations, good for database servers
+ 	- Horizontal: add more servers
