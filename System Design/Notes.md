@@ -15,7 +15,7 @@
 	○ Joins will now need to be done in your application code
 ![image](https://github.com/user-attachments/assets/31dc1ec5-5fc2-4325-ae5c-6e98f7f99641)
 
-### Caching:
+#### Caching:
 - Data retrieval should first check the cache, only when that is not available should it query the database
 - Cache is much faster due to holding the dataset in RAM
 - Redis or Memcache are the appropriate choices
