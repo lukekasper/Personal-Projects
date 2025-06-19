@@ -37,3 +37,11 @@
 	- Redis has persistence, built-in data structures (lists and sets), and is more memory efficient
 	- Memcache is highly scalable, has multithreading, simpler API
 	
+#### Asynchronism
+- Async paradigm #1: do the time consuming work in advance and serve the finished product with a low request time
+	- Ie generate the html of large web pages in advance using a backend or script and serve the static html
+- Async paradigm #2: use a job queue and multiple worker nodes on the backend to process jobs
+	- A computationally intensive task is requested by the user
+ 	- This job is sent to a queue on the backend while the user continues to browse the page
+  	- Worker nodes are constantly checking the queue for new jobs, and when one is available they pick it up and execute
+  	- When the job is complete, a signal is sent to the front end and the product is served
