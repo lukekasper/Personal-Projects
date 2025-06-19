@@ -16,6 +16,7 @@
 ![image](https://github.com/user-attachments/assets/31dc1ec5-5fc2-4325-ae5c-6e98f7f99641)
 
 #### Caching:
+- Stores data in a key-value pair framework in the servers RAM
 - Data retrieval should first check the cache, only when that is not available should it query the database
 - Cache is much faster due to holding the dataset in RAM
 - Redis or Memcache are the appropriate choices
@@ -56,5 +57,43 @@
 - Scaling:
 	- Vertical: add more RAM or performance per machine
  		- Only can upgrade machines so much
-   		- Solid State Drives (SSDs): provide faster disk writing operations, good for database servers
+   		- Solid State Drives (SSDs): provide faster disk writing operations, good for database servers; smaller storage size
  	- Horizontal: add more servers
+  		- Load balancer disdistributes inbound requests across webservers
+    			- Can return ip address of load balancer not individual servers
+				- Can have private ip addresses for servers
+      			- Return ip address of a different server each time
+- Load balancing
+	- AWS Elastic Load Balancer is one common software solution
+	- Round robin:
+		- Processing load is not evenly distributed across servers
+		- Ip addresses from DNS request get cached by browser/OS, leading to the same server getting returned each time
+		- Let load balancer do the round robin to get around ip caching
+	- Sessions will break with this model, one server may have a session and when you get redirected to a new server it will not have session data
+	- How to resolve sticky session problem: visiting a site multiple still leads to the same session data and same backend server
+ 		- Cookies: a small piece of data that a website/server stores on your device through your web browser
+   			- Can store a hash of the server's ip or id in the cookie during the initial user request
+      			- This then gets sent back to the load balancer during subsequent requests
+         		- The load balancer then uses this hash to discern the server ip address with the user's session
+   		- Caching: can store a user's session data in RAM
+     			- Due to RAM constraints, cache can get too large for the machine
+       			- Can use something like an LRU cache to clear out the oldest objects (linked list)
+	- Load balancers also come with redundancy (Active-Active or Active-Passive) to reduce single point of failure
+ 		- Heartbeats between balancers to determine status
+- MySQL storage:
+	- Archive engine: automatically compresses data by default
+		- Slower to query but uses less disk space
+   		- Useful for log files, where database writes are common but rarely need to query the data
+   	- Replication:
+   		- Master-Slave:
+   	 		- Master is written and read from but replicates data to slaves for redundancy
+   	   		- Can specialize slaves for specific operations (read vs write) to increase performance
+   	     		- Still single point of failure on master
+		- Master-Master:
+   			- Increases redundancy to eliminate single point of failure
+   	  		- Heartbeats between servers to determine status
+   	    		- Requires consistent replication/synchronization
+- Partitioning: allows the load balancers or servers to handle parts of the workload based on logical divisions
+	- Ie users A-M on one cluster and users N-Z in another
+ 	- Increases performance and redundancy
+- 
