@@ -130,6 +130,8 @@
 	- Consistency: every read receives the most recent write or an error
  	- Availability: every request receives a response, without guarantee that it contains the most recent version of the information
   	- Partition Tolerance: the system continues to operate despite arbitrary partitioning due to network failures
+  	- CAP Theorem states: in a distributed system, you can only have two out of the following three guarantees across a write/read pair: 			- Consistency, Availability, and Partition Tolerance
+  		- Networks are unreliable, must tolerate partitions
 	- CP: consistency and partition tolerance
 		- Waiting for a response from the partitioned node might result in a timeout error.
   		- CP is a good choice if your business needs require atomic reads and writes.
@@ -137,4 +139,26 @@
 		- Responses return the most readily available version of the data available on any node, which might not be the latest.
   		- Writes might take some time to propagate when the partition is resolved.
 		- AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors.
-  	- 
+	- Eventual consistency: rely on a background process to synchcronize data between servers
+ 		- Assume some time between requests is acceptable to allow process to synchronize data
+	- Consistency Patterns
+		- Weak consistency: after a write, reads may or may not see it. A best effort approach is taken.
+  			- Seen in systems such as memcached. Works well in real time use cases such as VoIP, video chat, and realtime multiplayer games
+        		- Ie) if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
+          	- Eventual consistency: after a write, reads will eventually see it (typically within ms). Data is replicated asynchronously.
+          		- Seen in systems such as DNS and email. Works well in highly available systems.
+	 	- Strong consistency: after a write, reads will see it. Data is replicated synchronously.
+          	 	- Seen in file systems and RDBMSes. Works well in systems that need transactions.
+	  - Availability Patterns
+   		- Fail-Over:
+     			- Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
+      			- Active-Active: application logic or DNS service needs to know of both servers
+       			- Disadvantages:
+       				- Fail-over adds more hardware and additional complexity
+       				- There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
+         	- Replication: Master-Slave and Master-Master (discussed more in database section)
+          		<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+			<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+
+
+
