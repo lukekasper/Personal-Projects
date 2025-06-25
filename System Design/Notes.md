@@ -96,4 +96,19 @@
 - Partitioning: allows the load balancers or servers to handle parts of the workload based on logical divisions
 	- Ie users A-M on one cluster and users N-Z in another
  	- Increases performance and redundancy
-- 
+- High availability is the idea of servers/databases checking eachother for heartbeats to ensure minimal downtime
+	- In addition to scalability, redundancy is critical to reducing single point of failures
+ 	- Need redundancy in web servers, database servers, load balancers, switches, and datacenters!
+  	- Availability zones that AWS provides takes care of redundancy for datacenters
+  	- DNS can provide load balancing for different datacenters based on geographical location
+- Security:
+	- Firewall only allows TCP.80 and 443 connections
+ 		- TCP 80 is default port for HTTP traffic and port 443 is default port for SSL (HTTPS traffic)
+   		- May want to allow port 22 for ssh or SSL based VPN for connecting to datacenter remotely
+	- Traffic from load balancers to web servers is TCP 80 only
+ 		- Less of a need to encrypt traffic once its within the datacenter
+	- Expensive load balancers up front can handle cryptogrophy and SSL certs
+ 	- Traffic from web servers to databases are TCP 3306 (SQL queries)
+  	- Switch can typically handle firewall concerns
+  	- Principal of least privilege implies we want to limit access wherever possible 
+
