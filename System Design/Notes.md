@@ -112,3 +112,29 @@
   	- Switch can typically handle firewall concerns
   	- Principal of least privilege implies we want to limit access wherever possible 
 
+#### High Level Trade-Offs
+- Performance vs Scalability:
+	- Scalability: adding more resources leads to a proportional increase in performance
+ 	- Performance: handling more or larger units of work
+  	- For high availability, good scalability means adding more resources to facilitate redundancy does not lead to a loss of performance
+  	- More requests, larger datasets, or additional nodes for redundancy can impact code performance
+  	- Heterogeneity: some nodes will be able to process faster or store more data than other nodes in a system
+  		- This can be due to newer/better hardware becoming available for some nodes
+		- Algorithms that rely on uniformity either break down under these conditions or underutilize the newer resources
+  	- Must architect programs early on to account for scalability concerns
+- Latency vs Throughput:
+	- Latency: time to perform some action or to produce some result
+ 	- Throughput: number of such actions or results per unit of time
+  	- Generally, you should aim for maximal throughput with acceptable latency
+- Availability vs Consistency:
+	- Consistency: every read receives the most recent write or an error
+ 	- Availability: every request receives a response, without guarantee that it contains the most recent version of the information
+  	- Partition Tolerance: the system continues to operate despite arbitrary partitioning due to network failures
+	- CP: consistency and partition tolerance
+		- Waiting for a response from the partitioned node might result in a timeout error.
+  		- CP is a good choice if your business needs require atomic reads and writes.
+  	- AP: availability and partition tolerance
+		- Responses return the most readily available version of the data available on any node, which might not be the latest.
+  		- Writes might take some time to propagate when the partition is resolved.
+		- AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors.
+  	- 
