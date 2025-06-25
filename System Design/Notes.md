@@ -143,13 +143,13 @@
 	- Eventual consistency: rely on a background process to synchcronize data between servers
  		- Assume some time between requests is acceptable to allow process to synchronize data
 	- Consistency Patterns
-		- Weak consistency: after a write, reads may or may not see it. A best effort approach is taken.
-  			- Seen in systems such as memcached. Works well in real time use cases such as VoIP, video chat, and realtime multiplayer games
-        		- Ie) if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
-          	- Eventual consistency: after a write, reads will eventually see it (typically within ms). Data is replicated asynchronously.
+ 		- Weak consistency: after a write, reads may or may not see it. A best effort approach is taken.
+   			- Seen in systems such as memcached. Works well in real time use cases such as VoIP, video chat, and realtime multiplayer games
+      			- Ie) if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
+         	- Eventual consistency: after a write, reads will eventually see it (typically within ms). Data is replicated asynchronously.
           		- Seen in systems such as DNS and email. Works well in highly available systems.
-	 	- Strong consistency: after a write, reads will see it. Data is replicated synchronously.
-          	 	- Seen in file systems and RDBMSes. Works well in systems that need transactions.
+            	- Strong consistency: after a write, reads will see it. Data is replicated synchronously.
+             		- Seen in file systems and RDBMSes. Works well in systems that need transactions.
 	  - Availability Patterns
    		- Fail-Over:
      			- Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
