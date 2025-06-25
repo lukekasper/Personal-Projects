@@ -157,7 +157,16 @@
        				- Fail-over adds more hardware and additional complexity
        				- There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
          	- Replication: Master-Slave and Master-Master (discussed more in database section)
-			<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+			
+   			<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+
+	- Availability in parallel vs in sequence:
+   		- If a service consists of multiple components prone to failure, the service's overall availability depends on whether the components are in sequence or in parallel
+     		- Sequence: overall availability decreases when two components with availability < 100% are in sequence
+       			- Availability (Total) = Availability (Foo) * Availability (Bar)
+          	- Parallel: overall availability increases when two components with availability < 100% are in parallel
+          		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar)) 
+       
 
 
 
