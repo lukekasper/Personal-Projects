@@ -165,7 +165,7 @@
      		- Sequence: overall availability decreases when two components with availability < 100% are in sequence
        			- Availability (Total) = Availability (Foo) * Availability (Bar)
           	- Parallel: overall availability increases when two components with availability < 100% are in parallel
-          		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar)) 
+          		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
        
 
 
