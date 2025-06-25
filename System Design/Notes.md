@@ -150,10 +150,10 @@
           		- Seen in systems such as DNS and email. Works well in highly available systems.
             	- Strong consistency: after a write, reads will see it. Data is replicated synchronously.
              		- Seen in file systems and RDBMSes. Works well in systems that need transactions.
-	  - Availability Patterns
-   		- Fail-Over:
-     			- Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
-      			- Active-Active: application logic or DNS service needs to know of both servers
+       - Availability Patterns
+       		- Fail-Over:
+         		- Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
+           		- Active-Active: application logic or DNS service needs to know of both servers
        			- Disadvantages:
        				- Fail-over adds more hardware and additional complexity
        				- There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
