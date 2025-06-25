@@ -157,7 +157,7 @@
        				- Fail-over adds more hardware and additional complexity
        				- There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
          	- Replication: Master-Slave and Master-Master (discussed more in database section)
-		<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+			<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
 
 
 
