@@ -130,7 +130,7 @@
 	- Consistency: every read receives the most recent write or an error
  	- Availability: every request receives a response, without guarantee that it contains the most recent version of the information
   	- Partition Tolerance: the system continues to operate despite arbitrary partitioning due to network failures
-  	- CAP Theorem states: in a distributed system, you can only have two out of the following three guarantees across a write/read pair: 			- Consistency, Availability, and Partition Tolerance
+  	- CAP Theorem states: in a distributed system, you can only have two out of the following three guarantees across a write/read pair			- Consistency, Availability, and Partition Tolerance
   		- Networks are unreliable, must tolerate partitions
 	- CP: consistency and partition tolerance
 		- Waiting for a response from the partitioned node might result in a timeout error.
