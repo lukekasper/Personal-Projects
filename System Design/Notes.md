@@ -202,6 +202,6 @@
   		- Domain name registration:
 			- Register domain name registar
   			- Registar sends a request to ICANN
-    			- Directs associated root server to add an entry based on Top Level Domain name (TLD)
-      			- Secondary servers cache this
+     			- Directs associated root server to add an entry based on Top Level Domain name (TLD)
+        		- Secondary servers cache this
       
