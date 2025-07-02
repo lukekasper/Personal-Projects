@@ -168,6 +168,17 @@
           	- Parallel: overall availability increases when two components with availability < 100% are in parallel
           		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
        
-
-
-
+#### DNS
+- ![image](https://github.com/user-attachments/assets/cab327f0-c0be-4d38-ba72-b5670da2e051)
+- Domain Name System (DNS): translates a domain name to an ip address
+- NS record (name server): Specifies the DNS servers for your domain/subdomain.
+- MX record (mail exchange): Specifies the mail servers for accepting messages.
+- A record (address): Points a name to an IP address.
+- CNAME (canonical): Points a name to another name or CNAME (example.com to www.example.com) or to an A record.
+- DNS services: CloudFlare, Route 53
+- Different methods for routing:
+	- Round robin: distributes requests cyclically across servers
+ 	- Weighted round robin: accounts for servers with more CPU/RAM and gives those extra connections
+  		- Must specify weights in advance based on server specs
+    	- Sometimes beneficial to use this if you want to reserve one server for business critical applications (less connections)
+     	- 
