@@ -169,8 +169,9 @@
           		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
        
 #### DNS
-- ![image](https://github.com/user-attachments/assets/cab327f0-c0be-4d38-ba72-b5670da2e051)
+![image](https://github.com/user-attachments/assets/cab327f0-c0be-4d38-ba72-b5670da2e051)
 - Domain Name System (DNS): translates a domain name to an ip address
+- DNS can be cached by lower-level DNS servers or by browser/OS for a certain amount of time based on TTL properties
 - NS record (name server): Specifies the DNS servers for your domain/subdomain.
 - MX record (mail exchange): Specifies the mail servers for accepting messages.
 - A record (address): Points a name to an IP address.
@@ -180,5 +181,18 @@
 	- Round robin: distributes requests cyclically across servers
  	- Weighted round robin: accounts for servers with more CPU/RAM and gives those extra connections
   		- Must specify weights in advance based on server specs
-    	- Sometimes beneficial to use this if you want to reserve one server for business critical applications (less connections)
-     	- 
+    		- Sometimes beneficial to use this if you want to reserve one server for business critical applications (less connections
+      		- Can prevent sending requests to servers under maintenance (weight=0)
+	- Least connections: distribute traffic based on number of active connections rather than cyclically on new requests
+ 	- Weighted least connections: similar to weighted round robin
+  	- Random: randomly assigns connections
+  	- Latency-based routing: use latency records to determine which connection will have the best performance
+  		- Route 53 DNS can accomplish this with an AWS elastic load balancer
+  	 	- Latency records are based on measurements taken over time
+  	- Geolocation-based: choose server based on location of users (where request originates from)
+  		- Localize content (like display web page in the language of the user)
+  	 	- Restrict content distribution to locations where you have distribution rights
+  	  	- Restrict endpoints by location so user's get predictably routed to the same node
+  	  	- Maps ips to a location; some ips won't be mapped though so need a default node to handle these cases
+- Disadvantages:
+	- Some delays from accessing a DNS, mitigated through caching
