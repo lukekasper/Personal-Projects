@@ -204,4 +204,5 @@
   			- Registar sends a request to ICANN
 		  - Directs associated root server to add an entry based on Top Level Domain name (TLD)
 		  - Secondary servers cache this
+    	- DNS servers can be suseptible to DDoS attacks
       
