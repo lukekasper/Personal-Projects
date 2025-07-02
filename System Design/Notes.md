@@ -200,8 +200,8 @@
  		- Level 1: root servers; highly guarded; all other DNS servers cache from these
 		- Level 2: secondary servers cache from root and are thus faster; managed by govs, ISPs and companies
   		- Domain name registration:
-    			1. Register domain name registar
-			2. Registar sends a request to ICANN
-			3. Directs associated root server to add an entry based on Top Level Domain name (TLD)
-  			4. Secondary servers cache this
+		1. Register domain name registar
+  		2. Registar sends a request to ICANN
+    		3. Directs associated root server to add an entry based on Top Level Domain name (TLD)
+      		4. Secondary servers cache this
       
