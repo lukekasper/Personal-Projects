@@ -206,3 +206,25 @@
 		  - Secondary servers cache this
     	- DNS servers can be suseptible to DDoS attacks
       
+#### Content Delivery Network (CDN)
+- Globally distributed network of proxy servers, serving content from locations closer to the user
+	- Generally, static files such as HTML/CSS/JS, photos, and video
+- Performance improvement through CDNs:
+	- Users recieve data from datcenters close to them
+ 	- Your servers do not need to serve requests that the CDN fulfills
+- Push CDNs: receive new content whenever changes occur on your server
+	- You are responsible for getting content onto the CDN and rewriting urls to point to CDN
+ 	- You configure when content expires and when it is uploaded
+  	- Minimizes traffic / maximizes storage
+  	- Good for low traffic site, or sites whose content changes infrequently or sites with very large files
+- Pull CDNs: grab new content from your server when the first user requests the content
+	- Leave content on server and have CDN pull the content; rewrite urls to point to CDN
+ 	- Slower response time until content is cached on CDN
+  	- TTL governs length of cache
+  	- Minimize storage space but can create redundant traffic (if ttl expires before content changes)
+  	- Works well for sites with heavy traffic and small file size
+- Disadvantages:
+	- CDNs can be costly, especially for high traffic (may still be worth it)
+ 	- Content can be stale if site is updated before TTL expires
+  	- Must change urls to point to CDN
+- Amazon's Cloudfront is a popular CDN choice
