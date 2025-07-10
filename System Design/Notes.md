@@ -239,6 +239,11 @@
   		- Avoid needing to install certs on each server
   	 	- Save from potentially expensive operations on the backend servers
   	- Session persistence: track cookies and route client traffic to correct server if clients do not keep track of sessions
+  	- Allows for horizontal scaling
+  		- Adds complexity and involves cloning servers (backend or db)
+  	 	- Servers should be stateless: should not contain any user-related data like sessions or profile pictures
+  	  	- Sessions can be stored in a centralized data store such as a database (SQL, NoSQL) or a persistent cache (Redis, Memcached)
+  	  	- Downstream servers (caches and databases) need to handle more simultaneous connections as upstream servers scale out
 - Use active-passive or active-active configuration w/ balancers to avoid single point of failure
 - Load balancing strategies: random, round robin (or weighted), least loaded, cookies/sessions, layer 4, layer 7
 - Layer 4 balancing:
@@ -257,3 +262,6 @@
    	- More computationally expensive (need to parse and read packet) but better flexibility for routing
    		- Performance impact is less with modern hardware and software like NGINX
  	- HTTP/HTTPS traffic
+- Disadvantages:
+	- Can be a bottleneck if not configured properly or does not enough resources
+ 	- Adding load balancer increases architecture complexity (multiple even moreso)
