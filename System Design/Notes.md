@@ -228,3 +228,32 @@
  	- Content can be stale if site is updated before TTL expires
   	- Must change urls to point to CDN
 - Amazon's Cloudfront is a popular CDN choice
+
+#### Load Balancers
+- Distrubute incoming client traffic to resources (databases or backend servers)
+- Benefits:
+	- Prevent traffic to going to unhealthy server (down or under maintenance)
+ 	- Prevent overloading resource
+  	- Eliminate single point of failure
+  	- SSL termination: decrypt incoming requests and encrypt response to clients
+  		- Avoid needing to install certs on each server
+  	 	- Save from potentially expensive operations on the backend servers
+  	- Session persistence: track cookies and route client traffic to correct server if clients do not keep track of sessions
+- Use active-passive or active-active configuration w/ balancers to avoid single point of failure
+- Load balancing strategies: random, round robin (or weighted), least loaded, cookies/sessions, layer 4, layer 7
+- Layer 4 balancing:
+	- Uses transport layer to distribute requests
+	- Based on source/destination IP addresses, and ports in the header (no packet content)
+	- Perform Network Address Translation (NAT): translates ip address in header
+		- Private ips from internal network to/from public ips for global internet
+  		- Added security by concealing ips of private network
+    		- Expanded to NATP to include port translation as well
+	- TCP/UDP traffic
+- Layer 7 balancing:
+	- Uses application layer to distribute requests
+	- May include contents of the header, message, and cookie
+	- Terminates network traffic, reads message, makes decision, then opens a connection to the selected server
+ 		- Ie) direct video traffic to servers that host videos while directing user billing traffic to security-hardened servers
+   	- More computationally expensive (need to parse and read packet) but better flexibility for routing
+   		- Performance impact is less with modern hardware and software like NGINX
+ 	- HTTP/HTTPS traffic
