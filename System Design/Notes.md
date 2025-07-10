@@ -279,4 +279,18 @@
   	        - Worker does not wait for response from client, but moves on to next request
   	        	- Client response will get added to queue and picked up by next available worker
 	 	- Expensive events (read/write to disk) get offloaded to other thread managers to avoid blocking workers
-  		- Workers get pinned to a CPU core, avoids context switching (processes swapping between cores) 
+  		- Workers get pinned to a CPU core, avoids context switching (processes swapping between cores)
+  	 - Simple configuration, built-in caching
+  	 - Great for use at the edge to handle client traffic as it enters the infrastructure
+  	 	- SSL termination, serving static content, caching, reverse proxy
+- HAProxy:
+	- Designed specifically as a load balancer
+ 		- Layer 4/Layer 7 configurable
+ 	- Can handle millions of connections with low latency
+	- Great for high TCP applications, failover resistant
+ 	- More complex configuration
+  	- Can be used deeper in the stack:
+  		- Advanced API routing, microservices, server health checks, rate limiting
+ - Can deploy a combined NGINX/HAProxy architecture
+ 	- Nginx handles web traffic at ingress: authentication, filtering of malicious traffic, serving static content
+  	- HAProxy gets sanitized traffic and sends TCP data to web servers with more granular traffic control
