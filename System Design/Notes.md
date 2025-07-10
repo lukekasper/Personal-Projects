@@ -291,6 +291,15 @@
  	- More complex configuration
   	- Can be used deeper in the stack:
   		- Advanced API routing, microservices, server health checks, rate limiting
- - Can deploy a combined NGINX/HAProxy architecture
+- Can deploy a combined NGINX/HAProxy architecture
  	- Nginx handles web traffic at ingress: authentication, filtering of malicious traffic, serving static content
   	- HAProxy gets sanitized traffic and sends TCP data to web servers with more granular traffic control
+- Dynamic vs Static load balancing algorithms
+	- Static (ie weighted round robin):
+ 		- Assumptions are made about nature of traffic and resources without knowing state of systems at decision time
+   		- Simpler to implement, less overhead, risk overloading resources
+     	- Dynamic (ie least connections):
+      		- Uses state of system to make optimized decisions
+        	- Large complexity can slow down performance or create bottlenecks
+ - https://en.wikipedia.org/wiki/Load_balancing_(computing)
+ -  
