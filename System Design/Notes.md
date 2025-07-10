@@ -265,3 +265,18 @@
 - Disadvantages:
 	- Can be a bottleneck if not configured properly or does not enough resources
  	- Adding load balancer increases architecture complexity (multiple even moreso)
+- NGINX:
+	- Traditional uses 1 thread/process per request
+		- Completes an entire socket request before moving on to the next one
+   		- Processes switch between cores frequently -> large overhead
+  		- Spends alot of time in the blocked state for large disk read/write operations and waiting on client responses
+    		- Breaks down with many connections
+  	- NGINX: makes use of worker processes (1 per core) to handle multiple connections simultaneously
+   		- Workers can communicate using shared memory for shared cache data or session persistence
+   		- Events occur, get added to an event queue and workers pick them up and process
+  	  		- Event on a listening socket -> create a connection
+  	    		- Event on a connection socket -> read from buffer or write to buffer
+  	        - Worker does not wait for response from client, but moves on to next request
+  	        	- Client response will get added to queue and picked up by next available worker
+	 	- Expensive events (read/write to disk) get offloaded to other thread managers to avoid blocking workers
+  		- Workers get pinned to a CPU core, avoids context switching (processes swapping between cores) 
