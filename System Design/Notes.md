@@ -1,6 +1,6 @@
 ## Scalability
 
-#### Clones:
+### Clones:
 - Scalable web apps have multiple servers running the same codebase
 - Each server must be identical, therefore cannot store any user or session data
 - Data should be stored on a centrally managed database or persistent cache
@@ -9,13 +9,13 @@
 - Kubernetes/Docker can be sued to insure consistent deployment across different server nodes
 - Amazon Machine Images (AMI): These are pre-configured virtual machine templates used to launch EC2 instances. If you're running Docker containers on EC2, an AMI ensures that all instances start with the same base configuration.
   
-#### Database:
+### Database:
 - After awhile, applications with a lot of requests may eventually slow down and break altogether.  This is often a result of the MySQL database schema
 	- Use a NoSQL database like MongoDB
 	- Joins will now need to be done in your application code
 ![image](https://github.com/user-attachments/assets/31dc1ec5-5fc2-4325-ae5c-6e98f7f99641)
 
-#### Caching:
+### Caching:
 - Stores data in a key-value pair framework in the servers RAM
 - Data retrieval should first check the cache, only when that is not available should it query the database
 - Cache is much faster due to holding the dataset in RAM
@@ -38,7 +38,7 @@
 	- Redis has persistence, built-in data structures (lists and sets), and is more memory efficient
 	- Memcache is highly scalable, has multithreading, simpler API
 	
-#### Asynchronism
+### Asynchronism
 - Async paradigm #1: do the time consuming work in advance and serve the finished product with a low request time
 	- Ie generate the html of large web pages in advance using a backend or script and serve the static html
 - Async paradigm #2: use a job queue and multiple worker nodes on the backend to process jobs
@@ -47,7 +47,7 @@
   	- Worker nodes are constantly checking the queue for new jobs, and when one is available they pick it up and execute
   	- When the job is complete, a signal is sent to the front end and the product is served
  
-#### Web Hosting
+### Web Hosting
 - What to look for:
 	- SFTP vs FTP: need to have user info and passwords encrypted
  	- Shared host vs virtual private server (VPS)
@@ -112,7 +112,7 @@
   	- Switch can typically handle firewall concerns
   	- Principal of least privilege implies we want to limit access wherever possible 
 
-#### High Level Trade-Offs
+### High Level Trade-Offs
 - Performance vs Scalability:
 	- Scalability: adding more resources leads to a proportional increase in performance
  	- Performance: handling more or larger units of work
@@ -168,7 +168,7 @@
           	- Parallel: overall availability increases when two components with availability < 100% are in parallel
           		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
        
-#### DNS
+### DNS
 ![image](https://github.com/user-attachments/assets/cab327f0-c0be-4d38-ba72-b5670da2e051)
 - Domain Name System (DNS): translates a domain name to an ip address
 - DNS can be cached by lower-level DNS servers or by browser/OS for a certain amount of time based on TTL properties
@@ -206,7 +206,7 @@
 		  - Secondary servers cache this
     	- DNS servers can be suseptible to DDoS attacks
       
-#### Content Delivery Network (CDN)
+### Content Delivery Network (CDN)
 - Globally distributed network of proxy servers, serving content from locations closer to the user
 	- Generally, static files such as HTML/CSS/JS, photos, and video
 - Performance improvement through CDNs:
@@ -229,7 +229,7 @@
   	- Must change urls to point to CDN
 - Amazon's Cloudfront is a popular CDN choice
 
-#### Load Balancers
+### Load Balancers
 - Distrubute incoming client traffic to resources (databases or backend servers)
 - Benefits:
 	- Prevent traffic to going to unhealthy server (down or under maintenance)
