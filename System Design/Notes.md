@@ -323,3 +323,11 @@
 - Seperating out application (or platform) services from web services allow each to be scaled independently
 	- New API does not necessitate new web server
  	- Conforms to **single responsibility principle** -> smaller independent services working together
+- Microservices:
+	- Loosely-coupled services, performing unique functions, exchanging info using a lightweight protocol
+ 	- Pintrest services: user profile, follower, feed, search, photo upload, etc.
+	- Discovery services:
+ 		- Consul, Etcd, and Zookeeper help services find each other by keeping track of registered names, addresses, and ports
+   		- Can perform health checks on services using HTTP endpoints
+- Disadvantages:
+	- Can add complexity 
