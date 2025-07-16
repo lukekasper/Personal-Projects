@@ -302,4 +302,20 @@
       		- Uses state of system to make optimized decisions
         	- Large complexity can slow down performance or create bottlenecks
  - https://en.wikipedia.org/wiki/Load_balancing_(computing)
- -  
+
+### Reverse Proxy
+- Web server that sits between clients and backend servers providing an interface to the public
+- Forwards client requests to the appropriate web server and performs other services
+- Benefits:
+	- Security: hide backend ips, blacklist ips, limit number of connections per client, firewall services
+ 	- Scalability: clients only see proxie's ip, allows scaling or changing of backend server configuration
+  	- SSL termination: decrypt/encrypt traffic reducing load on backend servers
+  	- Compression: compress server responses
+  	- Caching: return response for cached requests
+  	- Static content: serve static content directly
+- Load balancer vs Reverse proxy:
+	- Load balancers are used with multiple backend servers, reverse proxies can be used with just one
+ 	- Nginx and HAProxy support both services
+
+### Application Layer
+<img width="1000" height="300" alt="image" src="https://github.com/user-attachments/assets/219e7b5b-ddc0-49b1-aff7-cc39557b4815" />
