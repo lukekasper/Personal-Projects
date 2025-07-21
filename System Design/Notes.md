@@ -337,4 +337,4 @@
  		- Consul, Etcd, and Zookeeper help services find each other by keeping track of registered names, addresses, and ports
    		- Can perform health checks on services using HTTP endpoints
 - Disadvantages: can add complexity
-
+- OpenAPI provides the standard for which mircroservices talk to one another
