@@ -329,5 +329,5 @@
 	- Discovery services:
  		- Consul, Etcd, and Zookeeper help services find each other by keeping track of registered names, addresses, and ports
    		- Can perform health checks on services using HTTP endpoints
-- Disadvantages:
-	- Can add complexity 
+- Disadvantages: can add complexity
+
