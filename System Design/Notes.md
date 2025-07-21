@@ -323,9 +323,16 @@
 - Seperating out application (or platform) services from web services allow each to be scaled independently
 	- New API does not necessitate new web server
  	- Conforms to **single responsibility principle** -> smaller independent services working together
+- Web servers should be responsible for:
+	- Frontend: serving web page content (React)
+ 	- Backend: serving serves APIs for back end to consume
 - Microservices:
 	- Loosely-coupled services, performing unique functions, exchanging info using a lightweight protocol
  	- Pintrest services: user profile, follower, feed, search, photo upload, etc.
+  		- Follow service: fast access, simple map datastructure; use Redis
+    		- Feed service: store metadata in database and image as a blob in AWS s3 bucket; use CDN like CloudFront to cache images
+      		- Search service: index from all data sources for search; ElasticSearch service is a good choice
+        	- Spam service: used supervised/unsupervised ML algorithms/libraries to filter data
 	- Discovery services:
  		- Consul, Etcd, and Zookeeper help services find each other by keeping track of registered names, addresses, and ports
    		- Can perform health checks on services using HTTP endpoints
