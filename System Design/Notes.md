@@ -376,4 +376,9 @@
   	 	- Need to update app logic to determine which db parition to read/write
   	  	- Joining data from different dbs is more complex (use [server link](https://stackoverflow.com/questions/5145637/querying-data-by-joining-two-tables-in-two-database-on-different-servers))
   	  	- More hardware = more complexity
-- 
+- Sharding:
+	- Similar to federation, but partitions dbs so each one holds a subset of data (ie by users names or geo location)
+ 	- Disadvantages:
+  		- Need to account for sharding in app logic, could lead to complex queries
+    		- Load may not be evenly distributed across dbs
+      		- Same other disadvantages as federation
