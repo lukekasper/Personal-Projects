@@ -338,3 +338,24 @@
    		- Can perform health checks on services using HTTP endpoints
 - Disadvantages: can add complexity
 - OpenAPI provides the standard for which mircroservices talk to one another
+
+### Database
+#### Relational Database Management System (RDBMS)
+- Relational database (SQL) is data organized in tables
+- ACID properties of relational databases:
+	- Atomicity: each transaction is all or nothing
+ 	- Consistency: any transaction brings db from one valid state to another
+  	- Isolation: transactions concurrently = transactions in serial
+  	- Durability: once transactions are committed, they stay committed
+- Master-Slave Replication:
+	- Master reads and writes, replicates writes to slave(s), which only serve reads
+ 	- Slaves can replicate to other slaves in a tree-like fashion
+  	- If master goes offline, db can operate in read-only until new master is promoted or provisioned
+  	- Disadvantages:
+  		- Logic needed for promotion scheme
+  	 	- Data loss if master fials before its replicated
+  	  	- With lots of writes, slaves can get bogged down with replaying writes and will bottleneck ability to serve reads
+  	  	- More slaves = more replications -> greater replication lag
+  	  	- Writing to masters can support multithreading, read replicas only support writing in single threaded
+  	  	- Replication -> more hardware -> more complexity
+	- 
