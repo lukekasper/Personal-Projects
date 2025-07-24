@@ -366,4 +366,12 @@
   	 	- Necessitates load balancer or load balancing in application code
   	  	- Most systems are loosely consistent (violates ACID) or have write latency due to synchronization
   	  	- Merge conflicts increase with more write nodes/increased latency
-- 
+- Federation:
+	- Functional partitioning of databases (ie forums, users, products dbs)
+ 		- Leads to less read/write traffic to each db -> less replication lag
+  	- Smaller dbs -> more data can fit in memory -> more cache hits -> better performance
+  	- Multiple write dbs -> more parallel writes -> better throughput
+  	- Disadvantages:
+  		- Not effective if schema requires huge functions or tables
+  	 	- Need to update app logic to determine which db parition to read/write
+  	  	- Joining data from different dbs is more complex (use [server link](https://stackoverflow.com/questions/5145637/querying-data-by-joining-two-tables-in-two-database-on-different-servers))
