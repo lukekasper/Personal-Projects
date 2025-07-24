@@ -358,4 +358,12 @@
   	  	- More slaves = more replications -> greater replication lag
   	  	- Writing to masters can support multithreading, read replicas only support writing in single threaded
   	  	- Replication -> more hardware -> more complexity
-	- 
+- Master-Master Replication:
+	- Masters serve both read and writes and coordinate replications with one another
+ 	- If one goes down, the other can operate with both reads and writes
+  	- Disadvantages:
+  		- Same as Master-Slave (except for promotion logic)
+  	 	- Necessitates load balancer or load balancing in application code
+  	  	- Most systems are loosely consistent (violates ACID) or have write latency due to synchronization
+  	  	- Merge conflicts increase with more write nodes/increased latency
+- 
