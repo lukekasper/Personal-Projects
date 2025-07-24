@@ -375,3 +375,5 @@
   		- Not effective if schema requires huge functions or tables
   	 	- Need to update app logic to determine which db parition to read/write
   	  	- Joining data from different dbs is more complex (use [server link](https://stackoverflow.com/questions/5145637/querying-data-by-joining-two-tables-in-two-database-on-different-servers))
+  	  	- More hardware = more complexity
+- 
