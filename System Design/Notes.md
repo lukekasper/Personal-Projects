@@ -1,5 +1,38 @@
 ## Scalability
 
+### Scaling with AWS
+- Serverless db option
+	- Can seperate db memory from compute resources (for connections/cache)
+ 	- Pay per second for usage, rather than static cost for dedicated server
+- Recommend starting with SQL db schema
+	- Well established technology
+ 	- Won't break SQL db with first million users
+  	- Clear patterns to scalability
+- NoSQL if:
+	- Need super-low latency
+ 	- Metadata-driven datasets
+  	- Massive amounts of data (> 5 TB)
+  	- Highly non-relational data or NEED schema-less construct
+- Amazon Cognito: handles Authorization and Authentication
+- Horizontal scaling may be limited by licenses
+- Recommend starting with AWS App Load Balancer:
+	- Highly available, health checks, sticky sessions, monitor/logging, content-based routing, containerized apps, web sockets, HTTP/2
+- WebSocket protocol begins with HTTP handshake to establish the connection,then upgraded to a WebSocket
+	- Once established, both client and server can send/receive messages independently, facilitating low-latency, real-time interactions
+- Databases can be scaled using read replicas and secondary write instances
+- Use Amazon CloudFront (CDN) and S3 to serve static content (and also dynamic content in some cases)
+- Amazon ElastiCache: store results of db query in-memory
+- DynamoDB table: factor out schema-less, metadata into NoSQL option to free up RDS instance for other things
+- AutoScaling resizes resources based on demand
+	- Amazon CloudWatch can provide metrics to scale appropriately
+- AWS Systems Manager allows automation of operational tasks
+- To achieve a MSA or SOA (Service-Oriented Architecture): break out discrete services into their own classes/services and host them as individual containers (ECS/EKS)
+	- Allows you to scale resources seperately for each service
+ 	- For very lightweight services, can use AWS Lambda to run functions as code
+- Amazon SQS/SNS: implement queing or notification into system to allow for loose-coupling and inter-service communication
+	- Allows for event-driven architecture: topics in a queue trigger specific business logic
+- 
+
 ### Clones:
 - Scalable web apps have multiple servers running the same codebase
 - Each server must be identical, therefore cannot store any user or session data
