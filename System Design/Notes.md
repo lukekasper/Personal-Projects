@@ -4,7 +4,7 @@
 - Serverless db option
 	- Can seperate db memory from compute resources (for connections/cache)
  	- Pay per second for usage, rather than static cost for dedicated server
-- Recommend starting with SQL db schema
+- Recommend **starting with SQL db schema**
 	- Well established technology
  	- Won't break SQL db with first million users
   	- Clear patterns to scalability
@@ -31,7 +31,7 @@
  	- For very lightweight services, can use AWS Lambda to run functions as code
 - Amazon SQS/SNS: implement queing or notification into system to allow for loose-coupling and inter-service communication
 	- Allows for event-driven architecture: topics in a queue trigger specific business logic
-- 
+- Cache data both inside (ElastiCache) and outside (CloudFront) your infrastructure
 
 ### Clones:
 - Scalable web apps have multiple servers running the same codebase
