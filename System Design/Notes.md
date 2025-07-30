@@ -413,6 +413,7 @@
   	  	- More hardware = more complexity
 - Sharding:
     - Similar to federation, but partitions dbs so each one holds a subset of data (ie by users names or geo location)
+    - Breaks tables apart by sections of rows, reducing index size and improving performance
     - Consistent Hashing:
         - A ring is partitioned (ie 1 - 2^160)
         - Each database shard is assigned a position on the ring using its id
