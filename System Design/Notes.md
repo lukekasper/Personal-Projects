@@ -211,33 +211,34 @@
 - CNAME (canonical): Points a name to another name or CNAME (example.com to www.example.com) or to an A record.
 - DNS services: CloudFlare, Route 53
 - Different methods for routing:
-	- Round robin: distributes requests cyclically across servers
- 	- Weighted round robin: accounts for servers with more CPU/RAM and gives those extra connections
-  		- Must specify weights in advance based on server specs
-    		- Sometimes beneficial to use this if you want to reserve one server for business critical applications (less connections
-      		- Can prevent sending requests to servers under maintenance (weight=0)
-	- Least connections: distribute traffic based on number of active connections rather than cyclically on new requests
- 	- Weighted least connections: similar to weighted round robin
-  	- Random: randomly assigns connections
-  	- Latency-based routing: use latency records to determine which connection will have the best performance
-  		- Route 53 DNS can accomplish this with an AWS elastic load balancer
-  	 	- Latency records are based on measurements taken over time
-  	- Geolocation-based: choose server based on location of users (where request originates from)
-  		- Localize content (like display web page in the language of the user)
-  	 	- Restrict content distribution to locations where you have distribution rights
-  	  	- Restrict endpoints by location so user's get predictably routed to the same node
-  	  	- Maps ips to a location; some ips won't be mapped though so need a default node to handle these cases
+    - Round robin: distributes requests cyclically across servers
+    - Weighted round robin: accounts for servers with more CPU/RAM and gives those extra connections
+        - Must specify weights in advance based on server specs
+        - Sometimes beneficial to use this if you want to reserve one server for business critical applications (less connections)
+        - Can prevent sending requests to servers under maintenance (weight=0)
+    - Least connections: distribute traffic based on number of active connections rather than cyclically on new requests
+    - Weighted least connections: similar to weighted round robin
+    - Random: randomly assigns connections
+    - Latency-based routing: use latency records to determine which connection will have the best performance
+        - Route 53 DNS can accomplish this with an AWS elastic load balancer
+        - Latency records are based on measurements taken over time
+    - Geolocation-based: choose server based on location of users (where request originates from)
+        - Localize content (like display web page in the language of the user)
+        - Restrict content distribution to locations where you have distribution rights
+        - Restrict endpoints by location so user's get predictably routed to the same node
+        - Maps ips to a location; some ips won't be mapped though so need a default node to handle these cases
 - Disadvantages:
-	- Some delays from accessing a DNS, mitigated through caching
-	- DNS server management could be complex and is generally managed by governments, ISPs, and large companies:
- 		- Level 1: root servers; highly guarded; all other DNS servers cache from these
-		- Level 2: secondary servers cache from root and are thus faster; managed by govs, ISPs and companies
-  		- Domain name registration:
-			- Register domain name registar
-  			- Registar sends a request to ICANN
-		  - Directs associated root server to add an entry based on Top Level Domain name (TLD)
-		  - Secondary servers cache this
-    	- DNS servers can be suseptible to DDoS attacks
+    - Some delays from accessing a DNS, mitigated through caching
+    - DNS server management could be complex and is generally managed by governments, ISPs, and large companies:
+        - Level 1: root servers; highly guarded; all other DNS servers cache from these
+        - Level 2: secondary servers cache from root and are thus faster; managed by govs, ISPs and companies
+        - Domain name registration:
+            - Register domain name registar
+            - Registar sends a request to ICANN
+            - Directs associated root server to add an entry based on Top Level Domain name (TLD)
+            - Secondary servers cache this
+        - DNS servers can be suseptible to DDoS attacks
+
       
 ### Content Delivery Network (CDN)
 - Globally distributed network of proxy servers, serving content from locations closer to the user
