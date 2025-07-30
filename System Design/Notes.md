@@ -147,59 +147,59 @@
 
 ### High Level Trade-Offs
 - Performance vs Scalability:
-	- Scalability: adding more resources leads to a proportional increase in performance
- 	- Performance: handling more or larger units of work
-  	- For high availability, good scalability means adding more resources to facilitate redundancy does not lead to a loss of performance
-  	- More requests, larger datasets, or additional nodes for redundancy can impact code performance
-  	- Heterogeneity: some nodes will be able to process faster or store more data than other nodes in a system
-  		- This can be due to newer/better hardware becoming available for some nodes
-		- Algorithms that rely on uniformity either break down under these conditions or underutilize the newer resources
-  	- Must architect programs early on to account for scalability concerns
+    - Scalability: adding more resources leads to a proportional increase in performance
+    - Performance: handling more or larger units of work
+    - For high availability, good scalability means adding more resources to facilitate redundancy does not lead to a loss of performance
+    - More requests, larger datasets, or additional nodes for redundancy can impact code performance
+    - Heterogeneity: some nodes will be able to process faster or store more data than other nodes in a system
+        - This can be due to newer/better hardware becoming available for some nodes
+        - Algorithms that rely on uniformity either break down under these conditions or underutilize the newer resources
+    - Must architect programs early on to account for scalability concerns
 - Latency vs Throughput:
-	- Latency: time to perform some action or to produce some result
- 	- Throughput: number of such actions or results per unit of time
-  	- Generally, you should aim for maximal throughput with acceptable latency
+    - Latency: time to perform some action or to produce some result
+    - Throughput: number of such actions or results per unit of time
+    - Generally, you should aim for maximal throughput with acceptable latency
 - Availability vs Consistency:
-	- Consistency: every read receives the most recent write or an error
- 	- Availability: every request receives a response, without guarantee that it contains the most recent version of the information
-  	- Partition Tolerance: the system continues to operate despite arbitrary partitioning due to network failures
-  	- CAP Theorem states: in a distributed system, you can only have two out of the following three guarantees across a write/read pair
-  		- Consistency, Availability, and Partition Tolerance
-  	 	- Networks are unreliable, must tolerate partitions
-  	- CP: consistency and partition tolerance
-		- Waiting for a response from the partitioned node might result in a timeout error.
-  		- CP is a good choice if your business needs require atomic reads and writes.
- 	- AP: availability and partition tolerance
-		- Responses return the most readily available version of the data available on any node, which might not be the latest.
-  		- Writes might take some time to propagate when the partition is resolved.
-		- AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors.
-	- Eventual consistency: rely on a background process to synchcronize data between servers
- 		- Assume some time between requests is acceptable to allow process to synchronize data
-	- Consistency Patterns
- 		- Weak consistency: after a write, reads may or may not see it. A best effort approach is taken.
-   			- Seen in systems such as memcached. Works well in real time use cases such as VoIP, video chat, and realtime multiplayer games
-      			- Ie) if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
-         	- Eventual consistency: after a write, reads will eventually see it (typically within ms). Data is replicated asynchronously.
-          		- Seen in systems such as DNS and email. Works well in highly available systems.
-            	- Strong consistency: after a write, reads will see it. Data is replicated synchronously.
-             		- Seen in file systems and RDBMSes. Works well in systems that need transactions.
-       - Availability Patterns
-       		- Fail-Over:
-         		- Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
-           		- Active-Active: application logic or DNS service needs to know of both servers
-       			- Disadvantages:
-       				- Fail-over adds more hardware and additional complexity
-       				- There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
-         	- Replication: Master-Slave and Master-Master (discussed more in database section)
-			
-   			<img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
+    - Consistency: every read receives the most recent write or an error
+    - Availability: every request receives a response, without guarantee that it contains the most recent version of the information
+    - Partition Tolerance: the system continues to operate despite arbitrary partitioning due to network failures
+    - CAP Theorem states: in a distributed system, you can only have two out of the following three guarantees across a write/read pair
+        - Consistency, Availability, and Partition Tolerance
+        - Networks are unreliable, must tolerate partitions
+    - CP: consistency and partition tolerance
+        - Waiting for a response from the partitioned node might result in a timeout error.
+        - CP is a good choice if your business needs require atomic reads and writes.
+    - AP: availability and partition tolerance
+        - Responses return the most readily available version of the data available on any node, which might not be the latest.
+        - Writes might take some time to propagate when the partition is resolved.
+        - AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors.
+    - Eventual consistency: rely on a background process to synchcronize data between servers
+        - Assume some time between requests is acceptable to allow process to synchronize data
+    - Consistency Patterns
+        - Weak consistency: after a write, reads may or may not see it. A best effort approach is taken.
+            - Seen in systems such as memcached. Works well in real time use cases such as VoIP, video chat, and realtime multiplayer games
+            - Ie) if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
+        - Eventual consistency: after a write, reads will eventually see it (typically within ms). Data is replicated asynchronously.
+            - Seen in systems such as DNS and email. Works well in highly available systems.
+        - Strong consistency: after a write, reads will see it. Data is replicated synchronously.
+            - Seen in file systems and RDBMSes. Works well in systems that need transactions.
+    - Availability Patterns
+        - Fail-Over:
+            - Active-Passive: only active serves requests. Downtime is dependent on if passivve needs to do a hot or cold boot
+            - Active-Active: application logic or DNS service needs to know of both servers
+            - Disadvantages:
+                - Fail-over adds more hardware and additional complexity
+                - There is a potential for loss of data if the active system fails before any newly written data can be replicated to the passive
+        - Replication: Master-Slave and Master-Master (discussed more in database section)
+        
+        <img width="272" alt="image" src="https://github.com/user-attachments/assets/129f203d-bc5d-42a1-9fb5-3a8fe0d6ab1a" />
 
-	- Availability in parallel vs in sequence:
-   		- If a service consists of multiple components prone to failure, the service's overall availability depends on whether the components are in sequence or in parallel
-     		- Sequence: overall availability decreases when two components with availability < 100% are in sequence
-       			- Availability (Total) = Availability (Foo) * Availability (Bar)
-          	- Parallel: overall availability increases when two components with availability < 100% are in parallel
-          		- Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
+    - Availability in parallel vs in sequence:
+        - If a service consists of multiple components prone to failure, the service's overall availability depends on whether the components are in sequence or in parallel
+        - Sequence: overall availability decreases when two components with availability < 100% are in sequence
+            - Availability (Total) = Availability (Foo) * Availability (Bar)
+        - Parallel: overall availability increases when two components with availability < 100% are in parallel
+            - Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
        
 ### DNS
 ![image](https://github.com/user-attachments/assets/cab327f0-c0be-4d38-ba72-b5670da2e051)
