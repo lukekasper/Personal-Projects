@@ -441,4 +441,25 @@
   	    - Data is duplicated
   	    - Constraints help redundant copies of data stay in sync, increases complexity
   	    - Heavy write dbs may be worse performing
-- 
+- SQL Tuning
+	- Must benchmark and profile to simulate/uncover bottlenecks
+ 	    - Benchmark: simulate high-load situations with toos like [ab](https://httpd.apache.org/docs/2.2/programs/ab.html)
+	    - Profile: use (slow query log)[http://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html] to track performance
+     	- Optimizations
+            - Tighten up schema:
+                - MySQL dumps to disk in contiguous blocks for fast access
+                - Use CHAR instead of VARCHAR (for fixed length fields)
+                - If you need to use VARCHAR, use VARCHAR(255) (max amount chars in an 8 bit number, no hit on performance)
+                - Use TEXT for large blocks of text such as blog posts
+                - Use INT for larger numbers up to 2^32
+                - Use DECIMAL for currency to avoid floating point representation errors
+                - Avoid storing large BLOBS, store the location of where to get the object instead
+                - Set the NOT NULL constraint where applicable to improve search performance
+	    - Use good indices:
+ 	        - Columns that you are querying (SELECT, GROUP BY, ORDER BY, JOIN) could be faster with indices
+                - Placing an index can keep the data in memory, requiring more space
+                - Writes could be slower since index needs to be updated
+                - When loading large amounts of data, it might be faster to disable indices, load the data, then rebuild the indices
+	    - Avoid expensive joins using denormalization
+            - Partition tables: put hot spots in a seperate table to keep it in memory
+            - Tune the query cache: in some cases, the query cache could lead to [performance issues](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html)
