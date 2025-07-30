@@ -419,7 +419,8 @@
   		- The db the data is stored in is the next db on the ring moving clockwise from the hashed key value
     	- Adding new nodes only means reassigning a fraction of the keys
 <img width="530" height="362" alt="image" src="https://github.com/user-attachments/assets/27fa5054-d05b-422e-93a4-c1e5e670682d" />
- 	- Disadvantages:
+
+  	- Disadvantages:
   		- Need to account for sharding in app logic, could lead to complex queries
     		- Load may not be evenly distributed across dbs
       		- Same other disadvantages as federation
