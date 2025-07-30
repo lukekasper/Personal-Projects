@@ -434,13 +434,14 @@
         - Same other disadvantages as federation
         - Minimal support for sharding from online communities or toolsets
 - Denormalization:
-        - Add redundant copies of data in tables to avoid expensive join operations during database reads
-            - Best for large read:write ratio apps, as it introduces some write overhead
-  	- Store computed values or combine data in a table that may be queried from multiple tables (ie user profile info) to speed up query performance
-  	- Disadvantages:
-  	    - Data is duplicated
-  	    - Constraints help redundant copies of data stay in sync, increases complexity
-  	    - Heavy write dbs may be worse performing
+    - Add redundant copies of data in tables to avoid expensive join operations during database reads
+        - Best for large read:write ratio apps, as it introduces some write overhead
+    - Store computed values or combine data in a table that may be queried from multiple tables (i.e. user profile info) to speed up query performance
+    - Disadvantages:
+        - Data is duplicated
+        - Constraints help redundant copies of data stay in sync, increases complexity
+        - Heavy write DBs may be worse performing
+
 - SQL Tuning
     - Must benchmark and profile to simulate/uncover bottlenecks
         - Benchmark: simulate high-load situations with tools like [ab](https://httpd.apache.org/docs/2.2/programs/ab.html)
