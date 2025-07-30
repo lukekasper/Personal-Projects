@@ -421,7 +421,7 @@
         - The db the data is stored in is the next db on the ring moving clockwise from the hashed key value
         - Adding new nodes only means reassigning a fraction of the keys
         - <img width="530" height="362" alt="image" src="https://github.com/user-attachments/assets/e32ef915-f22e-4ecf-bdaf-3b8c569d5037" />
-	- This scheme more easily avoids hotspots
+        - This scheme more easily avoids hotspots
             - Keys that are lexographically close to one antoher (ie keys based on time of day) will be spread out across all nodes based on hashing
         - Makes scaling up or down more predictable
             - Partitions are of fixed size and rougly even amount of data, new nodes just pick up some number of fixed partitions
