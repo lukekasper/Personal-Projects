@@ -411,4 +411,14 @@
   	  	- More hardware = more complexity
 - Sharding:
 	- Similar to federation, but partitions dbs so each one holds a subset of data (ie by users names or geo location)
-
+ 	- Consistent Hashing:
+  		- A ring is partitioned (ie 1 - 2^160) 
+    		- Each database shard is assigned a position on the ring using its id
+      		- Data in the db cluster is assigned based on its hashed key
+		- The hashed key returns a number, which corresponds to a position on the ring
+  		- The db the data is stored in is the next db on the ring moving clockwise from the hashed key value
+    		- Adding new nodes only means reassigning a fraction of the keys
+      	- Disadvantages:
+  		- Need to account for sharding in app logic, could lead to complex queries
+    		- Load may not be evenly distributed across dbs
+      		- Same other disadvantages as federation
