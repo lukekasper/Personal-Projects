@@ -412,7 +412,7 @@
 - Sharding:
 	- Similar to federation, but partitions dbs so each one holds a subset of data (ie by users names or geo location)
  	- Consistent Hashing:
-  		- A ring is partitioned (ie 1 - 2^160) 
+  		- A ring is partitioned (ie 1 - 2^160)
     		- Each database shard is assigned a position on the ring using its id
       		- Data in the db cluster is assigned based on its hashed key
 		- The hashed key returns a number, which corresponds to a position on the ring
