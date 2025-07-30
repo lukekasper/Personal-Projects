@@ -418,7 +418,7 @@
         - The hashed key returns a number, which corresponds to a position on the ring
         - The db the data is stored in is the next db on the ring moving clockwise from the hashed key value
         - Adding new nodes only means reassigning a fraction of the keys
-        - <img width="530" height="362" alt="image" src="https://github.com/user-attachments/assets/e32ef915-f22e-4ecf-bdaf-3b8c569d5037" />
+<img width="530" height="362" alt="image" src="https://github.com/user-attachments/assets/e32ef915-f22e-4ecf-bdaf-3b8c569d5037" />
     - Disadvantages:
         - Need to account for sharding in app logic, could lead to complex queries
         - Load may not be evenly distributed across dbs
