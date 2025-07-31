@@ -480,3 +480,10 @@
     - Limited operations -> complex operations shifted to app layer
     - Often basis for more complex systems (graph or document store)
     - Optional parameters do not get placeholders, leading to less memory than RDBs
+    - Examples: memchache, redis
+    - Disadvantages:
+        - No way to make a column mandatory (equivalent of NOT NULL).
+        - No way to use SQL data types to validate entries.
+        - No way to ensure that attribute names are spelled consistently.
+        - No way to put a foreign key on the values of any given attribute, e.g. for a lookup table.
+        - Fetching results in a conventional tabular layout is complex and expensive; to get attributes from multiple rows you need to do JOIN for each attribute.
