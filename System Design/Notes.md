@@ -487,3 +487,11 @@
         - No way to ensure that attribute names are spelled consistently.
         - No way to put a foreign key on the values of any given attribute, e.g. for a lookup table.
         - Fetching results in a conventional tabular layout is complex and expensive; to get attributes from multiple rows you need to do JOIN for each attribute.
+- Document Store:
+    - Abstraction: key-value with documents as values
+    - Documents (JSON, XML, binary) store all info about a single object
+    - Doc stores provide API to query documents based on language
+    - Documents are organized by collections, tags, metadata, or directories
+    - Examples: mongoDB, CouchDB, DynamoDB
+    - Very flexible, good for occasionally changing data
+- 
