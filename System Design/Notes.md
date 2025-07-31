@@ -464,3 +464,19 @@
         - Avoid expensive joins using denormalization
         - Partition tables: put hot spots in a separate table to keep it in memory
         - Tune the query cache: in some cases, the query cache could lead to [performance issues](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html)
+
+#### NoSQL
+- Data is denormalized, and joins are generally done in the application code
+- Lack ACID transactions in favor of eventual consistency
+- BASE is used for NoSQL (chooses availability over consistency):
+    - Basically available: the system guarantees availability
+    - Soft state: the state of the system may change over time, even without input
+    - Eventual consistency: the system will become consistent over a period of time, given that the system doesn't receive input during that period
+- Key-Value Store:
+    - Abstraction: hash table
+    - Allows for O(1) read/writes backed by memory or disk (SSD)
+    - Keys in lexigraphical order, allowing efficent retrieval
+    - Used for simple or rapidly changing data (in-memory cache)
+    - Limited operations -> complex operations shifted to app layer
+    - Often basis for more complex systems (graph or document store)
+    - Optional parameters do not get placeholders, leading to less memory than RDBs
