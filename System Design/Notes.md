@@ -494,4 +494,22 @@
     - Documents are organized by collections, tags, metadata, or directories
     - Examples: mongoDB, CouchDB, DynamoDB
     - Very flexible, good for occasionally changing data
-- 
+- Wide Column Store:
+	- <img width="581" height="231" alt="image" src="https://github.com/user-attachments/assets/7e290a19-61da-4861-abdb-b285cc578049" />
+    - Abstraction: nested map (ColumnFamily<RowKey, Columns<ColKey, Value, Timestamp>>)
+    - Structure:
+    	- Set of tables
+		- Each table with column families and rows
+		- Row key acts as a Primary key
+		- Any access to tables uses this Primary Key
+		- Each column qualifier denotes attribute corresponding to the object which resides in the cell
+    - Column-oriented structure as oppose to row-oriented like RDBMSs
+    - Wide column stores offer high availability and high scalability
+    - Used for very large data sets
+- Graph Store:
+	- Abstraction: graph
+ 	- Each node is a record and each edge is a relationship between data records
+    - Good when many foreign-key or many-to-many relationships exist
+    - High performance for complex relationships (ie social networks)
+    - Not widely supported through tools or community yet
+    - 
