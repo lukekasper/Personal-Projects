@@ -441,7 +441,6 @@
         - Data is duplicated
         - Constraints help redundant copies of data stay in sync, increases complexity
         - Heavy write DBs may be worse performing
-
 - SQL Tuning
     - Must benchmark and profile to simulate/uncover bottlenecks
         - Benchmark: simulate high-load situations with tools like [ab](https://httpd.apache.org/docs/2.2/programs/ab.html)
@@ -464,6 +463,8 @@
         - Avoid expensive joins using denormalization
         - Partition tables: put hot spots in a separate table to keep it in memory
         - Tune the query cache: in some cases, the query cache could lead to [performance issues](https://dev.mysql.com/doc/refman/5.7/en/query-cache.html)
+- Advantages:
+    - structured/relational data, strict schema, complex joins, transactions, clear patterns for scaling, more established, fast index lookups
 
 #### NoSQL
 - Data is denormalized, and joins are generally done in the application code
@@ -543,4 +544,25 @@
             - When it sends the update to node j, it attatches its vector along with its data
             - Node j then advances its own clock (v[j]) and merges the two vectors (vj[k] = max(vj[k], vi[k])
             - At node i, vi[k] = 6 means replica i knows the situation of replica k up to its logical clock of 6
-		- 
+		- Gossip (state transfer):
+            - Each replica maintains a vector clock and state version tree
+                - State version tree contains all conflicting updates
+            - Query:
+                - Client sends its vector clock (Vclient)
+                - Replica compares it with its own Vstate and returns all portion of state tree that occured after Vclient
+                - Client updates its Vclient by merging in response
+                    - Client is repsonsible for resolving version conflicts
+			- Update:
+                - Client sends its vector clock and new state
+			    - Replica checks Vclient against its clock, if Vclient[k] > Vi[k] make update, otherwise ignore it
+		    - Gossip:
+                - Replicas gossip amongst each other to try and merge version trees
+                - Select random replicast to gossip with
+		- Gossip (operation transfer):
+            - Applying operations in correct order is important -> cannot execute until all preceding operations have been completed
+            - Replicas save operations to log file and exchange logs amongst themselves to figure out right sequence to apply in local store
+		- Deletes:
+            - Need to mark object as delete but keep its metadata long enough to ensure all other replicas have marked delete, then can remove to clean up space
+- Advantages:
+    - Semi-structured/non-relational data, flexible schema, big data, data-intensive workload, high throughput for IO
+    - Ex: ingest clickstream and log data, leaderboard or scoring data, temp data (shopping cart), frequently accessed (hot) tables, metadata/lookup tables
