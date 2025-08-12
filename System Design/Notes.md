@@ -538,8 +538,9 @@
                 - When we want to read, need to query R replicas and return the one with the latest timestamp
                 - To ensure strict consistency W + R > N to ensure overlap
 		- Vector Clock:
-            - Concept:
-                - Each node has its own vector v with len(v) = number of replicas
-                - When node i updates something, it increments its element in the array (v[i])
-                - When it sends the update to node j, it attatches its vector along with its data
-                - 
+            - Each node has its own vector v with len(v) = number of replicas
+            - When node i updates something, it increments its element in the array (v[i])
+            - When it sends the update to node j, it attatches its vector along with its data
+            - Node j then advances its own clock (v[j]) and merges the two vectors (vj[k] = max(vj[k], vi[k])
+            - At node i, vi[k] = 6 means replica i knows the situation of replica k up to its logical clock of 6
+		- 
