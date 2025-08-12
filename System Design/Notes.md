@@ -468,6 +468,7 @@
 
 #### NoSQL
 - Data is denormalized, and joins are generally done in the application code
+	- Faster queries but slower updates due to updating multiple records
 - Good reference: https://horicky.blogspot.com/2009/11/nosql-patterns.html
 - Lack ACID transactions in favor of eventual consistency
 - BASE is used for NoSQL (chooses availability over consistency):
