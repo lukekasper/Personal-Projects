@@ -467,11 +467,17 @@
 
 #### NoSQL
 - Data is denormalized, and joins are generally done in the application code
+- Good reference: https://horicky.blogspot.com/2009/11/nosql-patterns.html
 - Lack ACID transactions in favor of eventual consistency
 - BASE is used for NoSQL (chooses availability over consistency):
     - Basically available: the system guarantees availability
     - Soft state: the state of the system may change over time, even without input
     - Eventual consistency: the system will become consistent over a period of time, given that the system doesn't receive input during that period
+- API Model: get(key), put(key, value), delete(key), execute(key, operation, parameters), mapreduce(keyList, mapFunc, reduceFunc)
+- Machine Layout
+	- All physical nodes have same software config but may have different hardware params (RAM, CPU, storage)
+    - Physical nodes are broken into n number of identical virtual nodes based on hardware capacity
+    - Physical nodes should not contain replicas of the same virtual node, spread the workload across many physical nodes and increase reliability
 - Key-Value Store:
     - Abstraction: hash table
     - Allows for O(1) read/writes backed by memory or disk (SSD)
@@ -512,4 +518,28 @@
     - Good when many foreign-key or many-to-many relationships exist
     - High performance for complex relationships (ie social networks)
     - Not widely supported through tools or community yet
-    - 
+- Design Patterns:
+    - Master-Slave:
+        - State transfer: master transfers entire state to slave, which then replaces its state with new state
+            - Only transfer portions of data that have changed (deltas) to avoid unecessary bandwidth
+            - Need to chunk up data object and use hash tree to determine which portions have changed
+            - More robust against message lost
+		- Operation transfer: master propogates a sequence of operations to slave, which applies these to its local state
+            - Less data sent over network but needs reliable mechanism with order guarantee
+	- Multi-Master:
+        - Quorujm Based 2PC (strict consistency): only write to W number of replicas (as oppose to all)
+            - Prepare phase:
+                - Coordinator asks all N replicas if they are ready to perform update
+                - Each replica will write response to log file and when successful, respond to coordinator
+			- Commit phase:
+                - After gathering W (< N) responses, coordinator asks these replicas to commit the data and write another log entry to confirm the commit
+			- Reads:
+                - Not all replicas are updated with data
+                - When we want to read, need to query R replicas and return the one with the latest timestamp
+                - To ensure strict consistency W + R > N to ensure overlap
+		- Vector Clock:
+            - Concept:
+                - Each node has its own vector v with len(v) = number of replicas
+                - When node i updates something, it increments its element in the array (v[i])
+                - When it sends the update to node j, it attatches its vector along with its data
+                - 
