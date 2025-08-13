@@ -567,3 +567,45 @@
 - Advantages:
     - Semi-structured/non-relational data, flexible schema, big data, data-intensive workload, high throughput for IO
     - Ex: ingest clickstream and log data, leaderboard or scoring data, temp data (shopping cart), frequently accessed (hot) tables, metadata/lookup tables
+
+### Cache
+- Cache sequence:
+    - Dispatcher looks if request is in cache
+    - If found return to client
+    - Else, forward to worker, store result in cache
+- Caching types:
+    - Client side (OS or browser)
+    - Server side
+        - Web servers (avoiding the need to contact application server layer)
+        - Reverse proxy or load balancer
+    - Distinct cache layer
+    - CDN
+    - Database: most dbs have some level of default caching; can tweak to optimize performance
+    - Application: in-memory caches like Memcached or Redis
+        - LRU algorithm can reduce footprint on RAM
+        - Redis feature: presistence option, data structures (sorted sets and lists)
+- Caching levels: row level, query-level, serializable objects, fully-rendered html
+    - Avoid file-based caching, cloning and auto-scaling become more difficult
+- Database query level:
+    - Hash query as a key and store result to cache
+    - Expiration issues:
+        - Hard to delete results for complex queries
+        - If one cell changes, need to delete **all** cached queries that may include that cell
+- Object level:
+    - Have app assemble dataset into class instance or data structure and cache that
+	    - Remove object if underlying data has changed
+        - Allows for asynchronous processing: workers assemble objects by consuming the latest cached object
+	- What objects to cache: user sessions, rendered web pages, activity streams, user graph data
+- Cache update strategies:
+    - Cache-aside:
+        - Application interacts with storage, not cache
+        ```python
+        def get_user(self, user_id):
+		    user = cache.get("user.{0}", user_id)
+		    if user is None:
+		        user = db.query("SELECT * FROM users WHERE user_id = {0}", user_id)
+		        if user is not None:
+		            key = "user.{0}".format(user_id)
+		            cache.set(key, json.dumps(user))
+		    return user
+        ```
