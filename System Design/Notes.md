@@ -597,7 +597,7 @@
         - Allows for asynchronous processing: workers assemble objects by consuming the latest cached object
 	- What objects to cache: user sessions, rendered web pages, activity streams, user graph data
 - Cache update strategies:
-    - Cache-aside:
+    - Cache-aside (or lazy loading):
         - Application interacts with storage, not cache
         ```python
         def get_user(self, user_id):
@@ -609,3 +609,18 @@
 		            cache.set(key, json.dumps(user))
 		    return user
         ```
+        - Memcached uses this pattern
+        - Disadvantages:
+            - A miss involves 1) query cache, 2) query databse, 3) write to cache; which can be slow
+            - Data is stale if db gets updated
+                - Can be mitigated with TTL or by using write-through
+			- With node failure, it is replaced by an empty node, increasing latency
+	- Write-through:
+        - User writes directly to cache, which writes to db for persistence
+            - Cache is main data store
+		```python
+  		def set_user(user_id, values):
+		    user = db.query("UPDATE Users WHERE id = {0}", user_id, values)
+		    cache.set(user_id, user)
+  		```
+        - 
