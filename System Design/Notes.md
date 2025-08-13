@@ -623,4 +623,11 @@
 		    user = db.query("UPDATE Users WHERE id = {0}", user_id, values)
 		    cache.set(user_id, user)
   		```
-        - 
+        - Slow overall due to write operation, but reads of recently written data are fast
+            - Users are more tolerant of slower writes
+		- Data in cache is not stale
+        - Disadvantages:
+            - With new node, will not cache entries until entry is updated in db
+            - Most written data may never be read, can minimize with TTL
+	- Write-behind (write-back):
+ - 
