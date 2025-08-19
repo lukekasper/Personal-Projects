@@ -643,4 +643,26 @@
         - Can configure cache to automatically refreshes recently accessed entries prior to expiration
         - Can reduce latency vs read-through if "hot" items are well predicted
             - If not can reduce performance
-	- 
+
+### Asynchronism
+- Reduce request time for expensive operations by not performing them in serial
+    - Can do time-consuming work in advance (periodic aggregation of data)
+- Message queues:
+    - Workflow:
+        - App publishes job to queue and notifies user of job status
+        - Worker picks up job from queue, processes it, signals job is complete
+	- User is not blocked and job is processed in background
+    - Small amount of processing may be done to appear to user that task is complete
+        - Tweet is posted locally but takes time to propogate to every follower
+	- Brokers:
+        - Redis: simple but messages can be lost
+        - RabbitMQ: popular but must adopt 'AMQP' protocol and manage own nodes
+        - Amazon SQS: hosted but may have high latency and possibility of duplicate messages
+- Task queues:
+    - Receive tasks and related data, runs them, and delivers results
+    - Support scheduling
+    - Run computationally-intensive jobs in background
+    - Celery has scheduling and python support
+- Back pressure:
+    - Queues may outgrow memory, resulting in cache misses, disk reads, and slow performance
+    - 
