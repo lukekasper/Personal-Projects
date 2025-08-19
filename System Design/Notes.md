@@ -630,4 +630,15 @@
             - With new node, will not cache entries until entry is updated in db
             - Most written data may never be read, can minimize with TTL
 	- Write-behind (write-back):
- - 
+        - App adds entry/updates cache
+        - Cache adds write event to queue
+        - Event processor asynchronously writes events to data store
+        - Improved write performance
+        - Disadvantages
+            - Data loss if cache goes down prior to hitting db
+            - More complex
+	- Refresh ahead:
+        - Cache automatically refreshes recently accessed entries prior to expiration
+        - Can reduce latency vs read-through if "hot" items are well predicted
+            - If not can reduce performance
+		- 
