@@ -665,4 +665,12 @@
     - Celery has scheduling and python support
 - Back pressure:
     - Queues may outgrow memory, resulting in cache misses, disk reads, and slow performance
-    - 
+    - Back pressure limits queue size by rejecting requests when rate exceeds what system is capable of processing
+        - Once queue is full, client gets server busy (or 503 status code)
+        - Client can retry request at later time (with exponential backoff)
+            - Periodically backs off request rate after each unsuccessful attempt (1s, 2s, 4s...)
+	- Available capcaity is a function of thread pool size and time to process individual transactions
+    - `queue length = max latency / (transaction time / number of threads)`
+    - Queue optimization needs good monitoring and loggin
+        - Alert when queue reaches 70% capcaity
+        - Monitor transaction times to ensure they are in expected range
