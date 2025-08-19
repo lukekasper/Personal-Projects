@@ -569,6 +569,8 @@
     - Ex: ingest clickstream and log data, leaderboard or scoring data, temp data (shopping cart), frequently accessed (hot) tables, metadata/lookup tables
 
 ### Cache
+- Cache invalidation: sync cache and db
+    - Can be solved with a write-through cache
 - Cache sequence:
     - Dispatcher looks if request is in cache
     - If found return to client
@@ -638,7 +640,7 @@
             - Data loss if cache goes down prior to hitting db
             - More complex
 	- Refresh ahead:
-        - Cache automatically refreshes recently accessed entries prior to expiration
+        - Can configure cache to automatically refreshes recently accessed entries prior to expiration
         - Can reduce latency vs read-through if "hot" items are well predicted
             - If not can reduce performance
-		- 
+	- 
