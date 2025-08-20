@@ -681,4 +681,4 @@
         - Alert when queue reaches 70% capcaity
         - Monitor transaction times to ensure they are in expected range
 - **Logging can often be a limiting factor in scalability**
-- 
+    - 
