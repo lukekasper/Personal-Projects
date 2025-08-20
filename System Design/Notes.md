@@ -375,6 +375,12 @@
 - OpenAPI provides the standard for which mircroservices talk to one another
 
 ### Database
+- Scaling stragtegies:
+    - CQRS: seperate read and write functionality
+    - Append only writes can vastly improve throughput
+        - Rather than update a piece of data, just append a new row with updated timestamp
+        - Future queries can select the most up-to-date piece of information
+        - May have a small impact to reads if not handled with compaction and cleanup
 #### Relational Database Management System (RDBMS)
 - Relational database (SQL) is data organized in tables
 - ACID properties of relational databases:
@@ -674,3 +680,5 @@
     - Queue optimization needs good monitoring and loggin
         - Alert when queue reaches 70% capcaity
         - Monitor transaction times to ensure they are in expected range
+- **Logging can often be a limiting factor in scalability**
+- 
