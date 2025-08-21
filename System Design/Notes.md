@@ -711,5 +711,22 @@
     - Supports broadcast and multicast
     - Uses datagrams: one packet per read call
     - Good for: low latency, video chat/streaming, online gaming
-- RPC:
-    - 
+- Remote procedure call (RPC):
+    - Client causes a procedure to execute on a remote server
+    - Steps:
+        - Client program calls client stub procedure; parameters are pushed onto the stack like a local procedure call
+        - Client stub procedure: marshals (packs) procedure id and arguments into request message
+        - Client communication module: OS sends the message from the client to the server
+        - Server communication module: OS passes the incoming packets to the server stub procedure
+        - Server stub procedure: unmarshalls the results, calls the server procedure matching the procedure id and passes the given arguments
+        - Server response repeats the steps above in reverse order
+	- Focused on exposing behaviors
+- Representational state transfer (REST):
+    - Qualities of RESTful frameworks:
+        - Identify resources (URI in HTTP): use the same URI regardless of any operation
+        - Change with representations (Verbs in HTTP):  use verbs, headers, and body
+        - Self-descriptive error message (status response in HTTP):  use status codes
+        - HATEOAS (HTML interface for HTTP): your web service should be fully accessible in a browser
+	- Focused on exposing data
+    - Decouples client/server, often used for public APIs
+    - **Honestly can't find a good argument to use RPC over REST**
