@@ -681,4 +681,35 @@
         - Alert when queue reaches 70% capcaity
         - Monitor transaction times to ensure they are in expected range
 - **Logging can often be a limiting factor in scalability**
+
+### Communication
+- OSI:
+    - Physical layer: cables carrying electrical signals
+    - Link layer: ethernet, multiple concurrent signals, local router to computer connection
+    - Network layer: traffic from one local network to another through routers, IP
+    - Transport layer: route traffic to a specific application using port assignments, UDP/TCP
+    - Application layer: how to know which page to load, HTTP
+- HTTP:
+    - Application layer
+    - Request/Response format: response includes requested info + status info
+    - Relies on underlying network protocol (TCP) to function
+- TCP:
+    - Connection established/terminated through a handshake
+    - Order of packets and lack of corruption guaranteed through sequence numbers/checksum fields and ack packets / auto retransmission
+    - Sender will resend packets if correct response is not received
+    - Comes in as a stream, nothing to distinguish one packet from another; one read may contain multiple packets
+    - Connection will drop after multiple timeouts
+    - Implements flow/congestion control
+    - Leads to more latency than UDP, but better data guarantees
+    - Web servers may keep many TCP connections open concurrently to ensure good throughput -> results in high memory usage
+        - Ensure to manage connections tightly and switch to UDP where applicable
+        - Connection pooling uses shared connections to reduce overhead of opening and closing connections
+	- Good for: web servers, datbases, SSH 
+- UDP:
+    - Connectionless protocol
+    - More efficient but no data guarantees
+    - Supports broadcast and multicast
+    - Uses datagrams: one packet per read call
+    - Good for: low latency, video chat/streaming, online gaming
+- RPC:
     - 
