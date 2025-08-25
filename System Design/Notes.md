@@ -771,3 +771,10 @@ Notes
 1 us = 10^-6 seconds = 1,000 ns
 1 ms = 10^-3 seconds = 1,000 us = 1,000,000 ns
 ```
+- Metrics:
+    - Read sequentially from HDD at 30 MB/s
+    - Read sequentially from 1 Gbps Ethernet at 100 MB/s
+    - Read sequentially from SSD at 1 GB/s
+    - Read sequentially from main memory at 4 GB/s
+    - 6-7 world-wide round trips per second
+    - 2,000 round trips per second within a data center
