@@ -381,6 +381,18 @@
         - Rather than update a piece of data, just append a new row with updated timestamp
         - Future queries can select the most up-to-date piece of information
         - May have a small impact to reads if not handled with compaction and cleanup
+- Map Reduce:
+    - Programming strategy for processing big data sets using parallel/distributed computing
+    - Used by Google
+    - Steps:
+        - Splitting: data is split into smaller chunks and distributed to mappers located on worker nodes
+        - Map: each node applies map function to local data, writes output to temp storage
+            - Map function transforms original data into a set of key/value pairs
+            - Master node makes sure no redundant data is processed
+		- Shuffle: worker nodes redistribute data to reducers based on output keys (produced by map function)
+            - Sorts map outputs
+            - All data belonging to a key is located on the same worker node
+		- Reduce: worker nodes process each group of output data, per key, in parallel
 #### Relational Database Management System (RDBMS)
 - Relational database (SQL) is data organized in tables
 - ACID properties of relational databases:
