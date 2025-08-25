@@ -393,6 +393,10 @@
             - Sorts map outputs
             - All data belonging to a key is located on the same worker node
 		- Reduce: worker nodes process each group of output data, per key, in parallel
+    - To address the issue of uneven key distribution, run a sampling job on key dataset before this
+        - Hot keys can get chunked up across multiple reducers
+            - Use key salting: key -> key_1, key_2 based on estimated number of reducers to assign to key
+        - Light keys can get combined on a single reducer
     <img width="1312" height="738" alt="image" src="https://github.com/user-attachments/assets/74ff3cc1-04a0-4b20-9e47-6a6b2b1f0560" />
 
 #### Relational Database Management System (RDBMS)
