@@ -778,3 +778,5 @@ Notes
     - Read sequentially from main memory at 4 GB/s
     - 6-7 world-wide round trips per second
     - 2,000 round trips per second within a data center
+- Object size:
+    - **Int in python is typically ~28 bytes (8-12 for object, 16 for object header, and 0-4 for padding alignment to 64 bit boundary)**
