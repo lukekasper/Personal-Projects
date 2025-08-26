@@ -18,6 +18,7 @@
             - As it crawls each page, can populate reverse_index_queue and doc_index_queue with page contents/url
         - Crawl: extract next link from priority queue, determine if similar page has been crawled (reduce priority), call crawl_page on link
             - Reduction in priority allows the url to be checked again later to refresh content
+- Reverse Index / Document Queues: seperate service (RabbitMQ)
 - Reverse Index Service:
     - Consumes reverse index queue
     - Runs MapReduce job:
