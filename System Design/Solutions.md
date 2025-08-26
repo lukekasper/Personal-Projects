@@ -4,7 +4,7 @@
     - links_to_crawl: use heapq to maintain priority queue
     - crawled_links: map of url to page signature
 - Key abstractions of Crawler Service
-    - PageDataStore: interact with db
+    - PageDataStore: interacts with db
         - Add/remove links to crawl
         - Reduce link priority to avoid cycles
         - Extract max priority from links_to_crawl
