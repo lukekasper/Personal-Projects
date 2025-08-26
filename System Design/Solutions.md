@@ -15,5 +15,23 @@
     - Crawler: contains PageDataStore, reverse_index_queue, doc_index_queue
         - Create signature (based on page url/contents)
         - Crawl page: add child urls to links_to_crawl db, create signature, remove link from links_to_crawl, add link to crawled_links
+            - As it crawls each page, can populate reverse_index_queue and doc_index_queue with page contents/url
         - Crawl: extract next link from priority queue, determine if similar page has been crawled (reduce priority), call crawl_page on link
-    - 
+- Reverse Index Service:
+    - Consumes reverse index queue
+    - Runs MapReduce job:
+        - Maps words to doc_id (or url)
+        - Reduces index to (word, [doc_ids])
+    - Ranks matching results based on query input and returns top ones
+- Document Index Service:
+    - Consumes document index queue
+    - Runs MapReduce job:
+        - Maps doc_id (or url) to metadata
+        - Reduces or merges metadata for each document
+    - Returns titles and page snippets for rendering results
+- Query API:
+    - Clien sends request to web server (running as reverse proxy)
+    - Web server forwards request to query API server
+    - Parses query: removes markup, breaks text into term, fixes typos, normalizes capitalization, converts query into boolean operations
+    - Use reverse index service to find matching webpages
+    - Use document service to return snippets
