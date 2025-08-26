@@ -35,3 +35,5 @@
     - Parses query: removes markup, breaks text into term, fixes typos, normalizes capitalization, converts query into boolean operations
     - Use reverse index service to find matching webpages
     - Use document service to return snippets
+- Other considerations:
+    - 
