@@ -55,3 +55,8 @@
         - Reduce TCP overhead
      
 <img width="1078" height="1304" alt="image" src="https://github.com/user-attachments/assets/d955e7b5-5909-4641-a110-6c39c8da2f01" />
+
+- Pipelines:
+    - Search: Client -> Web Server -> Query Service -> Reverse Index (returns ranked urls) / Document Service (returns snippets) -> Back to up chain to client
+    - Indexing: Reverse Index / Document Service -> pops **batch** of items off queue -> runs mapReduce to combine tokens -> writes/updates data in persistent storage and adds hot items to in-memory cache
+    - Crawling: Crawler is seeded with inputs -> pops priority item off links_to_crawl -> determines if similar page is in crawled_links (signature based) -> fetch wepbage and parse html -> use content to populate document and reverse index queues -> add child links to links_to_crawl -> create signature, remove url from links_to_crawl, add url to crawled_links
