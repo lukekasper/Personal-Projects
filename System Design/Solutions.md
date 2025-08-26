@@ -1,7 +1,7 @@
 ## System Design Solutions
 ### Web Crawler
 - Key data structures (NoSQL)
-    - links_to_crawl: uses heapq to maintain priority queue
+    - links_to_crawl: use heapq to maintain priority queue
     - crawled_links: map of url to page signature
 - Key abstractions of Crawler Service
     - PageDataStore: interact with db
