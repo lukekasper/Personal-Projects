@@ -80,6 +80,7 @@ def run_dedup_job(input_uri, output_uri):
     job = RemoveDuplicateUrls(args=[
         input_uri,
         '--output-dir', output_uri,
+        '--runner', 'hadoop',
     ])
     with job.make_runner() as runner:
         runner.run()
