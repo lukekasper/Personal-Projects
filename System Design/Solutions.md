@@ -44,10 +44,12 @@
     - Crawler is seeded an input, then it is self-feeding; no direct interaction from user
     - Crawler can use MapReduce to ensure only unique urls get fed into links_to_crawl
         - Of the extracted urls, discard any that appear more than once to reduce load on server
+    - Brief discussion of public REST API response structure
 - Scaling:
     - Serve popular queries from an in-memory cache (Redis or Memcached)
     - Document and Reverse Index services would probably have their own db clusters attached
         - Would need to make use of sharding/federation
+        - Can cache popular query results using LRU scheme
     - Crawler service can maintain in-memory cache of DNS lookups
         - Can do proactive (refresh ahead) cache to keep popular sites in-memory
     - UDP could be used for internal service communication in some areas to boost performance
@@ -85,3 +87,15 @@ def run_dedup_job(input_uri, output_uri):
     with job.make_runner() as runner:
         runner.run()
 ```
+
+### Twitter Timeline and Search
+- Database schema:
+    - User tweets can be stored in a SQL db
+    - Fanout (~60,000 tweets per second) will overload RDBMs, use NoSQL and Redis
+        - Eventual consistency model allows for fast writes and eventual consistency to followers
+        - Eliminates need for joins
+        - Can use append-only operations, with compaction/cleanup later
+        - Object store (s3 bucket) for media
+     
+- Optimizations:
+    - Use LRU cache for older tweets
