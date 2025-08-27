@@ -89,13 +89,57 @@ def run_dedup_job(input_uri, output_uri):
 ```
 
 ### Twitter Timeline and Search
-- Database schema:
+- Data Stores/Structures:
+    - User's tweets: row like data object stored in SQL db containing full tweet info
+        - High-write, append-only
+    - Users: row like data object stored in SQL db containing user metadata
+        - Low-write, high-read
+    - User home timeline:
+        - Each user has their own timeline of tweets from their followers
+        - Tweet is a Redis list in memory cache: [tweet_id, user_id, meta]
+        - Allows for fast access
+    - User Graph: Graph Store (Neo4j) and cached in-memory
+    - Search Index: ElasticSearch cluster
+    - Object Store: s3 bucket
+    - Notification Service:
+        - Pulls from queue populated by fan-out service (RabbitMQ)
+        - Uses reverse-index (NoSQL db/cache) with key-value structure (author_id: [subscriber_ids])
+- Use cases:
+    - User posts a tweet:
+        - Client posts tweet to Web Server (reverse proxy)
+        - Web server forwards request to Write API server
+        - Write API stores tweet in user's timeline in a SQL db
+        - Write API contacts Fan Out Service:
+            - Queries User Graph Service to find user's followers
+            - Stores tweet ids in home timeline of each of the user's followers in memcache
+                - O(n) -> 1000 follwers = 1000 lookups and inserts
+            - Stores tweet ids in Search Index Service to enable fast searching
+            - Stores media in Object store
+            - Uses Notification Service to send push notifications to followers
+                - Uses Queue to asynchronously send out notifications
+                - Notification processes queue event, does reverse lookup on user's subscribed to author's tweets, sends tweet metadata to mobile/email delivery services
+    - User views home timeline:
+        - Client requests to view home timeline
+        - Web server forwards request to read api
+        - Read api contacts Timeline Service:
+            - Get timeline data for that user stored in Redis cache O(1)
+            - Queries Tweet Info service to get tweet info via tweet ids O(n)
+                - Use multiget to query SQL db where full tweet info is stored
+                - May also have tweet-level cache sitting in front of this to boost performance on popular tweets
+            - Queries User Info service to get user info via user ids O(n)
+                - Same concept as tweet info service retrieval 
+- Database discussion:
     - User tweets can be stored in a SQL db
+        - Predictable write pattern
+        - Data is bounded to 1 user
+        - Favor strong consistency, user posts a tweet and expects it immediately visible
     - Fanout (~60,000 tweets per second) will overload RDBMs, use NoSQL and Redis
         - Eventual consistency model allows for fast writes and eventual consistency to followers
         - Eliminates need for joins
         - Can use append-only operations, with compaction/cleanup later
-        - Object store (s3 bucket) for media
-     
+- Other considerations:
+    - Discussion on REST API
+    - Discussion of cache data structure
+    - Internal communications use RPC
 - Optimizations:
     - Use LRU cache for older tweets
