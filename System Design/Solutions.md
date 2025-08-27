@@ -74,3 +74,13 @@ class RemoveDuplicateUrls(MRJob):
         if total == 1:
             yield key, total
 ```
+Calling MapReduce job:
+```
+def run_dedup_job(input_uri, output_uri):
+    job = RemoveDuplicateUrls(args=[
+        input_uri,
+        '--output-dir', output_uri,
+    ])
+    with job.make_runner() as runner:
+        runner.run()
+```
