@@ -59,5 +59,18 @@
 
 - Pipelines:
     - Search: Client -> Web Server -> Query Service -> Reverse Index (returns ranked urls) / Document Service (returns snippets) -> Back to up chain to client
-    - Indexing: Reverse Index / Document Service -> pops **batch** of items off queue -> runs mapReduce to combine tokens -> writes/updates data in persistent storage and adds hot items to in-memory cache
-    - Crawling: Crawler is seeded with inputs -> pops priority item off links_to_crawl -> determines if similar page is in crawled_links (signature based) -> fetch wepbage and parse html -> use content to populate document and reverse index queues -> add child links to links_to_crawl -> create signature, remove url from links_to_crawl, add url to crawled_links
+    - Indexing: Reverse Index / Document Service -> pops job off queue -> generates reverse index -> writes/updates data in persistent storage and adds hot items to in-memory cache
+    - Crawling: Crawler is seeded with inputs -> pops priority item off links_to_crawl -> determines if similar page is in crawled_links (signature based) -> fetch wepbage and parse html -> use content to populate document and reverse index queues -> extract child links to s3 or some other temp storage -> runs MapReduce job (asynchronously) -> add child links to links_to_crawl -> create signature, remove url from links_to_crawl, add url to crawled_links
+
+- MapReduce: use MRJob library
+```
+class RemoveDuplicateUrls(MRJob):
+
+    def mapper(self, _, line):
+        yield line, 1
+
+    def reducer(self, key, values):
+        total = sum(values)
+        if total == 1:
+            yield key, total
+```
