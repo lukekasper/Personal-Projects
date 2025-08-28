@@ -45,6 +45,7 @@
     - Crawler can use MapReduce to ensure only unique urls get fed into links_to_crawl
         - Of the extracted urls, discard any that appear more than once to reduce load on server
     - Brief discussion of public REST API response structure
+    - Discuss optimizations for caching and db replication strategies
 - Scaling:
     - Serve popular queries from an in-memory cache (Redis or Memcached)
     - Document and Reverse Index services would probably have their own db clusters attached
@@ -159,5 +160,15 @@ def run_dedup_job(input_uri, output_uri):
             - Compare this with tweet ids in the home timeline data object
             - If there are any deltas, add tweet ids from the recent activity log and sort based on timestamp
             - Then hydrate all tweets with Tweet Info Service
+    - Discuss optimizations for caching and db replication strategies
 - Optimizations:
-    - Use LRU cache for older tweets
+    - Keep only several hundred tweets for each home timeline in memory cache
+    - Keep only active users home timeline info in memory cache
+    - Tweet and User Services can keep recent tweets/active users in Redis db for faster access
+    - Opportunity for queues:
+        - Fan-Out Service:
+            - Push tweet jobs [tweet_id, user_id, follower_id, op_type] to a queue
+            - Have workers asynchronously process these to write to variuos user's home timelines
+        - Notification service (discussed above)
+    - Can use LRU cache to keep "hot" tweets or users in-memory for Services
+    
