@@ -127,7 +127,17 @@ def run_dedup_job(input_uri, output_uri):
                 - Use multiget to query SQL db where full tweet info is stored
                 - May also have tweet-level cache sitting in front of this to boost performance on popular tweets
             - Queries User Info service to get user info via user ids O(n)
-                - Same concept as tweet info service retrieval 
+                - Same concept as tweet info service retrieval
+    - User views their timeline:
+        - Client requests their timeline
+        - Web server forwards request to Read API
+        - Read API looks for tweets from that user in memory cache, otherwise pulls them from SQL db
+    - User searches for tweets:
+        - Client provides a query
+        - Web server forwards request to Search API
+        - Search API processes query (remove markdown, extract query params, convert to boolean, correct spelling, standardize capitalization)
+        - Search API contacts Search Service to gather tweet info based on query params
+        - Search API contacts the Tweet Info Service with the tweet ids and User Info Service with the user ids to get the full tweet info for rendering
 - Database discussion:
     - User tweets can be stored in a SQL db
         - Predictable write pattern
