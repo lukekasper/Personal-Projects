@@ -167,10 +167,17 @@ def run_dedup_job(input_uri, output_uri):
     - Keep only several hundred tweets for each home timeline in memory cache
     - Keep only active users home timeline info in memory cache
     - Tweet and User Services can keep recent tweets/active users in Redis db for faster access
+        - Can do this through query-level caching (hash query)
     - Opportunity for queues:
         - Fan-Out Service:
             - Push tweet jobs [tweet_id, user_id, follower_id, op_type] to a queue
             - Have workers asynchronously process these to write to variuos user's home timelines
         - Notification service (discussed above)
     - Can use LRU cache to keep "hot" tweets or users in-memory for Services
+    - Cache strategies:
+        - Write through: graph service, home timeline, user timeline
+            - Involve updates and don't want stale data, data is available immediately in cache
+            - Stale data could result in missed fan-outs
+        - Read through: Tweet/User info service
+            - Objects are immutable after creation, can lazy-load and keep hot/recent tweets in memory using LRU/TTL
 <img width="1348" height="1390" alt="image" src="https://github.com/user-attachments/assets/aa09e79d-d957-4cbc-a1df-1bb7076002c5" />
