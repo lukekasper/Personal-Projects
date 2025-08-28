@@ -46,6 +46,7 @@
         - Of the extracted urls, discard any that appear more than once to reduce load on server
     - Brief discussion of public REST API response structure
     - Discuss optimizations for caching and db replication strategies
+    - Backpressure to slow down crawler if queues get full
 - Scaling:
     - Serve popular queries from an in-memory cache (Redis or Memcached)
     - Document and Reverse Index services would probably have their own db clusters attached
@@ -161,6 +162,7 @@ def run_dedup_job(input_uri, output_uri):
             - If there are any deltas, add tweet ids from the recent activity log and sort based on timestamp
             - Then hydrate all tweets with Tweet Info Service
     - Discuss optimizations for caching and db replication strategies
+    - Discuss backpressure considerations for queues
 - Optimizations:
     - Keep only several hundred tweets for each home timeline in memory cache
     - Keep only active users home timeline info in memory cache
