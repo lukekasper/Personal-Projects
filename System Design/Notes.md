@@ -553,7 +553,7 @@
 		- Operation transfer: master propogates a sequence of operations to slave, which applies these to its local state
             - Less data sent over network but needs reliable mechanism with order guarantee
 	- Multi-Master:
-        - Quorujm Based 2PC (strict consistency): only write to W number of replicas (as oppose to all)
+        - Quorum Based 2PC (strict consistency): only write to W number of replicas (as oppose to all)
             - Prepare phase:
                 - Coordinator asks all N replicas if they are ready to perform update
                 - Each replica will write response to log file and when successful, respond to coordinator
