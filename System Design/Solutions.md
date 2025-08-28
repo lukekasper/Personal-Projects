@@ -151,5 +151,13 @@ def run_dedup_job(input_uri, output_uri):
     - Discussion on REST API
     - Discussion of cache data structure
     - Internal communications use RPC
+    - Race condition for celebrity users:
+        - Could take minutes for fan-out service to populate all follower's home timeline objects
+        - If someone replies to the tweet before it reaches everyone's home timeline, you could see the reply before the initial tweet
+        - Solution: keep a "recent activity" append-only log (ie Kafka) with ttl of a few minutes
+            - At serve-time, timeline service can search this log for tweets from people the user follows
+            - Compare this with tweet ids in the home timeline data object
+            - If there are any deltas, add tweet ids from the recent activity log and sort based on timestamp
+            - Then hydrate all tweets with Tweet Info Service
 - Optimizations:
     - Use LRU cache for older tweets
