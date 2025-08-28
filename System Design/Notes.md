@@ -360,7 +360,7 @@
     - Conforms to **single responsibility principle** -> smaller independent services working together
 - Web servers should be responsible for:
     - Frontend: serving web page content (React)
-    - Backend: serving serves APIs for back end to consume
+    - Backend: serving APIs for back end to consume
 - Microservices:
     - Loosely-coupled services, performing unique functions, exchanging info using a lightweight protocol
     - Pintrest services: user profile, follower, feed, search, photo upload, etc.
