@@ -181,3 +181,56 @@ def run_dedup_job(input_uri, output_uri):
         - Read through: Tweet/User info service
             - Objects are immutable after creation, can lazy-load and keep hot/recent tweets in memory using LRU/TTL
 <img width="1348" height="1390" alt="image" src="https://github.com/user-attachments/assets/aa09e79d-d957-4cbc-a1df-1bb7076002c5" />
+
+### Paste Bin
+- Use Cases:
+    - User paste's content
+        - Client sends request to web server (reverse proxy)
+        - Web server forwards request to Write API
+        - Write API:
+            - Generates a unique url:
+                - Checks if url exists in db, if so generate a new one
+            - Writes entry to SQL databse: shortlink (primary key), expiration time (optional), timestamp, paste path
+                - Create additional index on timestamp to speed up querying and keep data in memory
+            - Saves content to object store
+            - Returns url
+- Generate unique url:
+    - Use MD5 hash scheme using user's ip address + timestamp (16 bytes)
+    - Use Base62 to encode MD5 hash to make it compatible with url (no special characters)
+        - Take first 7 values of result (62^7 possibilities)
+    ```
+    import hashlib
+    import string
+    
+    # Base62 character set: 0-9, A-Z, a-z
+    BASE62_ALPHABET = string.digits + string.ascii_uppercase + string.ascii_lowercase
+    
+    def base62_encode(num):
+        """Encodes a positive integer into a Base62 string."""
+        if num == 0:
+            return BASE62_ALPHABET[0]
+        
+        base62 = []
+        while num > 0:
+            remainder = num % 62          # modulus to get the digit
+            num = num // 62               # integer division for the next loop
+            base62.append(BASE62_ALPHABET[remainder])
+        return ''.join(reversed(base62))
+    
+    def md5_to_base62(input_str, length=8):
+        """
+        Hashes the input string with MD5, converts to Base62,
+        and returns the first `length` characters.
+        """
+        # Step 1: MD5 hash (hex string)
+        md5_hash = hashlib.md5(input_str.encode('utf-8')).hexdigest()
+        
+        # Step 2: Convert hex string to integer
+        num = int(md5_hash, 16)
+        
+        # Step 3: Encode integer to Base62
+        base62_str = base62_encode(num)
+        
+        # Step 4: Return shortened key
+        return base62_str[:length]
+    ```
