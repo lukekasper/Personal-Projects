@@ -285,3 +285,6 @@ def run_dedup_job(input_uri, output_uri):
     - If collecting monthly analytics:
         - Can update once per month if fresh analytics within the month are not required
         - Can store daily hits in analytics database and combine during query time for that month
+    - Can create an asyncronous workflow for writes to speed up performance:
+        - User requests a write, and synchronously a shortlink is generated and sent in response to user
+        - WriteJob is created and pushed to queue, worker node picks this job up to write data to SQL db and Object store
