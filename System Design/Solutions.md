@@ -237,7 +237,7 @@ def run_dedup_job(input_uri, output_uri):
                     yield key, sum(values)
             ```
     - Delete expired links:
-        - Scan db for timestamp + expired time > current time O(logN)
+        - Scan db for timestamp + expired time > current time: O(logN)
         - Delete these entries or mark as expired
 - Generate unique url:
     - Use MD5 hash scheme using user's ip address + timestamp (16 bytes)
