@@ -194,6 +194,48 @@ def run_dedup_job(input_uri, output_uri):
                 - Create additional index on timestamp to speed up querying and keep data in memory
             - Saves content to object store
             - Returns url
+    - User searches a url:
+        - Client sends request to web server
+        - Web server forwards request to Read API
+        - Read API:
+            - Checks SQL db for url
+            - If it exists, fetch content from object store based on url path and render
+            - If not, return an error message
+    - Analytics on number of visits to a url per month:
+        - Use MapReduce job on Web Server Logs
+            - Scrape server logs and extract relevant lines with a server url
+            - Map url/month and reduce by summing hits on a url in a given month
+            ```
+            class HitCounts(MRJob):
+                def extract_url(self, line):
+                    """Extract the generated url from the log line."""
+                    ...
+            
+                def extract_year_month(self, line):
+                    """Return the year and month portions of the timestamp."""
+                    ...
+            
+                def mapper(self, _, line):
+                    """Parse each log line, extract and transform relevant lines.
+            
+                    Emit key value pairs of the form:
+            
+                    (2016-01, url0), 1
+                    (2016-01, url0), 1
+                    (2016-01, url1), 1
+                    """
+                    url = self.extract_url(line)
+                    period = self.extract_year_month(line)
+                    yield (period, url), 1
+            
+                def reducer(self, key, values):
+                    """Sum values for each key.
+            
+                    (2016-01, url0), 2
+                    (2016-01, url1), 1
+                    """
+                    yield key, sum(values)
+            ```
 - Generate unique url:
     - Use MD5 hash scheme using user's ip address + timestamp (16 bytes)
     - Use Base62 to encode MD5 hash to make it compatible with url (no special characters)
