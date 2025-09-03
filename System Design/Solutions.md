@@ -281,6 +281,7 @@ def run_dedup_job(input_uri, output_uri):
     ```
 - Scaling:
     - Collecting server logs across multiple web servers could involve pushing them to a centralized storage (HDFS) and running MapReduce on all log files
+        - Web server logs are now being kept in their own object store
     - Use analytics database (Amazon Redshift or Google BigQuery) for monthly hits data
     - If collecting monthly analytics:
         - Can update once per month if fresh analytics within the month are not required
