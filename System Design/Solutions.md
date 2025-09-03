@@ -418,6 +418,27 @@ def run_dedup_job(input_uri, output_uri):
                 - Updates SQL "monthly spending" table
                 - Notifies users transactions have synced through Notification service
                     - Notification service uses a queue and downstream email/mobile push services to distribute notifications
+    - Service recommends a budget
+        - Create a budget template based on user defined income
+        ```
+        class Budget(object):
+
+    def __init__(self, income):
+        self.income = income
+        self.categories_to_budget_map = self.create_budget_template()
+
+        def create_budget_template(self):
+            return {
+                DefaultCategories.HOUSING: self.income * .4,
+                DefaultCategories.FOOD: self.income * .2,
+                DefaultCategories.GAS: self.income * .1,
+                DefaultCategories.SHOPPING: self.income * .2,
+                ...
+            }
+    
+        def override_category_budget(self, category, amount):
+            self.categories_to_budget_map[category] = amount
+        ```
 - Services:
     - Category Service:
         - Create seller->category dict with most popular sellers:
