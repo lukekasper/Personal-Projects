@@ -37,6 +37,16 @@
     - Parses query: removes markup, breaks text into term, fixes typos, normalizes capitalization, converts query into boolean operations
     - Use reverse index service to find matching webpages
     - Use document service to return snippets
+    - API: `$ curl https://search.com/api/v1/search?query=hello+world`
+    - Response:
+    ```
+    {
+    "title": "foo's title",
+    "snippet": "foo's snippet",
+    "link": "https://foo.com",
+    },
+    ...
+    ```
 - Other considerations:
     - Can use fetch to get the url content, BeautifulSoup library to parse the content and extract child links by finding "<a href" tags
     - crawled_links can have a timestamp field to indicate when it was last crawled
