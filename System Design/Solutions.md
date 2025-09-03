@@ -344,3 +344,36 @@ def run_dedup_job(input_uri, output_uri):
 <img width="936" height="1360" alt="image" src="https://github.com/user-attachments/assets/5cbd1a20-73d7-40a4-83b3-05b6f616c22b" />
 
 ### Mint
+- Use cases:
+    - Database considerations:
+         - Store user info (10 million) in RDBMS (SQL)
+             - Schema:
+             ```
+             id int NOT NULL AUTO_INCREMENT
+             created_at datetime NOT NULL
+             last_update datetime NOT NULL
+             account_url varchar(255) NOT NULL
+             account_login varchar(32) NOT NULL
+             account_password_hash char(64) NOT NULL
+             user_id int NOT NULL
+             PRIMARY KEY(id)
+             FOREIGN KEY(user_id) REFERENCES users(id)
+             ```
+             - Create an index on id, user_id, created_at (speed up lookups and keep in memory)
+    - User connects to a financial account:
+        - Client sends request to Web Server (reverse proxy)
+        - Web server forwards request to Accounts API server
+        - Accounts API server updates SQL db accounts table with new info
+        - API:
+        ```
+        $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
+        "account_login": "baz", "account_password": "qux" }' \
+        https://mint.com/api/v1/account
+        ```
+        - Service extracts transaction from account
+    - Service extracts transactions from the account
+        - Extract info when:
+            - User first links account
+            - User manually refreshes account
+            - Each day for active users (past 30 days)
+        - 
