@@ -418,3 +418,49 @@ def run_dedup_job(input_uri, output_uri):
                 - Updates SQL "monthly spending" table
                 - Notifies users transactions have synced through Notification service
                     - Notification service uses a queue and downstream email/mobile push services to distribute notifications
+- Services:
+    - Category Service:
+        - Create seller->category dict with most popular sellers:
+        ```
+        class DefaultCategories(Enum):
+
+        HOUSING = 0
+        FOOD = 1
+        GAS = 2
+        SHOPPING = 3
+        ...
+    
+        seller_category_map = {}
+        seller_category_map['Exxon'] = DefaultCategories.GAS
+        seller_category_map['Target'] = DefaultCategories.SHOPPING
+        ...
+        ```
+        - For sellers not in initial map, use user overrides:
+        ```
+        class Categorizer(object):
+
+        def __init__(self, seller_category_map, seller_category_crowd_overrides_map):
+            self.seller_category_map = seller_category_map
+            self.seller_category_crowd_overrides_map = \
+                seller_category_crowd_overrides_map
+    
+        def categorize(self, transaction):
+            if transaction.seller in self.seller_category_map:
+                return self.seller_category_map[transaction.seller]
+            elif transaction.seller in self.seller_category_crowd_overrides_map:
+                self.seller_category_map[transaction.seller] = \
+                    self.seller_category_crowd_overrides_map[transaction.seller].peek_min()
+                return self.seller_category_map[transaction.seller]
+            return None
+
+        class Transaction(object):
+
+        def __init__(self, created_at, seller, amount):
+            self.created_at = created_at
+            self.seller = seller
+            self.amount = amount
+        ```
+            - Min heap would allow lookups of top overrides in O(1)
+            - "seller_category_crowd_overrides_map" gets populated through user interactions with the UI
+                - Tracks all overrides by user and ranks them (maybe by frequency)
+             
