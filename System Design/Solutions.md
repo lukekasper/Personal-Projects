@@ -166,6 +166,8 @@ def run_dedup_job(input_uri, output_uri):
         - Search API processes query (remove markdown, extract query params, convert to boolean, correct spelling, standardize capitalization)
         - Search API contacts Search Service to gather tweet info based on query params
         - Search API contacts the Tweet Info Service with the tweet ids and User Info Service with the user ids to get the full tweet info for rendering
+        - API: `$ curl https://twitter.com/api/v1/search?query=hello+world`
+        - Response: same as home timeline but tweets matching search criteria
 
 - Database discussion:
     - User tweets can be stored in a SQL db
