@@ -423,9 +423,9 @@ def run_dedup_job(input_uri, output_uri):
         ```
         class Budget(object):
 
-    def __init__(self, income):
-        self.income = income
-        self.categories_to_budget_map = self.create_budget_template()
+        def __init__(self, income):
+            self.income = income
+            self.categories_to_budget_map = self.create_budget_template()
 
         def create_budget_template(self):
             return {
@@ -435,10 +435,11 @@ def run_dedup_job(input_uri, output_uri):
                 DefaultCategories.SHOPPING: self.income * .2,
                 ...
             }
-    
+
         def override_category_budget(self, category, amount):
             self.categories_to_budget_map[category] = amount
         ```
+
 - Services:
     - Category Service:
         - Create seller->category dict with most popular sellers:
