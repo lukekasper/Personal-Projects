@@ -344,22 +344,50 @@ def run_dedup_job(input_uri, output_uri):
 <img width="936" height="1360" alt="image" src="https://github.com/user-attachments/assets/5cbd1a20-73d7-40a4-83b3-05b6f616c22b" />
 
 ### Mint
+- Database considerations:
+     - User info (10 million) in SQL db
+         - Schema:
+         ```
+         id int NOT NULL AUTO_INCREMENT
+         created_at datetime NOT NULL
+         last_update datetime NOT NULL
+         account_url varchar(255) NOT NULL
+         account_login varchar(32) NOT NULL
+         account_password_hash char(64) NOT NULL
+         user_id int NOT NULL
+         PRIMARY KEY(id)
+         FOREIGN KEY(user_id) REFERENCES users(id)
+         ```
+         - Create index on id, user_id, created_at (speed up lookups and keep in memory)
+         - "user_id" seperate from "id" due to:
+             - Security: don't want to expose internal db structure via API
+             - Portability: can migrate data more easily
+             - Third party: user_id may have meaning to other systems you are integrating with
+     - Transactions in SQL db
+         - Schema:
+         ```
+         id int NOT NULL AUTO_INCREMENT
+         created_at datetime NOT NULL
+         seller varchar(32) NOT NULL
+         amount decimal NOT NULL
+         user_id int NOT NULL
+         PRIMARY KEY(id)
+         FOREIGN KEY(user_id) REFERENCES users(id)
+         ```
+         - Create index on id, user_id, created_at
+     - Monthly spending in SQL db
+         - Schema:
+         ```
+         id int NOT NULL AUTO_INCREMENT
+         month_year date NOT NULL
+         category varchar(32)
+         amount decimal NOT NULL
+         user_id int NOT NULL
+         PRIMARY KEY(id)
+         FOREIGN KEY(user_id) REFERENCES users(id)
+         ```
+         - Create index on id, user_id
 - Use cases:
-    - Database considerations:
-         - Store user info (10 million) in RDBMS (SQL)
-             - Schema:
-             ```
-             id int NOT NULL AUTO_INCREMENT
-             created_at datetime NOT NULL
-             last_update datetime NOT NULL
-             account_url varchar(255) NOT NULL
-             account_login varchar(32) NOT NULL
-             account_password_hash char(64) NOT NULL
-             user_id int NOT NULL
-             PRIMARY KEY(id)
-             FOREIGN KEY(user_id) REFERENCES users(id)
-             ```
-             - Create an index on id, user_id, created_at (speed up lookups and keep in memory)
     - User connects to a financial account:
         - Client sends request to Web Server (reverse proxy)
         - Web server forwards request to Accounts API server
@@ -376,4 +404,17 @@ def run_dedup_job(input_uri, output_uri):
             - User first links account
             - User manually refreshes account
             - Each day for active users (past 30 days)
-        - 
+        - Steps:
+            - Client sends request to web server
+            - Web server forwards request to Accounts API
+            - Accounts API places job on queue (RabbitMQ)
+            - Transaction Service:
+                - Pops job off queue and extracts transactions for that account
+                    - Writes results to raw log file in object store
+                - Uses category service to categorize each transaction
+                - Uses Budgest service to calculate monthly spending by category
+                    - Budget service uses notification service to notify users if near or exceeding budget
+                - Updates SQL "transactions" table
+                - Updates SQL "monthly spending" table
+                - Notifies users transactions have synced through Notification service
+                    - Notification service uses a queue and downstream email/mobile push services to distribute notifications
