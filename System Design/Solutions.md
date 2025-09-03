@@ -495,3 +495,9 @@ def run_dedup_job(input_uri, output_uri):
         def override_category_budget(self, category, amount):
             self.categories_to_budget_map[category] = amount
         ```
+- Consideration:
+    - User updates a category manually:
+        - Web server contacts accounts API
+        - Accounts API puts job on queue to update that transaction
+        - Rerun budget service to recompute statistics for that user/month including the updated transaction
+            - Need to be careful how we incorporate the updated info with the out-of-date raw logs
