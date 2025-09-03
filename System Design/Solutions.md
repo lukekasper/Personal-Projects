@@ -387,6 +387,7 @@ def run_dedup_job(input_uri, output_uri):
          FOREIGN KEY(user_id) REFERENCES users(id)
          ```
          - Create index on id, user_id
+     - Atomic transaction data screams SQL! Cannot risk eventual consistency model with monetary data.
 - Use cases:
     - User connects to a financial account:
         - Client sends request to Web Server (reverse proxy)
@@ -412,35 +413,21 @@ def run_dedup_job(input_uri, output_uri):
                 - Pops job off queue and extracts transactions for that account
                     - Writes results to raw log file in object store
                 - Uses category service to categorize each transaction
+                    - Updates SQL "transactions" table with enriched transaction data (including category)
+                    - Writes mapped intermediate data to a temp file storage (HDFS)
+                        - Can use streaming option (Kafka) if needing real-time updates
                 - Uses Budgest service to calculate monthly spending by category
+                    - Injests intermediate mapped data (reads from HDFS)
+                    - Reduces output by montly spending
                     - Budget service uses notification service to notify users if near or exceeding budget
-                - Updates SQL "transactions" table
-                - Updates SQL "monthly spending" table
+                    - Updates SQL "monthly spending" table
                 - Notifies users transactions have synced through Notification service
                     - Notification service uses a queue and downstream email/mobile push services to distribute notifications
     - Service recommends a budget
         - Create a budget template based on user defined income
-        ```
-        class Budget(object):
 
-        def __init__(self, income):
-            self.income = income
-            self.categories_to_budget_map = self.create_budget_template()
-
-        def create_budget_template(self):
-            return {
-                DefaultCategories.HOUSING: self.income * .4,
-                DefaultCategories.FOOD: self.income * .2,
-                DefaultCategories.GAS: self.income * .1,
-                DefaultCategories.SHOPPING: self.income * .2,
-                ...
-            }
-
-        def override_category_budget(self, category, amount):
-            self.categories_to_budget_map[category] = amount
-        ```
-
-- Services:
+          
+- Service Implementations:
     - Category Service:
         - Create seller->category dict with most popular sellers:
         ```
@@ -484,3 +471,27 @@ def run_dedup_job(input_uri, output_uri):
         - Min heap would allow lookups of top overrides in O(1)
         - "seller_category_crowd_overrides_map" gets populated through user interactions with the UI
             - Tracks all overrides by user and ranks them (maybe by frequency)
+
+    - Budget Service:
+        - Runs MapReduce job on raw transaction logs for that month to create montly aggregates
+        - Writes data to monthly_spending aggregate table
+        - Call budget service to re-run analysis if user updates a category
+        ```
+        class Budget(object):
+
+        def __init__(self, income):
+            self.income = income
+            self.categories_to_budget_map = self.create_budget_template()
+
+        def create_budget_template(self):
+            return {
+                DefaultCategories.HOUSING: self.income * .4,
+                DefaultCategories.FOOD: self.income * .2,
+                DefaultCategories.GAS: self.income * .1,
+                DefaultCategories.SHOPPING: self.income * .2,
+                ...
+            }
+
+        def override_category_budget(self, category, amount):
+            self.categories_to_budget_map[category] = amount
+        ```
