@@ -120,6 +120,22 @@ def run_dedup_job(input_uri, output_uri):
             - Uses Notification Service to send push notifications to followers
                 - Uses Queue to asynchronously send out notifications
                 - Notification processes queue event, does reverse lookup on user's subscribed to author's tweets, sends tweet metadata to mobile/email delivery services
+        - API:
+        ```
+        $ curl -X POST --data '{ "user_id": "123", "auth_token": "ABC123", \
+        "status": "hello world!", "media_ids": "ABC987" }' \
+        https://twitter.com/api/v1/tweet
+        ```
+        - Response:
+        ```
+        {
+            "created_at": "Wed Sep 05 00:37:15 +0000 2012",
+            "status": "hello world!",
+            "tweet_id": "987",
+            "user_id": "123",
+            ...
+        }
+        ```
     - User views home timeline:
         - Client requests to view home timeline
         - Web server forwards request to read api
@@ -130,6 +146,16 @@ def run_dedup_job(input_uri, output_uri):
                 - May also have tweet-level cache sitting in front of this to boost performance on popular tweets
             - Queries User Info service to get user info via user ids O(n)
                 - Same concept as tweet info service retrieval
+        - API: `$ curl https://twitter.com/api/v1/home_timeline?user_id=123`
+        - Response:
+        ```
+        {
+            "user_id": "456",
+            "tweet_id": "123",
+            "status": "foo"
+        }
+        ...
+        ```        
     - User views their timeline:
         - Client requests their timeline
         - Web server forwards request to Read API
@@ -140,6 +166,7 @@ def run_dedup_job(input_uri, output_uri):
         - Search API processes query (remove markdown, extract query params, convert to boolean, correct spelling, standardize capitalization)
         - Search API contacts Search Service to gather tweet info based on query params
         - Search API contacts the Tweet Info Service with the tweet ids and User Info Service with the user ids to get the full tweet info for rendering
+
 - Database discussion:
     - User tweets can be stored in a SQL db
         - Predictable write pattern
@@ -194,6 +221,8 @@ def run_dedup_job(input_uri, output_uri):
                 - Create additional index on timestamp to speed up querying and keep data in memory
             - Saves content to object store
             - Returns url
+        - API: `$ curl -X POST --data '{ "expiration_length_in_minutes": "60", "paste_contents": "Hello World!" }' https://pastebin.com/api/v1/paste`
+        - Response: `{"shortlink": "foobar"}`
     - User searches a url:
         - Client sends request to web server
         - Web server forwards request to Read API
@@ -201,6 +230,16 @@ def run_dedup_job(input_uri, output_uri):
             - Checks SQL db for url
             - If it exists, fetch content from object store based on url path and render
             - If not, return an error message
+        - API:
+        `$ curl https://pastebin.com/api/v1/paste?shortlink=foobar`
+        - Response:
+        ```
+        {
+            "paste_contents": "Hello World"
+            "created_at": "YYYY-MM-DD HH:MM:SS"
+            "expiration_length_in_minutes": "60"
+        }
+        ```
     - Analytics on number of visits to a url per month:
         - Use MapReduce job on Web Server Logs
             - Scrape server logs and extract relevant lines with a server url
@@ -279,20 +318,7 @@ def run_dedup_job(input_uri, output_uri):
         # Step 4: Return shortened key
         return base62_str[:length]
     ```
-- API:
-    - Writes:
-        - `$ curl -X POST --data '{ "expiration_length_in_minutes": "60", "paste_contents": "Hello World!" }' https://pastebin.com/api/v1/paste`
-        - Response: `{"shortlink": "foobar"}`
-    - Reads:
-        - `$ curl https://pastebin.com/api/v1/paste?shortlink=foobar`
-        - Response:
-        ```
-        {
-            "paste_contents": "Hello World"
-            "created_at": "YYYY-MM-DD HH:MM:SS"
-            "expiration_length_in_minutes": "60"
-        }
-        ```
+        
 - Scaling:
     - Collecting server logs across multiple web servers could involve pushing them to a centralized storage (HDFS) and running MapReduce on all log files
         - Web server logs are now being kept in their own object store
