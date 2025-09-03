@@ -279,6 +279,20 @@ def run_dedup_job(input_uri, output_uri):
         # Step 4: Return shortened key
         return base62_str[:length]
     ```
+- API:
+    - Writes:
+        - `$ curl -X POST --data '{ "expiration_length_in_minutes": "60", "paste_contents": "Hello World!" }' https://pastebin.com/api/v1/paste`
+        - Response: `{"shortlink": "foobar"}`
+    - Reads:
+        - `$ curl https://pastebin.com/api/v1/paste?shortlink=foobar`
+        - Response:
+        ```
+        {
+            "paste_contents": "Hello World"
+            "created_at": "YYYY-MM-DD HH:MM:SS"
+            "expiration_length_in_minutes": "60"
+        }
+        ```
 - Scaling:
     - Collecting server logs across multiple web servers could involve pushing them to a centralized storage (HDFS) and running MapReduce on all log files
         - Web server logs are now being kept in their own object store
@@ -290,3 +304,5 @@ def run_dedup_job(input_uri, output_uri):
         - User requests a write, and synchronously a shortlink is generated and sent in response to user
         - WriteJob is created and pushed to queue, worker node picks this job up to write data to SQL db and Object store
 <img width="936" height="1360" alt="image" src="https://github.com/user-attachments/assets/5cbd1a20-73d7-40a4-83b3-05b6f616c22b" />
+
+### Mint
