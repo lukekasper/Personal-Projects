@@ -503,7 +503,7 @@ def run_dedup_job(input_uri, output_uri):
         def override_category_budget(self, category, amount):
             self.categories_to_budget_map[category] = amount
         ```
-- Consideration:
+- Considerations:
     - User updates a category manually:
         - Web server contacts accounts API
         - Accounts API puts job on queue to update that transaction
@@ -515,3 +515,4 @@ def run_dedup_job(input_uri, output_uri):
     - Keep only a months worth of data in transactions table
         - Can rebuild for older transactions on-the-fly from object store (raw data)
     - Keep "hot" transactions permenantly in memory with refresh-ahead or LRU cache
+<img width="1308" height="1332" alt="image" src="https://github.com/user-attachments/assets/f4a19d62-115a-4205-8c03-af3da940ed27" />
