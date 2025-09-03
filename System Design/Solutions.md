@@ -288,3 +288,4 @@ def run_dedup_job(input_uri, output_uri):
     - Can create an asyncronous workflow for writes to speed up performance:
         - User requests a write, and synchronously a shortlink is generated and sent in response to user
         - WriteJob is created and pushed to queue, worker node picks this job up to write data to SQL db and Object store
+<img width="936" height="1360" alt="image" src="https://github.com/user-attachments/assets/5cbd1a20-73d7-40a4-83b3-05b6f616c22b" />
