@@ -1,4 +1,14 @@
 ## System Design Solutions
+
+### General Info
+- Reading 1 MB sequentially from memory takes about 250 microseconds, while reading from SSD takes 4x and from disk takes 80x longer
+- Sizing:
+    - Currency/Datetime ~ 5 bytes
+    - Char = 1 byte
+    - Int = 4 bytes
+    - Double = 8 bytes
+    - Media ~ 1-10 KB
+
 ### Web Crawler
 - Key data structures (NoSQL)
     - links_to_crawl: use heapq to maintain priority queue
@@ -518,3 +528,42 @@ def run_dedup_job(input_uri, output_uri):
     - Candidates for NoSQL:
         - Seller->Category maps: key-value, small, Redis
 <img width="1308" height="1332" alt="image" src="https://github.com/user-attachments/assets/f4a19d62-115a-4205-8c03-af3da940ed27" />
+
+### Social Network Data Structures
+- Find shortest path between user and searched person
+```
+class Graph(Graph):
+
+    def shortest_path(self, source, dest):
+        if source is None or dest is None:
+            return None
+        if source is dest:
+            return [source.key]
+        prev_node_keys = self._shortest_path(source, dest)
+        if prev_node_keys is None:
+            return None
+        else:
+            path_ids = [dest.key]
+            prev_node_key = prev_node_keys[dest.key]
+            while prev_node_key is not None:
+                path_ids.append(prev_node_key)
+                prev_node_key = prev_node_keys[prev_node_key]
+            return path_ids[::-1]
+
+    def _shortest_path(self, source, dest):
+        queue = deque()
+        queue.append(source)
+        prev_node_keys = {source.key: None}
+        source.visit_state = State.visited
+        while queue:
+            node = queue.popleft()
+            if node is dest:
+                return prev_node_keys
+            prev_node = node
+            for adj_node in node.adj_nodes.values():
+                if adj_node.visit_state == State.unvisited:
+                    queue.append(adj_node)
+                    prev_node_keys[adj_node.key] = prev_node.key
+                    adj_node.visit_state = State.visited
+        return None
+```
