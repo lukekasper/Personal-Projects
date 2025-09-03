@@ -509,3 +509,9 @@ def run_dedup_job(input_uri, output_uri):
         - Accounts API puts job on queue to update that transaction
         - Rerun budget service to recompute statistics for that user/month including the updated transaction
             - Need to be careful how we incorporate the updated info with the out-of-date raw logs
+    - Store monthly_spending in Analytics Database (Amazon Redshift or Google BigQuery)
+        - May need to access and sum over monthly totals for ALL users to do a rollup
+        - Can be very computationally expensive
+    - Keep only a months worth of data in transactions table
+        - Can rebuild for older transactions on-the-fly from object store (raw data)
+    - Keep "hot" transactions permenantly in memory with refresh-ahead or LRU cache
