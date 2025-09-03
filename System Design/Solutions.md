@@ -425,7 +425,15 @@ def run_dedup_job(input_uri, output_uri):
                     - Notification service uses a queue and downstream email/mobile push services to distribute notifications
     - Service recommends a budget
         - Create a budget template based on user defined income
-
+        - User can override budget categories
+        - Store results in buget_overrides table
+        - Every time the Budget service recomputes a monthly spending, compare against the user budget
+            - Send notifications when a defined threshold is met
+            - Display metrics to user
+    - User accesses summaries and transactions
+        - Client sends request to web server, forwards to Read API
+        - Read API:
+            - Employs read-through cache to display content
           
 - Service Implementations:
     - Category Service:
