@@ -436,13 +436,12 @@ def run_dedup_job(input_uri, output_uri):
         ...
         ```
         - For sellers not in initial map, use user overrides:
-```
+        ```
         class Categorizer(object):
-    
+
         def __init__(self, seller_category_map, seller_category_crowd_overrides_map):
             self.seller_category_map = seller_category_map
-            self.seller_category_crowd_overrides_map = \
-                seller_category_crowd_overrides_map
+            self.seller_category_crowd_overrides_map = seller_category_crowd_overrides_map
     
         def categorize(self, transaction):
             if transaction.seller in self.seller_category_map:
@@ -452,14 +451,15 @@ def run_dedup_job(input_uri, output_uri):
                     self.seller_category_crowd_overrides_map[transaction.seller].peek_min()
                 return self.seller_category_map[transaction.seller]
             return None
-    
+
         class Transaction(object):
-    
+
         def __init__(self, created_at, seller, amount):
             self.created_at = created_at
             self.seller = seller
             self.amount = amount
-```
+        ```
+
             - Min heap would allow lookups of top overrides in O(1)
             - "seller_category_crowd_overrides_map" gets populated through user interactions with the UI
                 - Tracks all overrides by user and ranks them (maybe by frequency)
