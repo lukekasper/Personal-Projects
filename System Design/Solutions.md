@@ -513,7 +513,5 @@ def run_dedup_job(input_uri, output_uri):
         - May need to access and sum over monthly totals for ALL users to do a rollup
         - Can be very computationally expensive
     - Keep only a months worth of data in transactions table
- <img width="1308" height="1332" alt="image" src="https://github.com/user-attachments/assets/aa7f3813-e91b-437e-b274-ce5984b718a7" />
-
         - Can rebuild for older transactions on-the-fly from object store (raw data)
     - Keep "hot" transactions permenantly in memory with refresh-ahead or LRU cache
