@@ -661,3 +661,13 @@ class UserGraphService(object):
                     visited_ids.add(friend_id)
         return None
 ```
+- API: `$ curl https://social.com/api/v1/friend_search?person_id=1234`
+- Response:
+```
+{
+    "person_id": "100",
+    "name": "foo",
+    "link": "https://social.com/foo",
+}
+...
+```
