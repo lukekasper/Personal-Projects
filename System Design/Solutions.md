@@ -8,6 +8,11 @@
     - Int = 4 bytes
     - Double = 8 bytes
     - Media ~ 1-10 KB
+- Scaling the design:
+    1) Benchmark/Load Test (ab: Apache HTTP server benchmarking tool)
+    2) Profile for bottlenecks (Slow Query Log)
+    3) Address bottlenecks while evaluating alternatives and trade-offs
+    4) Repeat
 
 ### Web Crawler
 - Key data structures (NoSQL)
@@ -917,3 +922,50 @@ FOREIGN KEY(product_id) REFERENCES Products(id)
         - Only store last months data
         - Rebuild from logs if older data is needed
     - Use memcache for Reads (cache-aside)
+
+### Scale System on AWS
+- Core concepts:
+    - Use basic monitoring to find bottlenecks (IO, memory, CPU, network)
+        - CloudWatch
+    - Assign public ip
+        - Elastic IPs provide a public endpoint whose IP doesn't change on reboot
+    - Assign DNS, point to public ip
+        - Route 53
+    - Secure Web Server:
+        - Requests only from:
+            - Port 80: HTTP
+            - Port 443: HTTPS
+            - Port 22: ssh from whitelisted ips
+        - No initiating outbound connections
+- Scaling Phase 1:
+    - Benchmarking shows db is slow
+    - Seperate db concerns
+        - Object store (s3)
+        - SQL to a seperate server (managed by Amazon's RDS)
+    - Secure system:
+        - Encrypt data at rest
+        - Use virtual private cloud
+            - Public subnet for web server for traffic from internet
+            - Private subnet for everything else
+            - Only open ports for whitelisted ips for each component
+- Scaling Phase 2:
+    - Benchmark shows web server is slow
+    - Add load balancer
+        - Amazon's ELB, HAProxy, or NGINX
+        - Terminate SSL in load balancer to reduce downstream load
+    - Replicate web server over multiple zones
+    - Replicate SQL db in Master-Slave over multiple zones
+    - Seperate Web and Platform layers (Web servers vs API servers)
+    - Move static content to CDN (CloudFront)
+- Scaling Phase 3:
+    - Benchmarking shows slow db performance and 100:1 read:write ratio
+    -Implement caching
+        - Can first try SQL caching
+        - Implement memory cache (Amnazon's Elasticache) layer
+        - Move session data from web servers to seperate cache
+            - Makes web servers stateless (autoscaling)
+    - Add Read replicas
+        - Seperate application logic for distinct read/write actions
+        - Load balancers in front of read replicas
+    - Horizontally scale web/application servers
+- 
