@@ -912,3 +912,8 @@ FOREIGN KEY(category_id) REFERENCES Categories(id)
 FOREIGN KEY(product_id) REFERENCES Products(id)
 ```
     - Index on all id, product_id, category_id for faster lookups
+- Optimizations
+    - Use analytics db for sales_rank table
+        - Only store last months data
+        - Rebuild from logs if older data is needed
+    - Use memcache for Reads (cache-aside)
