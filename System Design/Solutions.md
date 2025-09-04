@@ -729,9 +729,11 @@ class QueryApi(object):
 ```
 class Node(object):
 
-    def __init__(self, query, results):
+    def __init__(self, query, results, prev=None, next=None):
         self.query = query
         self.results = results
+        self.prev = prev
+        self.next = next
 ```
 - Linked List:
 ```
