@@ -567,3 +567,37 @@ class Graph(Graph):
                     adj_node.visit_state = State.visited
         return None
 ```
+- Shard users across Persons servers and access with Lookup Service (can use consistent hashing scheme to do this)
+    -  Client contacts web server, forwards request to Search API
+    -  Search API forwards request to User Graph Service
+    -  User Graph Service:
+        - Uses Lookup Service to find Person Server where user is located
+        - Retrieves list of user's friend_ids
+        - Runs a BFS using user as source and friend_ids as first neighbors
+            - To get neighbor from a node, User Graph Service will again need to contact Lookup Service/Person Servers to find that neighbors friend_ids
+         
+- Consistent hashing implementation:
+```
+import hashlib
+import bisect
+
+class ConsistentHashRing:
+    def __init__(self, servers):
+        self.ring = []
+        self.server_map = {}
+        for server in servers:
+            key = self.hash(server)
+            self.ring.append(key)
+            self.server_map[key] = server
+        self.ring.sort()
+
+    def hash(self, key):
+        """Returns a hash value in integer space"""
+        return int(hashlib.md5(key.encode()).hexdigest(), 16)
+
+    def get_server(self, user_id):
+        """Find the server responsible for this user"""
+        user_hash = self.hash(user_id)
+        idx = bisect.bisect(self.ring, user_hash) % len(self.ring)
+        return self.server_map[self.ring[idx]]
+```
