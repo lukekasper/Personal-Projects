@@ -706,9 +706,10 @@ class UserGraphService(object):
 ```
 class QueryApi(object):
 
-    def __init__(self, memory_cache, reverse_index_service):
+    def __init__(self, memory_cache, reverse_index_service, document_service):
         self.memory_cache = memory_cache
         self.reverse_index_service = reverse_index_service
+        self.document_service = document_service
 
     def parse_query(self, query):
         """Remove markup, break text into terms, deal with typos,
