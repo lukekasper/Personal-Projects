@@ -694,4 +694,8 @@ class UserGraphService(object):
         - Shard servers by geographic location to increase size of batches
             - Discuss tradeoff of this with consistent hashing scheme and scalability
             - Could do a middle-ground combined approach
+    - Start BFS from user's with many friends (less degrees of seperation)
+        - Maintain a key-val memory cache for users -> friends count mapping for fast lookups
+        - Okay to have eventual consistency here
+    - Can make user of Graph db (Neo4j) and graph query language (GraphQL) for optimal performance
 <img width="774" height="1042" alt="image" src="https://github.com/user-attachments/assets/971a9317-3e61-456b-a883-454665eda75b" />
