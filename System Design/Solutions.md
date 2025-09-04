@@ -689,5 +689,9 @@ class UserGraphService(object):
             - Have to be careful how we determine what to store (only depth of a few degrees, only so many nodes per layer, ect)
         - Only run live BFS if both cache and NoSQL hits fail
     - Bi-directional BFS search
-    - 
+    - Batch together Person Server lookups
+        - Can do this for a single user request, or create a small window to batch requests across multiple users
+        - Shard servers by geographic location to increase size of batches
+            - Discuss tradeoff of this with consistent hashing scheme and scalability
+            - Could do a middle-ground combined approach
 <img width="774" height="1042" alt="image" src="https://github.com/user-attachments/assets/971a9317-3e61-456b-a883-454665eda75b" />
