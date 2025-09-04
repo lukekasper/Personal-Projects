@@ -811,6 +811,20 @@ class Cache(object):
         - Of the form: [timestamp, product_id, category_id, qty , total_price, seller_id, buyer_id]
     - Sales Rank Service runs MapReduce job on raw logs
         - Saves results to sales_rank SQL table
+- User views most popular products by category:
+    - Client sends request to web server, forwards to Read API
+    - Read API reads from sales_rank SQL db
+    - API: `$ curl https://amazon.com/api/v1/popular?category_id=1234`
+    - Response:
+    ```
+    {
+    "id": "100",
+    "category_id": "1234",
+    "total_sold": "100000",
+    "product_id": "50",
+    }
+    ...
+    ```
 - MapReduce Implementation:
     - Transform the data to: (category, product_id), sum(quantity)
     - Perform a distributed sort
@@ -897,4 +911,4 @@ PRIMARY KEY(id)
 FOREIGN KEY(category_id) REFERENCES Categories(id)
 FOREIGN KEY(product_id) REFERENCES Products(id)
 ```
-- 
+    - Index on all id, product_id, category_id for faster lookups
