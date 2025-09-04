@@ -897,5 +897,4 @@ PRIMARY KEY(id)
 FOREIGN KEY(category_id) REFERENCES Categories(id)
 FOREIGN KEY(product_id) REFERENCES Products(id)
 ```
-    - Index on id, category_id, product_id
 - 
