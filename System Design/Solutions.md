@@ -648,6 +648,18 @@ class UserGraphService(object):
         # this can be stored in the node itself
         visited_ids = set()
         visited_ids.add(source.id)
+
+        # Try to resume from cached layers
+        while True:
+            cached_layer = get_cached_layer(source_id, depth)
+            if cached_layer:
+                for node in cached_layer:
+                    visited[node] = source_id  # Assume direct parent for simplicity
+                queue = deque(cached_layer)
+                depth += 1
+            else:
+                break
+
         while queue:
             node = queue.popleft()
             if node.key is dest_key:
@@ -671,4 +683,6 @@ class UserGraphService(object):
 }
 ...
 ```
+- Optimizations
+    - Store complete or partial BFS traversals in memory cache
 <img width="774" height="1042" alt="image" src="https://github.com/user-attachments/assets/971a9317-3e61-456b-a883-454665eda75b" />
