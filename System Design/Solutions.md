@@ -684,5 +684,10 @@ class UserGraphService(object):
 ...
 ```
 - Optimizations
-    - Store complete or partial BFS traversals in memory cache
+    - Store complete or partial BFS traversals in memory cache (seed queue with this)
+        - Can also precompute popular user graphs and store in NoSQL db
+            - Have to be careful how we determine what to store (only depth of a few degrees, only so many nodes per layer, ect)
+        - Only run live BFS if both cache and NoSQL hits fail
+    - Bi-directional BFS search
+    - 
 <img width="774" height="1042" alt="image" src="https://github.com/user-attachments/assets/971a9317-3e61-456b-a883-454665eda75b" />
