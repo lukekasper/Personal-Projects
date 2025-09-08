@@ -959,7 +959,7 @@ FOREIGN KEY(product_id) REFERENCES Products(id)
     - Move static content to CDN (CloudFront)
 - Scaling Phase 3:
     - Benchmarking shows slow db performance and 100:1 read:write ratio
-    -Implement caching
+    - Implement caching
         - Can first try SQL caching
         - Implement memory cache (Amnazon's Elasticache) layer
         - Move session data from web servers to seperate cache
@@ -968,4 +968,26 @@ FOREIGN KEY(product_id) REFERENCES Products(id)
         - Seperate application logic for distinct read/write actions
         - Load balancers in front of read replicas
     - Horizontally scale web/application servers
-- 
+- Scaling Phase 4:
+    - Benchmark shows traffic spikes
+    - Integrate autoscaling to handle uneven traffic patterns
+    - Automate DevOps: ansible standardizes deployment and configuration of EC2 instances
+    - Monitor bottlenecks:
+         - Host level: review a single EC2 instance for CPU, memory, disk I/O, network throughput (CloudWatch)
+         - Aggregate level: review load balancer stats (Amazon ELB/ALB metrics via CloudWatch)
+         - Log analysis: CloudWatch, CloudTrail, Loggly, Splunk, Sumo
+         - External site performance: Pingdom or New Relic
+         - Handle notifications and incidents: PagerDuty
+         - Error Reporting: Sentry
+     - Consider managed service like AWS Autoscaling
+         - Seperate groups for web server and application server types
+         - Place each group in multiple availability zones
+         - Set max/min num of instances
+         - Trigger scale up/down through CloudWatch
+ - Scaling Phase 5:
+     - If SQL db is too large, store limited time period in db and rest in data warehouse (Redshift)
+     - Horizonally scale memory cache
+     - Employ additional SQL scaling patterns: federation, sharding, denormaliation, sql tuning
+     - Move some data to NoSQL db
+     - Create seperate data pipeline for asynchronous offline processing of computationally intensive tasks
+         - Make use of queues and workers (RabbitMQ)
