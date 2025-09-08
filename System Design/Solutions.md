@@ -10,7 +10,7 @@
     - Media ~ 1-10 KB
 - Scaling the design:
     1) Benchmark/Load Test (ab: Apache HTTP server benchmarking tool)
-    2) Profile for bottlenecks (Slow Query Log)
+    2) Profile for bottlenecks (Slow Query Log for SQL)
     3) Address bottlenecks while evaluating alternatives and trade-offs
     4) Repeat
 
