@@ -113,3 +113,43 @@ class Deck:
         self.deal_index = 0
         for card in self.cards:
             card.is_available = True
+
+class BlackJackGame:
+    def __init__(self):
+        self.deck = self._create_deck()
+        self.deck.shuffle()
+        self.player_hand = BlackJackHand()
+        self.dealer_hand = BlackJackHand()
+
+    def _create_deck(self):
+        cards = []
+        for suit in Suit:
+            for value in range(1, 14):  # 1 = Ace, 11–13 = J/Q/K
+                cards.append(BlackJackCard(value, suit))
+        return Deck(cards)
+
+    def deal_initial_cards(self):
+        for _ in range(2):
+            self.player_hand.add_card(self.deck.deal_card())
+            self.dealer_hand.add_card(self.deck.deal_card())
+
+    def show_hands(self):
+        print("Player's Hand:")
+        for card in self.player_hand.cards:
+            print(f"{card.value} of {card.suit.name}")
+        print(f"Score: {self.player_hand.score()}\n")
+
+        print("Dealer's Hand:")
+        for card in self.dealer_hand.cards:
+            print(f"{card.value} of {card.suit.name}")
+        print(f"Score: {self.dealer_hand.score()}\n")
+
+    def play(self):
+        self.deal_initial_cards()
+        self.show_hands()
+        # Extend with hit/stand logic, dealer rules, win/loss resolution
+
+if __name__ == "__main__":
+    game = BlackJackGame()
+    game.play()
+
