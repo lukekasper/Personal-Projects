@@ -64,6 +64,10 @@ class Hand:
     def add_card(self, card):
         self.cards.append(card)
 
+    @abstractmethod
+    def score(self):
+        pass
+
 
 class BlackJackHand(Hand):
     BLACKJACK = 21
