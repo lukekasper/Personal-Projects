@@ -7,15 +7,14 @@ import random
 class Suit(Enum):
     HEART = 0
     DIAMOND = 1
-    CLUBS = 2
-    SPADE = 3
+    CLUB = 2
+    SPADES = 3
 
 
 class Card(ABC):
     def __init__(self, value, suit):
-        self._value = value
+        self._base_value = value
         self.suit = suit
-        self.is_available = True
 
     @property
     @abstractmethod
@@ -33,10 +32,10 @@ class BlackJackCard(Card):
         super().__init__(value, suit)
 
     def is_ace(self):
-        return self._value == 1
+        return self._base_value == 1
 
     def is_face_card(self):
-        return 10 < self._value <= 13  # Jack, Queen, King
+        return 10 < self._base_value <= 13
 
     @property
     def value(self):
@@ -45,14 +44,17 @@ class BlackJackCard(Card):
         elif self.is_face_card():
             return 10
         else:
-            return self._value
+            return self._base_value
 
     @value.setter
     def value(self, new_value):
         if 1 <= new_value <= 13:
-            self._value = new_value
+            self._base_value = new_value
         else:
             raise ValueError(f'Invalid card value: {new_value}')
+
+    def __str__(self):
+        return f"{self.value} of {self.suit.name}"
 
 
 class Hand:
@@ -62,9 +64,6 @@ class Hand:
     def add_card(self, card):
         self.cards.append(card)
 
-    def score(self):
-        return sum(card.value for card in self.cards)
-
 
 class BlackJackHand(Hand):
     BLACKJACK = 21
@@ -73,6 +72,9 @@ class BlackJackHand(Hand):
         super().__init__(cards)
 
     def score(self):
+        if not self.cards:
+            return 0
+
         min_over = sys.maxsize
         max_under = -sys.maxsize
         for score in self.possible_scores():
@@ -104,15 +106,13 @@ class Deck:
         if self.deal_index >= len(self.cards):
             return None
         card = self.cards[self.deal_index]
-        card.is_available = False
         self.deal_index += 1
         return card
 
     def shuffle(self):
         random.shuffle(self.cards)
         self.deal_index = 0
-        for card in self.cards:
-            card.is_available = True
+
 
 class BlackJackGame:
     def __init__(self):
@@ -124,7 +124,7 @@ class BlackJackGame:
     def _create_deck(self):
         cards = []
         for suit in Suit:
-            for value in range(1, 14):  # 1 = Ace, 11–13 = J/Q/K
+            for value in range(1, 14):
                 cards.append(BlackJackCard(value, suit))
         return Deck(cards)
 
@@ -136,12 +136,12 @@ class BlackJackGame:
     def show_hands(self):
         print("Player's Hand:")
         for card in self.player_hand.cards:
-            print(f"{card.value} of {card.suit.name}")
+            print(card)
         print(f"Score: {self.player_hand.score()}\n")
 
         print("Dealer's Hand:")
         for card in self.dealer_hand.cards:
-            print(f"{card.value} of {card.suit.name}")
+            print(card)
         print(f"Score: {self.dealer_hand.score()}\n")
 
     def play(self):
@@ -149,7 +149,7 @@ class BlackJackGame:
         self.show_hands()
         # Extend with hit/stand logic, dealer rules, win/loss resolution
 
+
 if __name__ == "__main__":
     game = BlackJackGame()
     game.play()
-
