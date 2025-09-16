@@ -54,7 +54,16 @@ class BlackJackCard(Card):
             raise ValueError(f'Invalid card value: {new_value}')
 
     def __str__(self):
-        return f"{self.value} of {self.suit.name}"
+        def __str__(self):
+            name_map = {
+                1: "Ace",
+                11: "Jack",
+                12: "Queen",
+                13: "King"
+            }
+            display = name_map.get(self._base_value, str(self._base_value))
+            return f"{display} of {self.suit.name.capitalize()}"
+
 
 
 class Hand:
