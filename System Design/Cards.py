@@ -149,9 +149,41 @@ class BlackJackGame:
         print(f"Score: {self.dealer_hand.score()}\n")
 
     def play(self):
-        self.deal_initial_cards()
+    self.deal_initial_cards()
+
+    # Player turn
+    while True:
         self.show_hands()
-        # Extend with hit/stand logic, dealer rules, win/loss resolution
+        if self.player_hand.score() > BlackJackHand.BLACKJACK:
+            print("Player busts! Dealer wins.\n")
+            return
+        move = input("Hit or Stand? (h/s): ").strip().lower()
+        if move == 'h':
+            self.player_hand.add_card(self.deck.deal_card())
+        elif move == 's':
+            break
+        else:
+            print("Invalid input. Please enter 'h' or 's'.")
+
+    # Dealer turn
+    print("\nDealer's turn...")
+    while self.dealer_hand.score() < 17:
+        self.dealer_hand.add_card(self.deck.deal_card())
+
+    self.show_hands()
+
+    # Win/loss resolution
+    player_score = self.player_hand.score()
+    dealer_score = self.dealer_hand.score()
+
+    if dealer_score > BlackJackHand.BLACKJACK:
+        print("Dealer busts! Player wins.\n")
+    elif player_score > dealer_score:
+        print("Player wins!\n")
+    elif player_score < dealer_score:
+        print("Dealer wins!\n")
+    else:
+        print("It's a tie!\n")
 
 
 if __name__ == "__main__":
