@@ -1,0 +1,126 @@
+from abc import ABCMeta, abstractmethod
+from collections import deque
+from enum import Enum
+
+
+class Rank(Enum):
+    OPERATOR = 0
+    SUPERVISOR = 1
+    DIRECTOR = 2
+
+
+class CallState(Enum):
+    READY = 0
+    IN_PROGRESS = 1
+    COMPLETE = 2
+
+
+class Call:
+    def __init__(self, rank):
+        self.state = CallState.READY
+        self.rank = rank
+        self.employee = None
+
+
+class Employee(metaclass=ABCMeta):
+    def __init__(self, employee_id, name, rank, call_center):
+        self.employee_id = employee_id
+        self.name = name
+        self.rank = rank
+        self.call = None
+        self.call_center = call_center
+
+    def take_call(self, call):
+        self.call = call
+        call.employee = self
+        call.state = CallState.IN_PROGRESS
+
+    def complete_call(self):
+        self.call.state = CallState.COMPLETE
+        self.call_center.notify_call_completed(self.call)
+
+    @abstractmethod
+    def escalate_call(self):
+        pass
+
+    def _escalate_call(self):
+        self.call.state = CallState.READY
+        call = self.call
+        self.call = None
+        self.call_center.notify_call_escalated(call)
+
+
+class Operator(Employee):
+    def __init__(self, employee_id, name, call_center):
+        super().__init__(employee_id, name, Rank.OPERATOR, call_center)
+
+    def escalate_call(self):
+        self.call.rank = Rank.SUPERVISOR
+        self._escalate_call()
+
+
+class Supervisor(Employee):
+    def __init__(self, employee_id, name, call_center):
+        super().__init__(employee_id, name, Rank.SUPERVISOR, call_center)
+
+    def escalate_call(self):
+        self.call.rank = Rank.DIRECTOR
+        self._escalate_call()
+
+
+class Director(Employee):
+    def __init__(self, employee_id, name, call_center):
+        super().__init__(employee_id, name, Rank.DIRECTOR, call_center)
+
+    def escalate_call(self):
+        raise NotImplementedError("Directors must be able to handle any call")
+
+
+class CallCenter:
+    def __init__(self, operators, supervisors, directors):
+        self.operators = operators
+        self.supervisors = supervisors
+        self.directors = directors
+        self.queued_calls = deque()
+
+    def dispatch_call(self, call):
+        if call.rank not in Rank:
+            raise ValueError(f"Invalid call rank: {call.rank}")
+
+        employee = None
+        if call.rank == Rank.OPERATOR:
+            employee = self._dispatch_call(call, self.operators)
+        if call.rank == Rank.SUPERVISOR or employee is None:
+            employee = self._dispatch_call(call, self.supervisors)
+        if call.rank == Rank.DIRECTOR or employee is None:
+            employee = self._dispatch_call(call, self.directors)
+
+        if employee is None:
+            self.queued_calls.append(call)
+
+    def _dispatch_call(self, call, employees):
+        for employee in employees:
+            if employee.call is None:
+                employee.take_call(call)
+                return employee
+        return None
+
+    def notify_call_completed(self, call):
+        employee = call.employee
+        call.employee = None
+        employee.call = None
+        self.dispatch_queued_call_to_newly_freed_employee(employee)
+
+    def notify_call_escalated(self, call):
+        call.employee = None
+        self.dispatch_call(call)
+
+    def dispatch_queued_call_to_newly_freed_employee(self, employee):
+        if not self.queued_calls:
+            return
+
+        for i, call in enumerate(self.queued_calls):
+            if call.rank == employee.rank:
+                self.queued_calls.remove(call)
+                employee.take_call(call)
+                break
