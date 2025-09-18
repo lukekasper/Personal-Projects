@@ -1,86 +1,55 @@
-class Node(object):
-    def __init__(self, value, prev=None, next=None):
-        self.value = value
-        self.prev = prev
-        self.next = next
+class Node:
+    def __init__(self, query, result):
+        self.query = query
+        self.result = result
+        self.prev = None
+        self.next = None
 
 
-class LinkedList(object):
-    def __init__(self, head=None, tail=None):
-        self.head = head
-        self.tail = tail
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = {}  # Maps query to Node
 
+        # Dummy head and tail nodes
+        self.head = Node(None, None)  # Most recently used
+        self.tail = Node(None, None)  # Least recently used
+        self.head.next = self.tail
+        self.tail.prev = self.head
 
-    def remove_from_tail(self):
-        if self.tail.prev:
-            self.tail = self.tail.prev
-            self.tail.next = None
-        else:
-            self.tail = None
-            self.head = None
+    def _remove(self, node):
+        """Detach node from the linked list."""
+        node.prev.next = node.next
+        node.next.prev = node.prev
 
-
-    def append_to_front(self, node):
-        node.prev = None
-        node.next = self.head
-        if self.head:
-            self.head.prev = node
-        self.head = node
-
-        if not self.tail:
-            self.tail = node
-
-
-    def move_to_front(self, node):
-        if node is self.head:
-            return
-        
-        if node.prev:
-            node.prev.next = node.next
-
-        if node.next:
-            node.next.prev = node.prev
-
-        node.prev = None
-        node.next = self.head
-        if self.head:
-            self.head.prev = node    
-        self.head = node
-
-        if self.tail is None:
-            self.tail = node
-
-
-class LRUCache(object):
-
-    def __init__(self, MAX_SIZE):
-        self.MAX_SIZE = MAX_SIZE
-        self.map = {}
-        self.list = LinkedList()
-        self.size = 0
+    def _insert_to_front(self, node):
+        """Insert node right after head (most recently used)."""
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.next = node
 
     def get(self, query):
+        if query in self.cache:
+            node = self.cache[query]
+            self._remove(node)
+            self._insert_to_front(node)
+            return node.result
+        return None
 
-        node = self.lookup.get(query)
-
-        if not node:
-            return None
-        
-        self.list.move_to_front(node)
-        return node.value
-    
-    def set(self, query, value):
-        
-        node = self.map.get(query)
-
-        if node:
-            node.value = value
-            self.list.move_to_front(node)
+    def set(self, query, result):
+        if query in self.cache:
+            node = self.cache[query]
+            node.result = result
+            self._remove(node)
+            self._insert_to_front(node)
         else:
-            if self.size == self.MAX_SIZE:
-                self.list.remove_from_tail()
-                del self.map[self.list.tail.query]
-            else:
-                self.size += 1
-            self.map[query] = Node(value)
-            self.list.append_to_front(self.map[query])
+            if len(self.cache) == self.capacity:
+                # Remove least recently used node
+                lru = self.tail.prev
+                self._remove(lru)
+                del self.cache[lru.query]
+
+            new_node = Node(query, result)
+            self.cache[query] = new_node
+            self._insert_to_front(new_node)
