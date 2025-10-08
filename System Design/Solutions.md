@@ -681,6 +681,7 @@ class UserGraphService(object):
         visited_ids.add(source.id)
 
         # Try to resume from cached layers
+        depth = 0
         while True:
             cached_layer = get_cached_layer(source_id, depth)
             if cached_layer:
