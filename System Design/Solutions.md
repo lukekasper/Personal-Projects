@@ -680,20 +680,6 @@ class UserGraphService(object):
         visited_ids = set()
         visited_ids.add(source.id)
 
-        # Try to resume from cached layers
-        depth = 0
-        while True:
-            cached_layer = get_cached_layer(source_id, depth)
-            if cached_layer:
-                for node in cached_layer:
-                    if node.id not in visited_ids:
-                        visited_ids.add(node.id)
-                        prev_node_keys[node.key] = source_id # Assume direct parent for simplicity
-                queue = deque(cached_layer)
-                depth += 1
-            else:
-                break
-
         while queue:
             node = queue.popleft()
             if node.id == dest_id:
