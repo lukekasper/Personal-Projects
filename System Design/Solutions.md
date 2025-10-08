@@ -681,11 +681,11 @@ class UserGraphService(object):
         # visited, which can be different from a typical bfs where
         # this can be stored in the node itself
         visited_ids = set()
-        visited_ids.add(source.id)
+        visited_ids.add(source_key)
 
         # Try to resume from cached layers
         while True:
-            cached_layer = get_cached_layer(source_id, depth)
+            cached_layer = get_cached_layer(source_key, depth)
             if cached_layer:
                 for node in cached_layer:
                     visited[node] = source_id  # Assume direct parent for simplicity
