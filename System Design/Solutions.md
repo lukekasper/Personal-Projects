@@ -702,7 +702,7 @@ class UserGraphService(object):
                 if friend_id not in visited_ids:
                     friend_node = self.person(friend_id)
                     queue.append(friend_node)
-                    prev_node_keys[friend_id] = prev_node.key
+                    prev_node_keys[friend_id] = prev_node.id
                     visited_ids.add(friend_id)
         return None
 ```
