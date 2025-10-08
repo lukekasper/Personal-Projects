@@ -693,6 +693,65 @@ class UserGraphService(object):
                     visited_ids.add(friend_id)
         return None
 ```
+```
+BONUS:
+from collections import deque
+
+def bidirectional_bfs(graph, start, goal):
+    """
+    Find the shortest path between two nodes
+    """
+    if start == goal:
+        return [start]
+
+    # Queues for BFS from both ends
+    queue_start = deque([start])
+    queue_goal = deque([goal])
+
+    # Visited maps: node → parent
+    visited_start = {start: None}
+    visited_goal = {goal: None}
+
+    while queue_start and queue_goal:
+        # Expand one node from start side
+        current_start = queue_start.popleft()
+        for neighbor in graph.get(current_start, []):
+            if neighbor not in visited_start:
+                visited_start[neighbor] = current_start
+                queue_start.append(neighbor)
+                if neighbor in visited_goal:
+                    return reconstruct_path(visited_start, visited_goal, neighbor)
+
+        # Expand one node from goal side
+        current_goal = queue_goal.popleft()
+        for neighbor in graph.get(current_goal, []):
+            if neighbor not in visited_goal:
+                visited_goal[neighbor] = current_goal
+                queue_goal.append(neighbor)
+                if neighbor in visited_start:
+                    return reconstruct_path(visited_start, visited_goal, neighbor)
+
+    return None  # No path found
+
+def reconstruct_path(visited_start, visited_goal, meeting_point):
+    # Trace path from start to meeting point
+    path_start = []
+    node = meeting_point
+    while node is not None:
+        path_start.append(node)
+        node = visited_start[node]
+    path_start.reverse()
+
+    # Trace path from meeting point to goal
+    path_goal = []
+    node = visited_goal[meeting_point]
+    while node is not None:
+        path_goal.append(node)
+        node = visited_goal[node]
+
+    return path_start + path_goal
+
+```
 - API: `$ curl https://social.com/api/v1/friend_search?person_id=1234`
 - Response:
 ```
