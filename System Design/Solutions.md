@@ -650,45 +650,44 @@ class UserGraphService(object):
         person_server = self.lookup_service.lookup_person_server(person_id)
         return person_server.people([person_id])
 
-    def shortest_path(self, source_key, dest_key):
-        if source_key is None or dest_key is None:
+    def shortest_path(self, source_id, dest_id):
+        if source_id is None or dest_id is None:
             return None
-        if source_key is dest_key:
-            return [source_key]
-        prev_node_keys = self._shortest_path(source_key, dest_key)
+        if source_id == dest_id:
+            return [source_id]
+        prev_node_keys = self._shortest_path(source_id, dest_id)
         if prev_node_keys is None:
             return None
         else:
-            # Iterate through the path_ids backwards, starting at dest_key
-            path_ids = [dest_key]
-            prev_node_key = prev_node_keys[dest_key]
+            # Iterate through the path_ids backwards, starting at dest_id
+            path_ids = [dest_id]
+            prev_node_key = prev_node_keys[dest_id]
             while prev_node_key is not None:
                 path_ids.append(prev_node_key)
                 prev_node_key = prev_node_keys[prev_node_key]
             # Reverse the list since we iterated backwards
             return path_ids[::-1]
 
-    def _shortest_path(self, source_key, dest_key, path):
+    def _shortest_path(self, source_id, dest_id, path):
+
         # Use the id to get the Person
-        source = self.person(source_key)
-        # Update our bfs queue
+        source = self.person(source_id)
         queue = deque()
         queue.append(source)
-        # prev_node_keys keeps track of each hop from
-        # the source_key to the dest_key
-        prev_node_keys = {source_key: None}
-        # We'll use visited_ids to keep track of which nodes we've
-        # visited, which can be different from a typical bfs where
-        # this can be stored in the node itself
+
+        # prev_node_keys keeps track of each hop from the source_id to the dest_id
+        prev_node_keys = {source_id: None}
         visited_ids = set()
-        visited_ids.add(source_key)
+        visited_ids.add(source.id)
 
         # Try to resume from cached layers
         while True:
-            cached_layer = get_cached_layer(source_key, depth)
+            cached_layer = get_cached_layer(source_id, depth)
             if cached_layer:
                 for node in cached_layer:
-                    visited[node] = source_id  # Assume direct parent for simplicity
+                    if node.id not in visited_ids:
+                        visited_ids.add(node.id)
+                        prev_node_keys[node.key] = source_id # Assume direct parent for simplicity
                 queue = deque(cached_layer)
                 depth += 1
             else:
@@ -696,7 +695,7 @@ class UserGraphService(object):
 
         while queue:
             node = queue.popleft()
-            if node.key is dest_key:
+            if node.id == dest_id:
                 return prev_node_keys
             prev_node = node
             for friend_id in node.friend_ids:
