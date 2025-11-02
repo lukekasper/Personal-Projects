@@ -42,9 +42,11 @@
   - Flushes batch buffer and writes append-only bindary data to .dat file
   - Writer tracks size of data being written to file and starts a new one when threshold is reached
     - Allows for sooner offline processing of data
-   
-#### Previous Setup:
+
+#### Multi-threading:
 - One receive and one write thread per channel
+
+#### Previous Setup:
 - Previous setup used mutex to control read/writes to a shared data object
   - Receiver would flush buffer once chunk sized was reached
   - Use mutex on shared data object
