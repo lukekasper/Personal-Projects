@@ -32,6 +32,7 @@
 - Buffering layer:
   - Decouple ingestion from IO file writes
   - SPSC ring buffer per stream (lock-free queue)
+    - Boost supplies their own spsc lock-free queue
 - Assembly Layer:
   - Drain queue in batch chunks
   - Assembles chunks into radar periodics using in-memory bounded data structure
