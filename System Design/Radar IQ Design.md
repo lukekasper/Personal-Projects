@@ -55,5 +55,6 @@
   - Release object once written to
   - Writers would be looking for a full periodic return, and use mutext to write shared object to a file
   - Created lock contention
+- No distinct seperation of layers/services
 - Also no strict checking on data integrity or magic number implementation
 - No batching of writes or file chunking
