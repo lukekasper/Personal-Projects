@@ -45,6 +45,7 @@
 
 #### Multi-threading:
 - One receive and one write thread per channel
+- No mutexes needed due to lock-free SPSC ring buffer design
 
 #### Previous Setup:
 - Previous setup used mutex to control read/writes to a shared data object
