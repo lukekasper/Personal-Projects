@@ -43,13 +43,13 @@
   - Writer tracks size of data being written to file and starts a new one when threshold is reached
     - Allows for sooner offline processing of data
    
-- Previous setup discussion:
-  - One receive and one write thread per channel
-  - Previous setup used mutex to control read/writes to a shared data object
-    - Receiver would flush buffer once chunk sized was reached
-    - Use mutex on shared data object
-    - Release object once written to
-    - Writers would be looking for a full periodic return, and use mutext to write shared object to a file
-    - Created lock contention
-  - Also no strict checking on data integrity or magic number implementation
-  - No batching of writes or file chunking
+#### Previous Setup:
+- One receive and one write thread per channel
+- Previous setup used mutex to control read/writes to a shared data object
+  - Receiver would flush buffer once chunk sized was reached
+  - Use mutex on shared data object
+  - Release object once written to
+  - Writers would be looking for a full periodic return, and use mutext to write shared object to a file
+  - Created lock contention
+- Also no strict checking on data integrity or magic number implementation
+- No batching of writes or file chunking
