@@ -99,13 +99,15 @@ if __name__ == "__main__":
 
 #### Consumer Order Processing Service
 ```python
+import asyncio
 import logging
-from confluent_kafka import Consumer, KafkaException, KafkaError
+from confluent_kafka import Consumer, KafkaError, KafkaException
+from pydantic import BaseModel
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("OrderConsumer")
 
-class ProcessOrder:
+class OrderProcessor:
     def __init__(self, brokers="localhost:9092", group_id="order-service-group", topic="my_topic"):
         self.consumer = Consumer({
             'bootstrap.servers': brokers,
@@ -115,18 +117,19 @@ class ProcessOrder:
         self.topic = topic
         self.consumer.subscribe([self.topic])
 
-    def process_order(self, order_data: str):
-        """Business logic for handling an order message."""
-        logger.info(f"Processing order: {order_data}")
-        # Example: parse JSON, update DB, trigger workflow, etc.
-        # This is synchronous — no asyncio involved.
+    async def process_order(self, order: Order):
+        """Async business logic for handling an order."""
+        logger.info(f"Start processing order: {order.dict()}")
+        # Simulate slow I/O (DB write, external API call, etc.)
+        await asyncio.sleep(1)
+        logger.info(f"Finished processing order: {order.dict()}")
 
-    def run(self):
-        """Main loop: consume messages and process them synchronously."""
+    async def run(self):
         try:
             while True:
                 msg = self.consumer.poll(timeout=1.0)
                 if msg is None:
+                    await asyncio.sleep(0.1)
                     continue
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
@@ -134,15 +137,16 @@ class ProcessOrder:
                     else:
                         raise KafkaException(msg.error())
                 else:
-                    order_data = msg.value().decode("utf-8")
-                    logger.info(f"Received message: {order_data}")
-                    self.process_order(order_data)
-        except KeyboardInterrupt:
-            logger.info("Consumer interrupted, shutting down...")
+                    order = Order.parse_raw(msg.value().decode("utf-8"))
+                    # Schedule async task without blocking the loop
+                    asyncio.create_task(self.process_order(order))
         finally:
             self.consumer.close()
 
 if __name__ == "__main__":
-    service = ProcessOrder()
-    service.run()
+    processor = OrderProcessor()
+    try:
+        asyncio.run(processor.run())
+    except KeyboardInterrupt:
+        logger.info("Shutting down consumer service...")
 ```
