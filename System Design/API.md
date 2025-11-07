@@ -1,10 +1,11 @@
 #### Status Codes
-200 OK: Request successful, data returned.
-201 Created: New resource created.
-204 No Content: Success but no data returned.
-400 Bad Request: Invalid request.
-401 Unauthorized: Missing or invalid API key.
-500 Internal Server Error: Server encountered an error.
+- 200 OK: Request successful, data returned.
+- 201 Created: New resource created.
+- 204 No Content: Success but no data returned.
+- 400 Bad Request: Invalid request.
+- 401 Unauthorized: Missing or invalid API key.
+- 422 Unprocessable Content: Validation errors in content
+- 500 Internal Server Error: Server encountered an error.
 
 ```python
 # app.py
@@ -17,14 +18,16 @@ from authlib.jose import jwt, JsonWebToken
 from authlib.jose.errors import JoseError
 import requests
 from pydantic import BaseModel, Field, ValidationError, constr
+from confluent_kafka import Producer
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# ---- Config ----
-OIDC_ISSUER = "https://your-idp.example.com"
-OIDC_AUDIENCE = "orders-api"
-OIDC_JWKS_URL = f"{OIDC_ISSUER}/.well-known/jwks.json"
+# Initialize Redis cache client object
+r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+
+# Initialize producer (assuming broker config is already handled)
+producer = Producer({'bootstrap.servers': 'localhost:9092'})
 
 # ---- Schema ----
 class Order(BaseModel):
@@ -44,11 +47,12 @@ def create_order():
     if err:
         return jsonify({"error": err}), 401
 
+    # Validate datamodel
     try:
         payload = request.get_json(force=True)
-        order = Order(**payload)
-    except ValidationError as ve:
-        return jsonify({"error": "Validation failed", "details": ve.errors()}), 422
+        order = Order.parse_obj(payload)
+    except ValidationError as e:
+        return jsonify({"errors": e.errors()}), 422
     except Exception:
         return jsonify({"error": "Invalid JSON"}), 400
 
@@ -56,12 +60,27 @@ def create_order():
     if claims.get("sub") != order.user_id:
         return jsonify({"error": "Forbidden: user mismatch"}), 403
 
-    # For now, just acknowledge the order
-    return jsonify({
-        "status": "accepted",
-        "order_id": order.order_id,
-        "received_at": datetime.utcnow().isoformat() + "Z"
-    }), 202
+    # Idempotency: if idempotency_key provided, attempt to reuse existing order
+    # Should check if content differs from original, if so respond with error code
+    if order_in.idempotency_key:
+        existing_id = r.get(f"idempotency:{order_in.idempotency_key}")
+        if existing_id:
+            existing_order = r.get(f"order:{existing_id}")
+            return jsonify(json.loads(existing_order)), 200
+
+    # Serialize validated order to JSON
+    message = order.json()
+
+    # Push onto Kafka topic
+    producer.produce(
+        topic="orders",
+        key=order.order_id,               # partition by order_id
+        value=message.encode("utf-8"),
+        callback=delivery_report
+    )
+    producer.poll(0)  # trigger delivery
+
+    return jsonify(order.dict()), 201
 
 @app.route("/healthz", methods=["GET"])
 def health():
