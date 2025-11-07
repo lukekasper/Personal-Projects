@@ -7,6 +7,7 @@
 - 422 Unprocessable Content: Validation errors in content
 - 500 Internal Server Error: Server encountered an error.
 
+#### Post API (Producer)
 ```python
 # app.py
 import logging
@@ -95,3 +96,51 @@ def health():
 if __name__ == "__main__":
     app.run(port=8080)
 ```
+
+#### Consumer Order Processing Service
+import logging
+from confluent_kafka import Consumer, KafkaException, KafkaError
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("OrderConsumer")
+
+class ProcessOrder:
+    def __init__(self, brokers="localhost:9092", group_id="order-service-group", topic="my_topic"):
+        self.consumer = Consumer({
+            'bootstrap.servers': brokers,
+            'group.id': group_id,
+            'auto.offset.reset': 'earliest'
+        })
+        self.topic = topic
+        self.consumer.subscribe([self.topic])
+
+    def process_order(self, order_data: str):
+        """Business logic for handling an order message."""
+        logger.info(f"Processing order: {order_data}")
+        # Example: parse JSON, update DB, trigger workflow, etc.
+        # This is synchronous — no asyncio involved.
+
+    def run(self):
+        """Main loop: consume messages and process them synchronously."""
+        try:
+            while True:
+                msg = self.consumer.poll(timeout=1.0)
+                if msg is None:
+                    continue
+                if msg.error():
+                    if msg.error().code() == KafkaError._PARTITION_EOF:
+                        logger.info(f"End of partition: {msg.topic()} [{msg.partition()}]")
+                    else:
+                        raise KafkaException(msg.error())
+                else:
+                    order_data = msg.value().decode("utf-8")
+                    logger.info(f"Received message: {order_data}")
+                    self.process_order(order_data)
+        except KeyboardInterrupt:
+            logger.info("Consumer interrupted, shutting down...")
+        finally:
+            self.consumer.close()
+
+if __name__ == "__main__":
+    service = ProcessOrder()
+    service.run()
