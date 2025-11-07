@@ -40,6 +40,12 @@ class Order(BaseModel):
 def verify_token(auth_header: str):
     pass
 
+def delivery_report(err, msg):
+    if err is not None:
+        logger.error(f"Delivery failed: {err}")
+    else:
+        logger.info(f"Delivered to {msg.topic()} [{msg.partition()}]")
+
 # ---- Routes ----
 @app.route("/api/orders", methods=["POST"])
 def create_order():
