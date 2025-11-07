@@ -98,6 +98,7 @@ if __name__ == "__main__":
 ```
 
 #### Consumer Order Processing Service
+```python
 import logging
 from confluent_kafka import Consumer, KafkaException, KafkaError
 
@@ -144,3 +145,4 @@ class ProcessOrder:
 if __name__ == "__main__":
     service = ProcessOrder()
     service.run()
+```
