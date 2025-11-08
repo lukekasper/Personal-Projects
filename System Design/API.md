@@ -7,7 +7,7 @@
 - 422 Unprocessable Content: Validation errors in content
 - 500 Internal Server Error: Server encountered an error.
 
-#### Post API (Producer)
+#### Post/Get API (Producer)
 ```python
 # app.py
 import logging
@@ -88,6 +88,29 @@ def create_order():
     producer.poll(0)  # trigger delivery
 
     return jsonify(order.model_dump()), 201
+
+@app.route("/api/orders/<order_id>", methods=["GET"])
+def get_order(order_id):
+    # Verify JWT
+    claims, err = verify_token(request.headers.get("Authorization"))
+    if err:
+        return jsonify({"error": err}), 401
+
+    # Try to fetch order from Redis cache
+    order_data = r.get(f"order:{order_id}")
+    if not order_data:
+        return jsonify({"error": "Order not found"}), 404
+
+    try:
+        order = json.loads(order_data)
+    except Exception:
+        return jsonify({"error": "Corrupted order data"}), 500
+
+    # Optional authorization check: only allow owner to view
+    if claims.get("sub") != order.get("user_id"):
+        return jsonify({"error": "Forbidden: user mismatch"}), 403
+
+    return jsonify(order), 200
 
 @app.route("/healthz", methods=["GET"])
 def health():
