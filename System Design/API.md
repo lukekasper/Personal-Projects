@@ -87,7 +87,7 @@ def create_order():
     )
     producer.poll(0)  # trigger delivery
 
-    return jsonify(order.dict()), 201
+    return jsonify(order.model_dump()), 201
 
 @app.route("/healthz", methods=["GET"])
 def health():
