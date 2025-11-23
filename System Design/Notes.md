@@ -569,7 +569,7 @@
             - When it sends the update to node j, it attatches its vector along with its data
             - Node j then advances its own clock (v[j]) and merges the two vectors (vj[k] = max(vj[k], vi[k])
             - At node i, vi[k] = 6 means replica i knows the situation of replica k up to its logical clock of 6
-		- Gossip (state transfer):
+		- Gossip (state transfer): used for availability over consistency
             - Each replica maintains a vector clock and state version tree
                 - State version tree contains all conflicting updates
             - Query:
