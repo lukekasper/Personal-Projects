@@ -1,0 +1,23 @@
+## Getting Started
+- Create a new springboot project: https://start.spring.io/ or through IDE
+- Get dependencies from maven central repository
+  - Typically want to remove versions from spring framework dependencies in pom.xml to let springboot framework manage that
+- Spring MVC: Model View Controller
+  - Model: Data + Logic
+  - View: What user sees on frontend
+  - Controller: Mediator (ie API)
+- Controllers:
+  - Use annotation `@Controller` above Java class
+  - `@RequestMapping("/<url pattern>")` above method: creates api endpoint
+- Run application:
+  - `./mvnw`: maven wrapper to run maven from commandline
+  - `./mvnw spring-boot:run`: start springboot application
+- Automatic Restart:
+  - spring-boot-devtools: add tag `<optional>true<optional/>`
+  - compiler settings -> build project automatically
+  - advanced settings -> allow auto-make to start even if developed application is currently running
+- Applicaiton properties:
+  - Add them to application.properties
+  - Use `@Value("${application property key}")` annotation
+-  Dependency Injection:
+  -  
