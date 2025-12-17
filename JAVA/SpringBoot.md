@@ -22,5 +22,7 @@
 -  Dependency Injection:
   -  Use an "interface" to loosely couple dependencies
     - Contract that outlines capabilities of a class (no implementation)
-    - `public interface <class name>`
   - Pass dependency as argument in constructor
+  - Can inject dependencies via setter if the dependency is optional
+- "Beans" are JAVA objects managed by the Spring IOC (Inversion of Control) container
+  - Spring takes care of creating it, injecting dependencies, and managing its lifecycle
