@@ -20,4 +20,7 @@
   - Add them to application.properties
   - Use `@Value("${application property key}")` annotation
 -  Dependency Injection:
-  -  
+  -  Use an "interface" to loosely couple dependencies
+    - Contract that outlines capabilities of a class (no implementation)
+    - `public interface <class name>`
+  - Pass dependency as argument in constructor
