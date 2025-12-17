@@ -26,3 +26,12 @@
   - Can inject dependencies via setter if the dependency is optional
 - "Beans" are JAVA objects managed by the Spring IOC (Inversion of Control) container
   - Spring takes care of creating it, injecting dependencies, and managing its lifecycle
+- Annotations:
+  - `@Component`: tell spring to manage objects of this type
+  - `@Service`: classes that contain business logic (this is also an alias for `Component` annotation)
+  - `@Repository`: classes that interact with a databse
+  - `@Controller`: for marking classes as controllers for handling web requests
+- Common errors:
+  - BeanCreationException: Error creating bean for '<classname>'
+    - Must use `@Autowired`
+  - 
