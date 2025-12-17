@@ -26,12 +26,21 @@
   - Can inject dependencies via setter if the dependency is optional
 - "Beans" are JAVA objects managed by the Spring IOC (Inversion of Control) container
   - Spring takes care of creating it, injecting dependencies, and managing its lifecycle
+  - By default, beans get created once at application start, even if you call `context.getBean(...)` multiple times
+    - Spring framework uses "singleton" design pattern
+    - Can use`@Scope(value="prototype")` to have it create object instance on demand
+  - Use `@Autowired` when creating dependencies
 - Annotations:
   - `@Component`: tell spring to manage objects of this type
   - `@Service`: classes that contain business logic (this is also an alias for `Component` annotation)
   - `@Repository`: classes that interact with a databse
   - `@Controller`: for marking classes as controllers for handling web requests
+  - `@Scope(value="prototype")`: will not create a bean instance by default, but on call to "getBean"
+  - `@Autowired`: automatically manage dependency injection (must use with multiple constructors in a class)
+    - Searches by type by default
+  - `@Qualifier("<name>")`: to get object by name
 - Common errors:
   - BeanCreationException: Error creating bean for '<classname>'
     - Must use `@Autowired`
-  - 
+  - NoSuchBeanDefinitionException: No qualifying bean of type '<classname>'
+    - Class did not use `@Component` annotation
