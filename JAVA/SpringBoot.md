@@ -35,12 +35,23 @@
   - `@Service`: classes that contain business logic (this is also an alias for `Component` annotation)
   - `@Repository`: classes that interact with a databse
   - `@Controller`: for marking classes as controllers for handling web requests
+  - `@RestController`: create a REST api endpoint
+  - `@RequestMapping`: create api route for method to handle
   - `@Scope(value="prototype")`: will not create a bean instance by default, but on call to "getBean"
   - `@Autowired`: automatically manage dependency injection (must use with multiple constructors in a class)
     - Searches by type by default
   - `@Qualifier("<name>")`: to get object by name
+  - `@RequestParam("name")`: get http request parameters
 - Common errors:
   - BeanCreationException: Error creating bean for '<classname>'
     - Must use `@Autowired`
   - NoSuchBeanDefinitionException: No qualifying bean of type '<classname>'
     - Class did not use `@Component` annotation
+
+## Web Development
+- Create .jsp pages in "webapp" folder under main
+- Testing APIs: use Postman app:
+- Data Transfer Object (DTO): Java object used to transfer data between different layers of an application
+  - This limits what data gets exposed to outside clients from the API, making API more stable
+  - Any updates to data model just need to get reflected in mapping code, clients do not need to change
+- Model libraries (MapStruct) can be used to map these DTOs more efficiently:
