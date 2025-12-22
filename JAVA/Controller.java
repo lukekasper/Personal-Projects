@@ -26,6 +26,7 @@ public class UserController {
   
   @GetMapping
   public List<UserDto> getAllUsers(
+    @RequestHeader(name = "x-auth-token") String authToken,
     @RequestParam(required = false, defaultValue = "", name = "sort") String sort
   ) {
 
@@ -45,6 +46,19 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(userMapper.toDto(user));
+  }
+
+  @PostMapping
+  public ResponseEntity<UserDto> createUser(
+    @Requestbody RegisterUserRequest request,
+    UriComponentsBuilder uriBuilder
+  ) {
+    var user = userMapper.toEntity(request);
+    userRepository.save(user);
+
+    var userDto = usermapper.toDto(user);
+    uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
+    return ResponseEntity.created;
   }
 }
 
