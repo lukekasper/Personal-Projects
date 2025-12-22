@@ -42,6 +42,11 @@
     - Searches by type by default
   - `@Qualifier("<name>")`: to get object by name
   - `@RequestParam("name")`: get http request parameters
+  - `@RequestHeader()`: used to get http request header info
+  - `@RequestBody`: used to access info in POST request body
+  - `@PathVariable`: binds input parameter to variable in the URI path
+  - `@EntityGraph`:use when fetching an object to eagerly load other attributes as well and perform joins
+  - `@Query`: write custom SQL queries
 - Common errors:
   - BeanCreationException: Error creating bean for '<classname>'
     - Must use `@Autowired`
