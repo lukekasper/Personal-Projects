@@ -35,3 +35,9 @@ public class RegisterUserRequest {
   private String email;
   private String password;
 }
+
+@Data
+public class UpdateUserRequest {
+  private String name;
+  private String email;
+}
