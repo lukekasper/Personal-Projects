@@ -13,3 +13,7 @@
   - CPU intensive (complex calculations/image processing): # of CPU cores, # of CPU cores, 0 or very small (1-10)
   - Long-running blocking tasks (external API calls, large data processing): 5, 20, 200
   - High Concurrency (thousands or requests for a web app): 10, 50, 500+
+- Can use `@Scheduled` annotation to schedule background jobs
+- Use `TaskExecutor` to execute tasks without dealing with Thread management
+- If multiple threads are touching a shared muteable resource, must use "synchronization"
+  - Should be rare as most state lives in resources like: databse, distributed cache, queues, ect.
