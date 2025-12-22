@@ -1,1 +1,15 @@
-
+### Notes
+- https://blog.seancoughlin.me/multithreading-in-java-and-spring-boot
+- Async annotation abstracts away most async code for Spring Boot
+  - Allows methods to execute on a seperate thread to not block main program execution
+- `ThreadPoolTaskExecutor` allows customization of production thread pools
+  - Core pool size: Minimum number of threads that will always be available.
+  - Max pool size: Maximum number of threads that can be created.
+  - Queue capacity: How many tasks can be queued before new threads are created.
+  - Thread name prefix: Custom naming pattern for threads in this executor
+- Optimal parameters:
+  - Short, non-blocking tasks (ie logging): 2, 5, 50
+  - I/O bound tasks (file reads, db queries): 4, 10, 100
+  - CPU intensive (complex calculations/image processing): # of CPU cores, # of CPU cores, 0 or very small (1-10)
+  - Long-running blocking tasks (external API calls, large data processing): 5, 20, 200
+  - High Concurrency (thousands or requests for a web app): 10, 50, 500+
