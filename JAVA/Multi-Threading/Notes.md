@@ -17,3 +17,7 @@
 - Use `TaskExecutor` to execute tasks without dealing with Thread management
 - If multiple threads are touching a shared muteable resource, must use "synchronization"
   - Should be rare as most state lives in resources like: databse, distributed cache, queues, ect.
+- Common Thread Safety Issues:
+  - Race Conditions: Occurs when two or more threads access shared data and try to change it at the same time.
+  - Deadlocks: Happen when two or more threads are blocked forever, waiting for each other to release resources.
+  - Memory Consistency Errors: Result when multiple threads access shared variables without proper synchronization.
