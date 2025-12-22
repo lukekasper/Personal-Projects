@@ -41,3 +41,9 @@ public class UpdateUserRequest {
   private String name;
   private String email;
 }
+
+@Data
+public class ChangePasswordRequest {
+  private String oldPassword;
+  private String newPassword;
+}
