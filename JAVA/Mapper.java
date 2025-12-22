@@ -2,8 +2,8 @@
 public interface UserMapper {
   @Mapping(target = "timestamp", expression = "java(java.time.LocalDateTime.now())")
   UserDto toDto(User user);
-
-  User toEntity(RegisterUserRequest request);
+  User toEntity(RegisterUserRequest request)
+  void update(UpdateUserRequest request, @MappingTarget User, user);
 }
 
 
