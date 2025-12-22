@@ -47,3 +47,28 @@ public class UserController {
     return ResponseEntity.ok(userMapper.toDto(user));
   }
 }
+
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/products")
+public class ProductController {
+  private final ProductRepository productRepository;
+  private final ProductMapper productMapper;
+  
+  @GetMapping
+  public List<ProductDto> getAllProducts(
+    @RequesatParam(name = "categoryId", required = false) Byte categoryId
+  ) {
+    List<Product> products;
+    if (categoryId != null) {
+      products = productRepository.findByCategoryId(categoryId);
+    }
+    else {
+
+    }
+    return productRepository.findAll()
+        .stream()
+        .map(productMapper::toDto)
+        .toList();
+  }
