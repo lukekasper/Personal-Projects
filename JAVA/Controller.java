@@ -65,10 +65,7 @@ public class ProductController {
       products = productRepository.findByCategoryId(categoryId);
     }
     else {
-
+      products = productRepository.findAllWithCategory();
     }
-    return productRepository.findAll()
-        .stream()
-        .map(productMapper::toDto)
-        .toList();
+    return products.stream().map(productMapper::toDto).toList();
   }
