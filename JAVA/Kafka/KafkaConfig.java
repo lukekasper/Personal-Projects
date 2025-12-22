@@ -1,56 +1,51 @@
-// Java Program to Illustrate Kafka Configuration
-
-package com.amiya.kafka.apachekafkaconsumer.config;
-
-// Importing required classes
-import java.util.HashMap;
-import java.util.Map;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-
-// Annotations
 @EnableKafka
 @Configuration
+public class Config {
 
-// Class
-public class KafkaConfig {
-
+    // Function to establish a connection
+    // between Spring application
+    // and Kafka server
     @Bean
-    public ConsumerFactory<String, String> consumerFactory()
+    public ConsumerFactory<String, Student>
+    studentConsumer()
     {
 
-        // Creating a Map of string-object pairs
-        Map<String, Object> config = new HashMap<>();
+        // HashMap to store the configurations
+        Map<String, Object> map
+            = new HashMap<>();
 
-        // Adding the Configuration
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                   "127.0.0.1:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG,
-                   "group_id");
-        config.put(
-            ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-            StringDeserializer.class);
-        config.put(
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-            StringDeserializer.class);
+        // put the host IP in the map
+        map.put(ConsumerConfig
+                    .BOOTSTRAP_SERVERS_CONFIG,
+                "127.0.0.1:9092");
 
-        return new DefaultKafkaConsumerFactory<>(config);
+        // put the group ID of consumer in the map
+        map.put(ConsumerConfig
+                    .GROUP_ID_CONFIG,
+                "id");
+        map.put(ConsumerConfig
+                    .KEY_DESERIALIZER_CLASS_CONFIG,
+                StringDeserializer.class);
+        map.put(ConsumerConfig
+                    .VALUE_DESERIALIZER_CLASS_CONFIG,
+                JsonDeserializer.class);
+
+        // return message in JSON formate
+        return new DefaultKafkaConsumerFactory<>(
+            map, new StringDeserializer(),
+            new JsonDeserializer<>(Student.class));
     }
 
-    // Creating a Listener
-    public ConcurrentKafkaListenerContainerFactory
-    concurrentKafkaListenerContainerFactory()
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String,
+                                                   Student>
+    studentListner()
     {
-        ConcurrentKafkaListenerContainerFactory<
-            String, String> factory
+        ConcurrentKafkaListenerContainerFactory<String,
+                                                Student>
+            factory
             = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(studentConsumer());
         return factory;
     }
 }
