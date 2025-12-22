@@ -7,26 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
-// Annotation
 @RestController
+@RequestMapping("gfg")
+public class UserResource {
 
-// Class
-public class DemoController {
+    @Autowired
+    private KafkaTemplate<String, Student>
+        kafkaTemplate;
 
-    // Autowiring Kafka Template
-    @Autowired KafkaTemplate<String, String> kafkaTemplate;
+    private static final String TOPIC
+        = "StudentExample";
 
-    private static final String TOPIC = "NewTopic";
+    @GetMapping("/publish/{id}/"
+                + "{firstName}/{lastName}")
 
-    // Publish messages using the GetMapping
-    @GetMapping("/publish/{message}")
-    public String publishMessage(@PathVariable("message")
-                                 final String message)
+    public String post(
+        @PathVariable("id") final int id,
+        @PathVariable("firstName") final
+            String firstName,
+        @PathVariable("lastName") final
+            String lastName)
     {
 
-        // Sending the message
-        kafkaTemplate.send(TOPIC, message);
+        kafkaTemplate.send(
+            TOPIC,
+            new Student(
+                id, firstName,
+                lastName));
 
-        return "Published Successfully";
+        return "Published successfully";
     }
 }
