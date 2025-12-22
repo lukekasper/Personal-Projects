@@ -54,4 +54,11 @@
 - Data Transfer Object (DTO): Java object used to transfer data between different layers of an application
   - This limits what data gets exposed to outside clients from the API, making API more stable
   - Any updates to data model just need to get reflected in mapping code, clients do not need to change
-- Model libraries (MapStruct) can be used to map these DTOs more efficiently:
+- Model libraries (MapStruct) can be used to map these DTOs more efficiently
+- To build a API endpoint you need:
+  - Controller class: actual APi code
+  - Data field: data model for object
+  - DTO class: outlines what data fields get exposed to the user
+  - Mapper class: data model to DTO
+  - Repository class: inherits from "JpaRepository"
+- By default, 
