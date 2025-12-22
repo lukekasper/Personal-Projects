@@ -56,9 +56,58 @@ public class UserController {
     var user = userMapper.toEntity(request);
     userRepository.save(user);
 
-    var userDto = usermapper.toDto(user);
-    uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
-    return ResponseEntity.created;
+    var userDto = userMapper.toDto(user);
+    var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
+    return ResponseEntity.created(uri).body(userDto);
+  }
+
+  // Action-based request
+  @PostMapping("/{id}/change-password")
+  public ResponseEntity<Void> changePassword(
+    @PathVariable(name = "id") Long id,
+    @Requestbody ChangePasswordRequest request,
+  ) {
+    var user = userRepository.findById(id).orElse(null);
+    if (user == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!user.getPassword().equals(request.getOldPassword())) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    // Only need to use mapper when updating large or complex objects, not simple string fields
+    user.setPassword(request.getNewPassword());
+    userRepository.save(user);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<UserDto> updateUser(
+    @PathVariable(name = "id") Long id,
+    @Requestbody UpdateUserRequest request,
+  ) {
+    var user = userRepository.findById(id).orElse(null);
+    if (user == null) {
+      return ResponseEntity.notFound().build();
+    }
+    
+    userMapper.update(request, user);
+    userRepository.save(user);
+    return ResponseEntity.ok(userMapper.toDto(user));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteUser(
+    @PathVariable(name = "id") Long id,
+  ) {
+    var user = userRepository.findById(id).orElse(null);
+    if (user == null) {
+      return ResponseEntity.notFound().build();
+    }
+    
+    userRepository.delete(user);
+    return ResponseEntity.noContent().build();
   }
 }
 
@@ -69,6 +118,7 @@ public class UserController {
 public class ProductController {
   private final ProductRepository productRepository;
   private final ProductMapper productMapper;
+  private final CategoryRepository categoryRepository;
   
   @GetMapping
   public List<ProductDto> getAllProducts(
@@ -83,3 +133,58 @@ public class ProductController {
     }
     return products.stream().map(productMapper::toDto).toList();
   }
+
+  @PostMapping
+  public ResponseEntity<ProductDto> createProduct(
+    @Requestbody ProudctDto productDto,
+    UriComponentsBuilder uriBuilder
+  ) {
+    var category = categoryRepository.findById(productDto.getCategoryId()).orElse(null);
+    if (category == null) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    var product = productMapper.toEntity(productDto);
+    product.setCategory(category)
+    productRepository.save(product);
+
+    productDto.setId(product.getId());
+    var uri = uriBuilder.path("/products/{id}").buildAndExpand(productDto.getId()).toUri();
+    return ResponseEntity.created(uri).body(productDto);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<ProductDto> updateProduct(
+    @PathVariable(name = "id") Long id,
+    @Requestbody ProudctDto productDto,
+  ) {
+    var category = categoryRepository.findById(productDto.getCategoryId()).orElse(null);
+    if (category == null) {
+      return ResponseEntity.badRequest().build();
+    }
+    
+    var product = productRepository.findById(id).orElse(null);
+    if (product == null) {
+      return ResponseEntity.notFound().build();
+    }
+    
+    productMapper.update(productDto, product);
+    product.setCategory(category);
+    productRepository.save(product);
+    productDto.setId(product.getId());
+    return ResponseEntity.ok(productDto);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteProduct(
+    @PathVariable(name = "id") Long id,
+  ) {
+    var product = productRepository.findById(id).orElse(null);
+    if (product == null) {
+      return ResponseEntity.notFound().build();
+    }
+    
+    productRepository.delete(product);
+    return ResponseEntity.noContent().build();
+  }
+}
