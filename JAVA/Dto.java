@@ -1,5 +1,5 @@
 @AllArgsConstructor
-@Getter
+@Data
 public class UserDto {
   /// remove field from json objects
   @JsonIgnore
@@ -27,4 +27,11 @@ public class ProductDto {
   private BigDecimal price;
   private String description;
   private Byte categoryId;
+}
+
+@Data
+public class RegisterUserRequest {
+  private String name;
+  private String email;
+  private String password;
 }
