@@ -55,4 +55,11 @@ public class CustomerController {
     public ErrorResponse handleNoSuchElementException(NoSuchElementException ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+
+    // Exception Handler method added in CustomerController to handle CustomerAlreadyExistsException
+    @ExceptionHandler(value = CustomerAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCustomerAlreadyExistsException(CustomerAlreadyExistsException ex) {
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
 }
