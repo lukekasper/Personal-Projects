@@ -695,7 +695,7 @@
             - Periodically backs off request rate after each unsuccessful attempt (1s, 2s, 4s...)
 	- Available capcaity is a function of thread pool size and time to process individual transactions
     - `queue length = max latency / (transaction time / number of threads)`
-    - Queue optimization needs good monitoring and loggin
+    - Queue optimization needs good monitoring and logging
         - Alert when queue reaches 70% capcaity
         - Monitor transaction times to ensure they are in expected range
 - **Logging can often be a limiting factor in scalability**
