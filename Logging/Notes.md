@@ -1,0 +1,14 @@
+### Wide Logging
+- Should have:
+  - Structured (json) logging
+  - High cardinality (unique fields): user_id, session_id, order_id, ect
+  - High dimensionality and wide-event: one log event emitted per request per service with all relevant fields
+- Use OpenTelemetry to aid in logging structure
+- Can now run efficient queries on event data thanks to json structure
+- Build wide-events during execution of program, adding context as request lifecycle continues
+- Only save a sample of logs:
+  - 100% of 500 errors, exceptions and failures
+  - 100% of requests above p99 latency threshold
+  - 100% of requests from specific users: VIPs, internal testing accounts, flagged sessions
+  - 1-5% of all other successful requests
+-  BigQuery data warehouses can be used to store large number of log events
