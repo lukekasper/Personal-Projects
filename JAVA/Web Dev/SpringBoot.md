@@ -1,3 +1,7 @@
+## Repo Structure
+<img width="610" height="756" alt="image" src="https://github.com/user-attachments/assets/f8740987-37c7-40f8-8d7a-a48ae53ee848" />
+
+
 ## Getting Started
 - Create a new springboot project: https://start.spring.io/ or through IDE
 - Get dependencies from maven central repository
