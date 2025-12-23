@@ -1,8 +1,8 @@
-## Repo Structure
+### Repo Structure
 <img width="610" height="756" alt="image" src="https://github.com/user-attachments/assets/f8740987-37c7-40f8-8d7a-a48ae53ee848" />
 
 
-## Getting Started
+### Getting Started
 - Create a new springboot project: https://start.spring.io/ or through IDE
 - Get dependencies from maven central repository
   - Typically want to remove versions from spring framework dependencies in pom.xml to let springboot framework manage that
@@ -57,7 +57,7 @@
   - NoSuchBeanDefinitionException: No qualifying bean of type '<classname>'
     - Class did not use `@Component` annotation
 
-## Web Development
+### Web Development
 - Create .jsp pages in "webapp" folder under main
 - Testing APIs: use Postman app:
 - Data Transfer Object (DTO): Java object used to transfer data between different layers of an application
@@ -70,4 +70,16 @@
   - DTO class: outlines what data fields get exposed to the user
   - Mapper class: data model to DTO
   - Repository class: inherits from "JpaRepository"
-- By default, 
+
+### Beans:
+- `@Configuration`: indicates that this class declares one or more `@Bean` methods
+- `@Bean`: defines a method that produces a bean to be managed by the Spring IOC container
+  - Can give the "name" attrinbute inside the Bean decorator to give it a specific bean id
+- Examples of resources covered in the @Configuration class:
+  - WebClient for Stripe
+  - Kafka producer for events
+  - Redis cache
+  - ObjectMapper
+  - Executor pool
+  - Crypto utilities
+- You would typically break these into individual configuration classes to manage concerns seperately
