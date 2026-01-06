@@ -21,3 +21,7 @@
   - Race Conditions: Occurs when two or more threads access shared data and try to change it at the same time.
   - Deadlocks: Happen when two or more threads are blocked forever, waiting for each other to release resources.
   - Memory Consistency Errors: Result when multiple threads access shared variables without proper synchronization.
+
+### Example
+https://github.com/Java-Techie-jt/order-batch-processing
+https://github.com/Java-Techie-jt/api-performance-demo
