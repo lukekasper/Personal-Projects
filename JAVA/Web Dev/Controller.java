@@ -119,6 +119,7 @@ public class ProductController {
   private final ProductRepository productRepository;
   private final ProductMapper productMapper;
   private final CategoryRepository categoryRepository;
+  private final IdempotencyService idempotencyService;
   
   @GetMapping
   public List<ProductDto> getAllProducts(
@@ -134,22 +135,54 @@ public class ProductController {
     return products.stream().map(productMapper::toDto).toList();
   }
 
+  /// IDEMPOTENCY EXAMPLE
   @PostMapping
   public ResponseEntity<ProductDto> createProduct(
+    @RequestHeader("Idempotency-Key") String idempotencyKey,
     @Requestbody ProudctDto productDto,
     UriComponentsBuilder uriBuilder
   ) {
+    
+    // 1. Check if we already have a stored response
+    var stored = idempotencyService.getStoredResponse(idempotencyKey);
+    if (stored.isPresent()) {
+        try {
+            ProductDto dto = new ObjectMapper().readValue(stored.get(), ProductDto.class);
+            URI uri = uriBuilder.path("/products/{id}")
+                                .buildAndExpand(dto.getId())
+                                .toUri();
+            return ResponseEntity.created(uri).body(dto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // 2. Try to acquire lock
+    boolean lockAcquired = idempotencyService.acquireLock(idempotencyKey);
+    if (!lockAcquired) {
+        // Lock exists but no stored response → still processing
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                             .body(null);
+    }
+
+    // 3. Perform business logic
     var category = categoryRepository.findById(productDto.getCategoryId()).orElse(null);
     if (category == null) {
-      return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().build();
     }
 
     var product = productMapper.toEntity(productDto);
-    product.setCategory(category)
+    product.setCategory(category);
     productRepository.save(product);
 
     productDto.setId(product.getId());
-    var uri = uriBuilder.path("/products/{id}").buildAndExpand(productDto.getId()).toUri();
+    URI uri = uriBuilder.path("/products/{id}")
+                        .buildAndExpand(productDto.getId())
+                        .toUri();
+
+    // 4. Store final response
+    idempotencyService.storeResponse(idempotencyKey, productDto);
+
     return ResponseEntity.created(uri).body(productDto);
   }
 
