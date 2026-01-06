@@ -83,3 +83,26 @@
   - Executor pool
   - Crypto utilities
 - You would typically break these into individual configuration classes to manage concerns seperately
+
+### Idempotency:
+1. Require Idempotency-Header in request
+2. Create a table to store Idempotency records
+  - Idempotency key
+  - request hash
+  - final response payload
+  - resource id
+  - status (IN_PROGRESS, COMPLETED, FAILED)
+  ```
+    CREATE TABLE idempotency_record (
+      id VARCHAR(64) PRIMARY KEY,
+      request_hash VARCHAR(128),
+      response_body TEXT,
+      resource_id BIGINT,
+      status VARCHAR(20),
+      created_at TIMESTAMP
+    );
+  ```
+3. Check for existing record before doing anything
+4. Try to acquire redis lock
+5. Perform business logic
+6. Store final response in idempotency table
